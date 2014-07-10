@@ -30,10 +30,14 @@
 
 
 /* System constants used to control simulation termination */
+#define MAX_SHEEP_EATEN 36 
 #define MAX_COWS_EATEN 12
+#define MAX_DEFEATED_HUNTERS 48
+#define MAX_DEFEATED_THIEVES 36
 #define MAX_COWS_CREATED 80
-#define MAX_TREASURE_IN_HOARD 120
-#define INITIAL_TREASURE_IN_HOARD 100
+#define MIN_TREASURE_IN_HOARD 0
+#define MAX_TREASURE_IN_HOARD 1000
+#define INITIAL_TREASURE_IN_HOARD 500
 
 
 /* System constants to specify size of groups of cows*/
@@ -63,9 +67,12 @@ int cowsEatenCounter = 0;
 int mealWaitingFlag = 0;
 
 /* Group IDs for managing/removing processes */
+int parentProcessID = -1;
 int smaugProcessID = -1;
+int sheepProcessGID = -1;
 int cowProcessGID = -1;
-int parentProcessGID = -1;
+int hunterProcessGID = -1;
+int thiefProcessGID = -1;
 
 
 /* Define the semaphore operations for each semaphore */
@@ -284,6 +291,8 @@ void cow(int startTimeN)
 	int k;
 	localpid = getpid();
 
+	setpgid(localpid, cowProcessGID);
+
 	/* graze */
 	printf("CCCCCCC %8d CCCCCCC   A cow is born\n", localpid);
 	if( startTimeN > 0) {
@@ -361,6 +370,9 @@ void terminateSimulation() {
 		}
 		printf("XXTERMINATETERMINATE   killed cows \n");
 	}
+
+	//printf("smaugProcessID: %d  localpgid: %d\n", smaugProcessID, localpgid);
+
 	if(smaugProcessID != (int)localpgid ) {
 		kill(smaugProcessID, SIGKILL);
 		printf("XXTERMINATETERMINATE   killed smaug\n");
@@ -468,7 +480,6 @@ void semctlChecked(int semaphoreID, int semNum, int flag, union semun seminfo) {
 
 void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something) 
 {
-
 	/* wrapper that checks if the semaphore operation request has terminated */
 	/* successfully. If it has not the entire simulation is terminated */
 	if (semop(semaphoreID, operation, something) == -1 ) {
@@ -497,83 +508,97 @@ double timeChange( const struct timeval startTime )
 
 }
 
+// START
 
-struct CallbackInterval {
-	int remainingTime;
-	int interval;
-};
-
-typedef struct CallbackInterval Interval;
-
-void processInterval(Interval i) {
-	i.remainingTime -= 1;
-	if( i.remainingTime< 0 )
-		i.remainingTime = 0;
-}
-
-int isIntervalReady(Interval i) {
-	if( i.remainingTime == 0 )
-		return 1;
-	else
-		return 0;
-}
+double getInputFor(char *prompt);
 
 int main() {
 	initialize();
 
-	int done = 0;
+	const int maximumSheepInterval = getInputFor("maximumSheepInterval(us)");
+	const int maximumCowInterval = getInputFor("maximumCowInterval(us)");
+	const int maximumHunterInterval = getInputFor("maximumHunterInterval(us)");
+	const int maximumThiefInterval = getInputFor("maximumThiefInterval(us)");
+	const double winProb = getInputFor("winProb");
 
-	Interval maximumSheepInterval;
-	int maximumCowInterval;
-	int maximumHunterInterval;
-	int maximumThiefInterval;
-	int winProb;
+	double sheepTimer = 0;
+	double cowTimer = 0;
+	double hunterTimer = 0;
+	double thiefTimer = 0;
 
-	maximumSheepInterval.interval = getInputFor("maximumSheepInterval");
-
-	maximumCowInterval = getInputFor("maximumCowInterval");
-	maximumHunterInterval = getInputFor("maximumHunterInterval");
-	maximumThiefInterval = getInputFor("maximumThiefInterval");
-	winProb = getInputFor("winProb");
+	parentProcessID = getpid();
+	smaugProcessID = -1; // we do not know smaugpid yet
+	sheepProcessGID = parentProcessID - 1;
+	cowProcessGID = parentProcessID - 2;
+	hunterProcessGID = parentProcessID - 3;
+	thiefProcessGID = parentProcessID - 4;
 
 	pid_t childPID = fork();
 
-	if(childPID >= 0) {
-		if(childPID == 0) {
-			smaug();
-		} else {
-				
-			int c = 0;
-			while(done != 1) {
-				if(c < 10)
-					printf("tick: %d\n", c++);
-
-				processInterval(maximumSheepInterval);
-
-				if(isIntervalReady(maximumSheepInterval) == 1) {
-					printf("o ya\n");
-				}
-
-
-				usleep(100);
-			}
-		
-			//	printf("testing values: %d\n", maximumsheepinterval);
-			//	printf("testing values: %d\n", maximumCowInterval);
-			//	printf("testing values: %d\n", winProb);
-
-		}
-	} else {
+	if(childPID < 0) {
 		printf("FORK FAILED\n");
 		return 1;
-	}
+	} else if(childPID == 0) {
+		smaug();
+		return 0;
+	} 
 
+	// smaugpid is now known to callee from the above fork; assign it now
+	smaugProcessID = childPID;
+		
+	gettimeofday(&startTime, NULL);
+	int done = 0;
+	int c = 0;
+	while(done == 0) {
+		double simDuration = timeChange(startTime);
+		//printf("simDuration: %f\n", simDuration);
+
+		if(sheepTimer - simDuration <= 0) {
+			sheepTimer = simDuration + (rand() % maximumSheepInterval) / 1000.0;
+		//	printf("SHEEP CREATED! next sheep at: %f\n", sheepTimer);
+		}
+
+		if(cowTimer - simDuration <= 0) {
+			cowTimer = simDuration + (rand() % maximumCowInterval) / 1000.0;
+			printf("COW CREATED! next cow at: %f\n", cowTimer);
+			int childPID = fork();
+			if(childPID == 0) {
+				cow(simDuration);
+				return 0;
+			}
+		}
+
+		if(hunterTimer - simDuration <= 0) {
+			hunterTimer = simDuration + (rand() % maximumHunterInterval) / 1000.0;
+		//	printf("HUNTER CREATED! next hunter at: %f\n", hunterTimer);
+		}
+ 
+		if(thiefTimer - simDuration <= 0) {
+			thiefTimer = simDuration + (rand() % maximumThiefInterval) / 1000.0;
+		//	printf("THIEF CREATED! next hunter at: %f\n", thiefTimer);
+		}
+
+		//printf("tick: %d\n", c++);
+
+		if(simDuration >=  5000)
+			done = 1;
+
+		//sleep(1);
+		//usleep(10);
+	}
+	
+	//	printf("testing values: %d\n", maximumsheepinterval);
+	//	printf("testing values: %d\n", maximumCowInterval);
+	printf("finish\n");
+
+	terminateSimulation();
 	return 0;
 }
 
-int getInputFor(char *prompt) {
+double getInputFor(char *prompt) {
 	printf("Enter the value for %s: ", prompt);
-	int input = 0;
-	scanf("%d", &input);
+	double input = 0;
+	scanf("%lf", &input);
 	return input;
 }
+
