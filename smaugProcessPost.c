@@ -221,13 +221,13 @@ void initialize()
 
 
 	/* Now we create and attach  the segments of shared memory*/
-        if ((terminateFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
-                printf("!!INIT!!INIT!!INIT!!  shm not created for terminateFlag\n");
-                 exit(1);
-        }
-        else {
-                printf("!!INIT!!INIT!!INIT!!  shm created for terminateFlag\n");
-        }
+	if ((terminateFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
+		printf("!!INIT!!INIT!!INIT!!  shm not created for terminateFlag\n");
+		exit(1);
+	}
+	else {
+		printf("!!INIT!!INIT!!INIT!!  shm created for terminateFlag\n");
+	}
 	if ((cowCounter = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
 		printf("!!INIT!!INIT!!INIT!!  shm not created for cowCounter\n");
 		exit(1);
@@ -252,13 +252,13 @@ void initialize()
 
 
 	/* Now we attach the segment to our data space.  */
-        if ((terminateFlagp = shmat(terminateFlag, NULL, 0)) == (int *) -1) {
-                printf("!!INIT!!INIT!!INIT!!  shm not attached for terminateFlag\n");
-                exit(1);
-        }
-        else {
-                 printf("!!INIT!!INIT!!INIT!!  shm attached for terminateFlag\n");
-        }
+	if ((terminateFlagp = shmat(terminateFlag, NULL, 0)) == (int *) -1) {
+		printf("!!INIT!!INIT!!INIT!!  shm not attached for terminateFlag\n");
+		exit(1);
+	}
+	else {
+		printf("!!INIT!!INIT!!INIT!!  shm attached for terminateFlag\n");
+	}
 
 	if ((cowCounterp = shmat(cowCounter, NULL, 0)) == (int *) -1) {
 		printf("!!INIT!!INIT!!INIT!!  shm not attached for cowCounter\n");
@@ -312,6 +312,7 @@ void cow(int startTimeN)
 	printf("CCCCCCC %8d CCCCCCC   %d  cows have been enchanted \n", localpid, *cowCounterp );
 	if( ( *cowCounterp  >= COWS_IN_GROUP )) {
 		*cowCounterp = *cowCounterp - COWS_IN_GROUP;
+		semopChecked(semID, &SignalProtectCowsInGroup, 1);
 		for (k=0; k<COWS_IN_GROUP; k++){
 			semopChecked(semID, &WaitCowsInGroup, 1);
 		}
@@ -338,7 +339,7 @@ void cow(int startTimeN)
 	if( ( *cowsEatenCounterp >= COWS_IN_GROUP )) {
 		*cowsEatenCounterp = *cowsEatenCounterp - COWS_IN_GROUP;
 		for (k=0; k<COWS_IN_GROUP; k++){
-       		        semopChecked(semID, &WaitCowsEaten, 1);
+			semopChecked(semID, &WaitCowsEaten, 1);
 		}
 		printf("CCCCCCC %8d CCCCCCC   The last cow has been eaten\n", localpid);
 		semopChecked(semID, &SignalProtectCowsEaten, 1);
@@ -399,22 +400,22 @@ void releaseSemandMem()
 	// wait for the semaphores 
 	usleep(2000);
 	while( (w = waitpid( -1, &status, WNOHANG)) > 1){
-			printf("                           REAPED process in terminate %d\n", w);
+		printf("                           REAPED process in terminate %d\n", w);
 	}
 	printf("\n");
-        if(shmdt(terminateFlagp)==-1) {
-                printf("RELEASERELEASERELEAS   terminateFlag share memory detach failed\n");
-        }
-        else{
-                printf("RELEASERELEASERELEAS   terminateFlag share memory detached\n");
-        }
-        if( shmctl(terminateFlag, IPC_RMID, NULL ))
-        {
-                printf("RELEASERELEASERELEAS   share memory delete failed %d\n",*terminateFlagp );
-        }
-        else{
-                printf("RELEASERELEASERELEAS   share memory deleted\n");
-        }
+	if(shmdt(terminateFlagp)==-1) {
+		printf("RELEASERELEASERELEAS   terminateFlag share memory detach failed\n");
+	}
+	else{
+		printf("RELEASERELEASERELEAS   terminateFlag share memory detached\n");
+	}
+	if( shmctl(terminateFlag, IPC_RMID, NULL ))
+	{
+		printf("RELEASERELEASERELEAS   share memory delete failed %d\n",*terminateFlagp );
+	}
+	else{
+		printf("RELEASERELEASERELEAS   share memory deleted\n");
+	}
 	if( shmdt(cowCounterp)==-1)
 	{
 		printf("RELEASERELEASERELEAS   cowCounterp memory detach failed\n");
@@ -515,6 +516,7 @@ double getInputFor(char *prompt);
 int main() {
 	initialize();
 
+	// Unsafe; narrowing primitive conversions from double to int, but that's ok since we don't need that much precision anyways
 	const int maximumSheepInterval = getInputFor("maximumSheepInterval(us)");
 	const int maximumCowInterval = getInputFor("maximumCowInterval(us)");
 	const int maximumHunterInterval = getInputFor("maximumHunterInterval(us)");
@@ -527,7 +529,8 @@ int main() {
 	double thiefTimer = 0;
 
 	parentProcessID = getpid();
-	smaugProcessID = -1; // we do not know smaugpid yet
+	// we do not know smaugpid yet
+	smaugProcessID = -1; 
 	sheepProcessGID = parentProcessID - 1;
 	cowProcessGID = parentProcessID - 2;
 	hunterProcessGID = parentProcessID - 3;
@@ -580,7 +583,8 @@ int main() {
 
 		//printf("tick: %d\n", c++);
 
-		if(simDuration >=  5000)
+		// simDuration: 1 second is 1000 simDurations; 10 seconds is 10000 simDurations.. etc
+		if(simDuration >=  10000)
 			done = 1;
 
 		//sleep(1);
@@ -588,8 +592,6 @@ int main() {
 	}
 	
 	//	printf("testing values: %d\n", maximumsheepinterval);
-	//	printf("testing values: %d\n", maximumCowInterval);
-	printf("finish\n");
 
 	terminateSimulation();
 	return 0;
