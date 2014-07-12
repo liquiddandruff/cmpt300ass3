@@ -32,8 +32,8 @@
 #define SEM_DRAGONEATING 19
 #define SEM_DRAGONFIGHTING 20
 #define SEM_DRAGONSLEEPING 21
-#define SEM_PMEALWAITINGFLAG 23
-#define SEM_PSHEEPWAITINGFLAG 24
+#define SEM_PCOWMEALFLAG 23
+#define SEM_PSHEEPMEALFLAG 24
 
 
 /* System constants used to control simulation termination */
@@ -66,17 +66,17 @@ struct timeval startTime;
 
 /*  Pointers and ids for shared memory segments */
 int *terminateFlagp = NULL;
-int *sheepWaitingFlagp = NULL;
+int *sheepMealFlagp = NULL;
 int *sheepCounterp = NULL;
 int *sheepEatenCounterp = NULL;
-int *mealWaitingFlagp = NULL;
+int *cowMealFlagP = NULL;
 int *cowCounterp = NULL;
 int *cowsEatenCounterp = NULL;
 int terminateFlag = 0;
-int sheepWaitingFlag = 0;
+int sheepMealFlag = 0;
 int sheepCounter = 0;
 int sheepEatenCounter = 0;
-int mealWaitingFlag = 0;
+int cowMealFlag = 0;
 int cowCounter = 0;
 int cowsEatenCounter = 0;
 
@@ -102,10 +102,10 @@ struct sembuf WaitCowsInGroup={SEM_COWSINGROUP, -1, 0};
 struct sembuf SignalCowsInGroup={SEM_COWSINGROUP, 1, 0};
 
 /*Number in group mutexes*/
-struct sembuf WaitProtectSheepWaitingFlag={SEM_PSHEEPWAITINGFLAG, -1, 0};
-struct sembuf SignalProtectSheepWaitingFlag={SEM_PSHEEPWAITINGFLAG, 1, 0};
-struct sembuf WaitProtectMealWaitingFlag={SEM_PMEALWAITINGFLAG, -1, 0};
-struct sembuf SignalProtectMealWaitingFlag={SEM_PMEALWAITINGFLAG, 1, 0};
+struct sembuf WaitProtectSheepMealFlag={SEM_PSHEEPMEALFLAG, -1, 0};
+struct sembuf SignalProtectSheepMealFlag={SEM_PSHEEPMEALFLAG, 1, 0};
+struct sembuf WaitProtectCowMealFlag={SEM_PCOWMEALFLAG, -1, 0};
+struct sembuf SignalProtectCowMealFlag={SEM_PCOWMEALFLAG, 1, 0};
 struct sembuf WaitProtectSheepInGroup={SEM_PSHEEPINGROUP, -1, 0};
 struct sembuf SignalProtectSheepInGroup={SEM_PSHEEPINGROUP, 1, 0};
 struct sembuf WaitProtectCowsInGroup={SEM_PCOWSINGROUP, -1, 0};
@@ -156,15 +156,12 @@ void terminateSimulation();
 void releaseSemandMem();
 void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something); 
 void semctlChecked(int semaphoreID, int semNum, int flag, union semun seminfo); 
-	
 
 
 void smaug()
 {
 	int k;
-	int temp;
 	int localpid;
-	double elapsedTime;
 
 	/* local counters used only for smaug routine */
 	int sheepEatenTotal = 0;
@@ -180,14 +177,14 @@ void smaug()
 	semopChecked(semID, &WaitDragonSleeping, 1);
 	printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
 	while (TRUE) {		
-		semopChecked(semID, &WaitProtectMealWaitingFlag, 1);
-		semopChecked(semID, &WaitProtectSheepWaitingFlag, 1);
-		while( *mealWaitingFlagp >= 1 && *sheepWaitingFlagp >= 1) {
-			*sheepWaitingFlagp = *sheepWaitingFlagp - 1;
-			*mealWaitingFlagp = *mealWaitingFlagp - 1;
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   signal cow and sheep meal flag %d\n", *mealWaitingFlagp);
-			semopChecked(semID, &SignalProtectSheepWaitingFlag, 1);
-			semopChecked(semID, &SignalProtectMealWaitingFlag, 1);
+		semopChecked(semID, &WaitProtectCowMealFlag, 1);
+		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+		while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1) {
+			*sheepMealFlagp = *sheepMealFlagp - 1;
+			*cowMealFlagP = *cowMealFlagP - 1;
+			printf("SMAUGSMAUGSMAUGSMAUGSMAU   signal cow and sheep meal flag %d\n", *cowMealFlagP);
+			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+			semopChecked(semID, &SignalProtectCowMealFlag, 1);
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is eating a meal\n");
 			for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
 				semopChecked(semID, &SignalSheepWaiting, 1);
@@ -223,16 +220,16 @@ void smaug()
 			}
 
 			/* Smaug checks to see if another snack is waiting */
-			semopChecked(semID, &WaitProtectMealWaitingFlag, 1);
-			if( *mealWaitingFlagp > 0  ) {
+			semopChecked(semID, &WaitProtectCowMealFlag, 1);
+			if( *cowMealFlagP > 0  ) {
 				// Mutex check for sheeps is staggered to improve performance, parent else branch is reused for break case
-				semopChecked(semID, &WaitProtectSheepWaitingFlag, 1);
-				if(*sheepWaitingFlagp > 0) {
+				semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+				if(*sheepMealFlagp > 0) {
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localpid);
 					continue;
 				} else {
-					semopChecked(semID, &SignalProtectMealWaitingFlag, 1);
-					semopChecked(semID, &SignalProtectSheepWaitingFlag, 1);
+					semopChecked(semID, &SignalProtectCowMealFlag, 1);
+					semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
 					semopChecked(semID, &WaitDragonSleeping, 1);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
@@ -240,7 +237,7 @@ void smaug()
 				}
 			}
 			else {
-				semopChecked(semID, &SignalProtectMealWaitingFlag, 1);
+				semopChecked(semID, &SignalProtectCowMealFlag, 1);
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
 				semopChecked(semID, &WaitDragonSleeping, 1);
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
@@ -277,8 +274,8 @@ void initialize()
 	/* Init Mutex to one */
 	seminfo.val=1;
 	semctlChecked(semID, SEM_PTERMINATE, SETVAL, seminfo);
-	semctlChecked(semID, SEM_PMEALWAITINGFLAG, SETVAL, seminfo);
-	semctlChecked(semID, SEM_PSHEEPWAITINGFLAG, SETVAL, seminfo);
+	semctlChecked(semID, SEM_PCOWMEALFLAG, SETVAL, seminfo);
+	semctlChecked(semID, SEM_PSHEEPMEALFLAG, SETVAL, seminfo);
 
 	semctlChecked(semID, SEM_PSHEEPINGROUP, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PSHEEPEATEN, SETVAL, seminfo);
@@ -296,12 +293,12 @@ void initialize()
 	else {
 		printf("!!INIT!!INIT!!INIT!!  shm created for terminateFlag\n");
 	}
-	if ((mealWaitingFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
-		printf("!!INIT!!INIT!!INIT!!  shm not created for mealWaitingFlag\n");
+	if ((cowMealFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
+		printf("!!INIT!!INIT!!INIT!!  shm not created for cowMealFlag\n");
 		exit(1);
 	}
 	else {
-		printf("!!INIT!!INIT!!INIT!!  shm created for mealWaitingFlag\n");
+		printf("!!INIT!!INIT!!INIT!!  shm created for cowMealFlag\n");
 	}
 	if ((cowCounter = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
 		printf("!!INIT!!INIT!!INIT!!  shm not created for cowCounter\n");
@@ -317,12 +314,12 @@ void initialize()
 	else {
 		printf("!!INIT!!INIT!!INIT!!  shm created for cowsEatenCounter\n");
 	}
-	if ((sheepWaitingFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
-		printf("!!INIT!!INIT!!INIT!!  shm not created for sheepWaitingFlag\n");
+	if ((sheepMealFlag = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
+		printf("!!INIT!!INIT!!INIT!!  shm not created for sheepMealFlag\n");
 		exit(1);
 	}
 	else {
-		printf("!!INIT!!INIT!!INIT!!  shm created for sheepWaitingFlag\n");
+		printf("!!INIT!!INIT!!INIT!!  shm created for sheepMealFlag\n");
 	}
 	if ((sheepCounter = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
 		printf("!!INIT!!INIT!!INIT!!  shm not created for sheepCounter\n");
@@ -348,12 +345,12 @@ void initialize()
 	else {
 		printf("!!INIT!!INIT!!INIT!!  shm attached for terminateFlag\n");
 	}
-	if ((mealWaitingFlagp = shmat(mealWaitingFlag, NULL, 0)) == (int *) -1) {
-		printf("!!INIT!!INIT!!INIT!!  shm not attached for mealWaitingFlag\n");
+	if ((cowMealFlagP = shmat(cowMealFlag, NULL, 0)) == (int *) -1) {
+		printf("!!INIT!!INIT!!INIT!!  shm not attached for cowMealFlag\n");
 		exit(1);
 	}
 	else {
-		printf("!!INIT!!INIT!!INIT!!  shm attached for mealWaitingFlag\n");
+		printf("!!INIT!!INIT!!INIT!!  shm attached for cowMealFlag\n");
 	}
 	if ((cowCounterp = shmat(cowCounter, NULL, 0)) == (int *) -1) {
 		printf("!!INIT!!INIT!!INIT!!  shm not attached for cowCounter\n");
@@ -367,12 +364,12 @@ void initialize()
 	} else {
 		printf("!!INIT!!INIT!!INIT!!  shm attached for cowsEatenCounter\n");
 	}
-	if ((sheepWaitingFlagp = shmat(sheepWaitingFlag, NULL, 0)) == (int *) -1) {
-		printf("!!INIT!!INIT!!INIT!!  shm not attached for sheepWaitingFlag\n");
+	if ((sheepMealFlagp = shmat(sheepMealFlag, NULL, 0)) == (int *) -1) {
+		printf("!!INIT!!INIT!!INIT!!  shm not attached for sheepMealFlag\n");
 		exit(1);
 	}
 	else {
-		printf("!!INIT!!INIT!!INIT!!  shm attached for sheepWaitingFlag\n");
+		printf("!!INIT!!INIT!!INIT!!  shm attached for sheepMealFlag\n");
 	}
 	if ((sheepCounterp = shmat(sheepCounter, NULL, 0)) == (int *) -1) {
 		printf("!!INIT!!INIT!!INIT!!  shm not attached for sheepCounter\n");
@@ -394,7 +391,6 @@ void initialize()
 void sheep(int startTimeN)
 {
 	int localpid;
-	int retval;
 	int k;
 	localpid = getpid();
 
@@ -411,7 +407,7 @@ void sheep(int startTimeN)
 	printf("SSSSSSS %8d SSSSSSS   sheep grazes for %f ms\n", localpid, startTimeN/1000.0);
 
 
-	/* does this beast complete a group of BEASTS_IN_GROUP ? */
+	/* does this sheep complete a group of SHEEP_IN_GROUP? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectSheepInGroup, 1);
 	semopChecked(semID, &SignalSheepInGroup, 1);
@@ -424,17 +420,17 @@ void sheep(int startTimeN)
 			semopChecked(semID, &WaitSheepInGroup, 1);
 		}
 		printf("SSSSSSS %8d SSSSSSS   The last sheep is waiting\n", localpid);
-		semopChecked(semID, &WaitProtectSheepWaitingFlag, 1);
-		*sheepWaitingFlagp = *sheepWaitingFlagp + 1;
-		printf("SSSSSSS %8d SSSSSSS   signal sheep meal flag %d\n", localpid, *sheepWaitingFlagp);
-		semopChecked(semID, &SignalProtectSheepWaitingFlag, 1);
+		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+		*sheepMealFlagp = *sheepMealFlagp + 1;
+		printf("SSSSSSS %8d SSSSSSS   signal sheep meal flag %d\n", localpid, *sheepMealFlagp);
+		semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 
-		semopChecked(semID, &WaitProtectMealWaitingFlag, 1);
-		if( *mealWaitingFlagp >= 1 ) {
+		semopChecked(semID, &WaitProtectCowMealFlag, 1);
+		if( *cowMealFlagP >= 1 ) {
 			semopChecked(semID, &SignalDragonSleeping, 1);
 			printf("SSSSSSS %8d SSSSSSS   last sheep  wakes the dragon \n", localpid);
 		}
-		semopChecked(semID, &SignalProtectMealWaitingFlag, 1);
+		semopChecked(semID, &SignalProtectCowMealFlag, 1);
 	}
 	else
 	{
@@ -443,7 +439,7 @@ void sheep(int startTimeN)
 
 	semopChecked(semID, &WaitSheepWaiting, 1);
 
-	/* have all the beasts in group been eaten? */
+	/* have all the sheeps in group been eaten? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectSheepEaten, 1);
 	semopChecked(semID, &SignalSheepEaten, 1);
@@ -471,7 +467,6 @@ void sheep(int startTimeN)
 void cow(int startTimeN)
 {
 	int localpid;
-	int retval;
 	int k;
 	localpid = getpid();
 
@@ -487,8 +482,7 @@ void cow(int startTimeN)
 	}
 	printf("CCCCCCC %8d CCCCCCC   cow grazes for %f ms\n", localpid, startTimeN/1000.0);
 
-
-	/* does this beast complete a group of BEASTS_IN_GROUP ? */
+	/* does this cow complete a group of COWS_IN_GROUP? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectCowsInGroup, 1);
 	semopChecked(semID, &SignalCowsInGroup, 1);
@@ -501,17 +495,17 @@ void cow(int startTimeN)
 			semopChecked(semID, &WaitCowsInGroup, 1);
 		}
 		printf("CCCCCCC %8d CCCCCCC   The last cow is waiting\n", localpid);
-		semopChecked(semID, &WaitProtectMealWaitingFlag, 1);
-		*mealWaitingFlagp = *mealWaitingFlagp + 1;
-		printf("CCCCCCC %8d CCCCCCC   signal meal flag %d\n", localpid, *mealWaitingFlagp);
-		semopChecked(semID, &SignalProtectMealWaitingFlag, 1);
+		semopChecked(semID, &WaitProtectCowMealFlag, 1);
+		*cowMealFlagP = *cowMealFlagP + 1;
+		printf("CCCCCCC %8d CCCCCCC   signal meal flag %d\n", localpid, *cowMealFlagP);
+		semopChecked(semID, &SignalProtectCowMealFlag, 1);
 
-		semopChecked(semID, &WaitProtectSheepWaitingFlag, 1);
-		if( *sheepWaitingFlagp >= 1 ) {
+		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+		if( *sheepMealFlagp >= 1 ) {
 			semopChecked(semID, &SignalDragonSleeping, 1);
 			printf("CCCCCCC %8d CCCCCCC   last cow  wakes the dragon \n", localpid);
 		}	
-		semopChecked(semID, &SignalProtectSheepWaitingFlag, 1);
+		semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 	}
 	else
 	{
@@ -520,7 +514,7 @@ void cow(int startTimeN)
 
 	semopChecked(semID, &WaitCowsWaiting, 1);
 
-	/* have all the beasts in group been eaten? */
+	/* have all the cows in group been eaten? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectCowsEaten, 1);
 	semopChecked(semID, &SignalCowsEaten, 1);
@@ -553,7 +547,7 @@ void terminateSimulation() {
 	int status;
 
 	localpid = getpid();
-	printf("RELEASESEMAPHORES   Terminating Simulation from process %8d\n", localpgid);
+	printf("RELEASESEMAPHORES   Terminating Simulation from process %8d\n", localpid);
 	if(sheepProcessGID != (int)localpgid ){
 		if(killpg(sheepProcessGID, SIGKILL) == -1 && errno == EPERM) {
 			printf("XXTERMINATETERMINATE   SHEEPS NOT KILLED\n");
@@ -569,7 +563,7 @@ void terminateSimulation() {
 
 	//printf("smaugProcessID: %d  localpgid: %d\n", smaugProcessID, localpgid);
 
-	if(smaugProcessID != (int)localpgid ) {
+	if(smaugProcessID != (int)localpid ) {
 		kill(smaugProcessID, SIGKILL);
 		printf("XXTERMINATETERMINATE   killed smaug\n");
 	}
@@ -606,25 +600,26 @@ void releaseSemandMem()
 	}
 	if( shmctl(terminateFlag, IPC_RMID, NULL ))
 	{
-		printf("RELEASERELEASERELEAS   share memory delete failed %d\n",*terminateFlagp );
+		// this will dereferrence the null pointer which has just been freed above, remove it;
+		printf("RELEASERELEASERELEAS   share memory delete failed\n");
 	}
 	else{
 		printf("RELEASERELEASERELEAS   share memory deleted\n");
 	}
 	// SHEEP MEMORY
-	if( shmdt(sheepWaitingFlagp)==-1)
+	if( shmdt(sheepMealFlagp)==-1)
 	{
-		printf("RELEASERELEASERELEAS   sheepWaitingFlagp memory detach failed\n");
+		printf("RELEASERELEASERELEAS   sheepMealFlagp memory detach failed\n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   sheepWaitingFlagp memory detached\n");
+		printf("RELEASERELEASERELEAS   sheepMealFlagp memory detached\n");
 	}
-	if( shmctl(sheepWaitingFlag, IPC_RMID, NULL ))
+	if( shmctl(sheepMealFlag, IPC_RMID, NULL ))
 	{
-		printf("RELEASERELEASERELEAS   sheepWaitingFlag share memory delete failed \n");
+		printf("RELEASERELEASERELEAS   sheepMealFlag share memory delete failed \n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   sheepWaitingFlag share memory deleted\n");
+		printf("RELEASERELEASERELEAS   sheepMealFlag share memory deleted\n");
 	}
 	if( shmdt(sheepCounterp)==-1)
 	{
@@ -655,19 +650,19 @@ void releaseSemandMem()
 		printf("RELEASERELEASERELEAS   sheepEatenCounter memory deleted\n");
 	}
 	// COW MEMORY
-	if( shmdt(mealWaitingFlagp)==-1)
+	if( shmdt(cowMealFlagP)==-1)
 	{
-		printf("RELEASERELEASERELEAS   mealWaitingFlagp memory detach failed\n");
+		printf("RELEASERELEASERELEAS   cowMealFlagP memory detach failed\n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   mealWaitingFlagp memory detached\n");
+		printf("RELEASERELEASERELEAS   cowMealFlagP memory detached\n");
 	}
-	if( shmctl(mealWaitingFlag, IPC_RMID, NULL ))
+	if( shmctl(cowMealFlag, IPC_RMID, NULL ))
 	{
-		printf("RELEASERELEASERELEAS   mealWaitingFlag share memory delete failed \n");
+		printf("RELEASERELEASERELEAS   cowMealFlag share memory delete failed \n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   mealWaitingFlag share memory deleted\n");
+		printf("RELEASERELEASERELEAS   cowMealFlag share memory deleted\n");
 	}
 	if( shmdt(cowCounterp)==-1)
 	{
