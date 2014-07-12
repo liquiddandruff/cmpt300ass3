@@ -35,6 +35,7 @@
 #define SEM_PCOWMEALFLAG 23
 #define SEM_PSHEEPMEALFLAG 24
 
+#define SEM_PHUNTERCOUNT 27
 
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
@@ -104,12 +105,16 @@ struct sembuf SignalCowsInGroup={SEM_COWSINGROUP, 1, 0};
 /*Number in group mutexes*/
 struct sembuf WaitProtectSheepMealFlag={SEM_PSHEEPMEALFLAG, -1, 0};
 struct sembuf SignalProtectSheepMealFlag={SEM_PSHEEPMEALFLAG, 1, 0};
-struct sembuf WaitProtectCowMealFlag={SEM_PCOWMEALFLAG, -1, 0};
-struct sembuf SignalProtectCowMealFlag={SEM_PCOWMEALFLAG, 1, 0};
 struct sembuf WaitProtectSheepInGroup={SEM_PSHEEPINGROUP, -1, 0};
 struct sembuf SignalProtectSheepInGroup={SEM_PSHEEPINGROUP, 1, 0};
+
+struct sembuf WaitProtectCowMealFlag={SEM_PCOWMEALFLAG, -1, 0};
+struct sembuf SignalProtectCowMealFlag={SEM_PCOWMEALFLAG, 1, 0};
 struct sembuf WaitProtectCowsInGroup={SEM_PCOWSINGROUP, -1, 0};
 struct sembuf SignalProtectCowsInGroup={SEM_PCOWSINGROUP, 1, 0};
+
+struct sembuf WaitProtectHunterCount={SEM_PHUNTERCOUNT, -1, 0};
+struct sembuf SignalProtectHunterCount={SEM_PHUNTERCOUNT, 1, 0};
 
 /*Number waiting sempahores*/
 struct sembuf WaitSheepWaiting={SEM_SHEEPWAITING, -1, 0};
@@ -274,14 +279,16 @@ void initialize()
 	/* Init Mutex to one */
 	seminfo.val=1;
 	semctlChecked(semID, SEM_PTERMINATE, SETVAL, seminfo);
-	semctlChecked(semID, SEM_PCOWMEALFLAG, SETVAL, seminfo);
-	semctlChecked(semID, SEM_PSHEEPMEALFLAG, SETVAL, seminfo);
 
+	semctlChecked(semID, SEM_PSHEEPMEALFLAG, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PSHEEPINGROUP, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PSHEEPEATEN, SETVAL, seminfo);
 
+	semctlChecked(semID, SEM_PCOWMEALFLAG, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PCOWSINGROUP, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PCOWSEATEN, SETVAL, seminfo);
+
+	semctlChecked(semID, SEM_PHUNTERCOUNT, SETVAL, seminfo);
 	printf("!!INIT!!INIT!!INIT!!  mutexes initiialized\n");
 
 
@@ -335,7 +342,14 @@ void initialize()
 	else {
 		printf("!!INIT!!INIT!!INIT!!  shm created for sheepEatenCounter\n");
 	}
-
+	// hunter
+	if ((hunterCounter = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
+		printf("!!INIT!!INIT!!INIT!!  shm not created for hunterCounter\n");
+		exit(1);
+	}
+	else {
+		printf("!!INIT!!INIT!!INIT!!  shm created for hunterCounter\n");
+	}
 
 	/* Now we attach the segment to our data space.  */
 	if ((terminateFlagp = shmat(terminateFlag, NULL, 0)) == (int *) -1) {
@@ -384,6 +398,14 @@ void initialize()
 	} else {
 		printf("!!INIT!!INIT!!INIT!!  shm attached for sheepEatenCounter\n");
 	}
+	// hunter
+	if ((hunterCounterp = shmat(hunterCounter, NULL, 0)) == (int *) -1) {
+		printf("!!INIT!!INIT!!INIT!!  shm not attached for hunterCounter\n");
+		exit(1);
+	} else {
+		printf("!!INIT!!INIT!!INIT!!  shm attached for hunterCounter\n");
+	}
+
 	printf("!!INIT!!INIT!!INIT!!   initialize end\n");
 }
 
@@ -539,6 +561,24 @@ void cow(int startTimeN)
 }
 
 
+void hunter(int startTimeN)
+{
+    int localpid = getpid();
+    setpgid(localpid, hunterProcessGID);
+    
+    printf("HHHHHHH %d HHHHHHH  A hunter arrived outside the valley\n", localpid);
+	if( startTimeN > 0) {
+		if( usleep( startTimeN) == -1){
+			/* exit when usleep interrupted by kill signal */
+			if(errno==EINTR)exit(4);
+		}	
+	}
+	printf("HHHHHHH %8d HHHHHHH  A hunter has found the magical path in %f ms, and is now wandering\n", localpid, startTimeN/1000.0);
+	semopChecked(semID, &WaitProtectHunterCount, 1);
+	*hunterCounterp = *hunterCounterp + 1;
+	semopChecked(semID, &SignalProtectHunterCount, 1);
+}
+
 
 void terminateSimulation() {
 	pid_t localpgid;
@@ -559,6 +599,12 @@ void terminateSimulation() {
 			printf("XXTERMINATETERMINATE   COWS NOT KILLED\n");
 		}
 		printf("XXTERMINATETERMINATE   killed cows \n");
+	}
+	if(hunterProcessGID != (int)localpgid ){
+		if(killpg(hunterProcessGID, SIGKILL) == -1 && errno == EPERM) {
+			printf("XXTERMINATETERMINATE   HUNTERS NOT KILLED\n");
+		}
+		printf("XXTERMINATETERMINATE   killed hunters \n");
 	}
 
 	//printf("smaugProcessID: %d  localpgid: %d\n", smaugProcessID, localpgid);
