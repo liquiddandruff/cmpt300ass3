@@ -51,7 +51,8 @@
 #define INITIAL_TREASURE_IN_HOARD 500
 
 /* Simulation variables */
-#define SMAUG_NAP_LENGTH_MS 200
+#define SECONDS_TO_MICROSECONDS 1000000
+#define SMAUG_NAP_LENGTH_US 2*SECONDS_TO_MICROSECONDS
 #define JEWELS_FROM_HUNTER_WIN 10
 #define JEWELS_FROM_HUNTER_LOSE 5
 #define JEWELS_FROM_THIEF_WIN 8
@@ -215,11 +216,11 @@ void smaug(const int smaugWinProb)
 				semopChecked(semID, &SignalProtectThiefCount, 1);
 				// Wake thief from wander state for interaction
 				semopChecked(semID, &SignalThievesWaiting, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing a thief\n");
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief\n");
 				if( rand() % 100 <= smaugWinProb ) {
 					thievesDefeatedTotal++;
 					numJewels += JEWELS_FROM_THIEF_LOSE;
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief\n");
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief (%d thieves have been defeated)\n", thievesDefeatedTotal);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_LOSE, numJewels);
 					if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
@@ -238,8 +239,8 @@ void smaug(const int smaugWinProb)
 					break;
 				}
 				// Nap and breath
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %d ms\n", SMAUG_NAP_LENGTH_MS);
-				sleep(SMAUG_NAP_LENGTH_MS);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
+				usleep(SMAUG_NAP_LENGTH_US);
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 			} else {
 				semopChecked(semID, &SignalProtectThiefCount, 1);
@@ -254,7 +255,7 @@ void smaug(const int smaugWinProb)
 					if( rand() % 100 <= smaugWinProb ) {
 						huntersDefeatedTotal++;
 						numJewels += JEWELS_FROM_HUNTER_LOSE;
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter\n");
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter (%d hunters have been defeated)\n", huntersDefeatedTotal);
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
 						if(huntersDefeatedTotal >= MAX_DEFEATED_HUNTERS) {
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d hunters, so the simulation will terminate.\n", MAX_DEFEATED_HUNTERS);
@@ -273,8 +274,8 @@ void smaug(const int smaugWinProb)
 						break;
 					}
 					// Nap and breath
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %d ms\n", SMAUG_NAP_LENGTH_MS);
-					sleep(SMAUG_NAP_LENGTH_MS);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
+					usleep(SMAUG_NAP_LENGTH_US);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 				} else {
 					semopChecked(semID, &SignalProtectHunterCount, 1);
@@ -311,12 +312,12 @@ void smaug(const int smaugWinProb)
 			for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
 				semopChecked(semID, &SignalSheepDead, 1);
 				sheepEatenTotal++;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a sheep\n");
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a sheep (%d sheep has been eaten)\n", sheepEatenTotal);
 			}
 			for( k = 0; k < COWS_IN_GROUP; k++ ) {
 				semopChecked(semID, &SignalCowsDead, 1);
 				cowsEatenTotal++;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a cow\n");
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a cow (%d cows have been eaten)\n", cowsEatenTotal);
 			}
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a meal (%d sheep and %d cow process has been terminated)\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
 			if(sheepEatenTotal >= MAX_SHEEP_EATEN ) {
@@ -686,29 +687,53 @@ void cow(int startTimeN)
 	printf("CCCCCCC %8d CCCCCCC   cow  dies\n", localpid);
 }
 
-
-void hunter(int startTimeN)
+void thief(int startTimeN)
 {
     int localpid = getpid();
-    setpgid(localpid, hunterProcessGID);
+    setpgid(localpid, thiefProcessGID);
     
-    printf("HHHHHHH %d HHHHHHH  A hunter arrived outside the valley\n", localpid);
+    printf("TTTTTTT %8d TTTTTTT   A thief arrived outside the valley\n", localpid);
 	if( startTimeN > 0) {
 		if( usleep( startTimeN) == -1){
 			/* exit when usleep interrupted by kill signal */
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("HHHHHHH %8d HHHHHHH  hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+	printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+	semopChecked(semID, &WaitProtectThiefCount, 1);
+	*thiefCounterp = *thiefCounterp + 1;
+	semopChecked(semID, &SignalProtectThiefCount, 1);
+	printf("TTTTTTT %8d TTTTTTT   thief is under smaug's spell and is waiting to be interacted with\n", localpid);
+	printf("TTTTTTT %8d TTTTTTT   thief wakes smaug\n", localpid);
+	semopChecked(semID, &SignalDragonSleeping, 1);
+	semopChecked(semID, &WaitThievesWaiting, 1);
+	printf("TTTTTTT %8d TTTTTTT   thief enters smaug's cave\n", localpid);
+	printf("TTTTTTT %8d TTTTTTT   thief plays with smaug\n", localpid);
+
+}
+
+void hunter(int startTimeN)
+{
+    int localpid = getpid();
+    setpgid(localpid, hunterProcessGID);
+    
+    printf("HHHHHHH %8d HHHHHHH   A hunter arrived outside the valley\n", localpid);
+	if( startTimeN > 0) {
+		if( usleep( startTimeN) == -1){
+			/* exit when usleep interrupted by kill signal */
+			if(errno==EINTR)exit(4);
+		}	
+	}
+	printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
 	semopChecked(semID, &WaitProtectHunterCount, 1);
 	*hunterCounterp = *hunterCounterp + 1;
 	semopChecked(semID, &SignalProtectHunterCount, 1);
-	printf("HHHHHHH %8d HHHHHHH  hunter is under smaug's spell and is waiting to be interacted with (wakes dragon if needed)\n", localpid);
+	printf("HHHHHHH %8d HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with\n", localpid);
+	printf("HHHHHHH %8d HHHHHHH   hunter wakes smaug\n", localpid);
 	semopChecked(semID, &SignalDragonSleeping, 1);
-
 	semopChecked(semID, &WaitHuntersWaiting, 1);
-	printf("HHHHHHH %8d HHHHHHH  hunter enters smaug's cave\n", localpid);
-	printf("HHHHHHH %8d HHHHHHH  hunter fights smaug\n", localpid);
+	printf("HHHHHHH %8d HHHHHHH   hunter enters smaug's cave\n", localpid);
+	printf("HHHHHHH %8d HHHHHHH   hunter fights smaug\n", localpid);
 
 }
 
@@ -956,11 +981,12 @@ int getInputFor(char *prompt);
 int main() {
 	initialize();
 
-	const int maximumSheepInterval = getInputFor("maximumSheepInterval(us)");
-	const int maximumCowInterval = getInputFor("maximumCowInterval(us)");
-	const int maximumHunterInterval = getInputFor("maximumHunterInterval(us)");
-	const int maximumThiefInterval = getInputFor("maximumThiefInterval(us)");
-	const int winProb = getInputFor("winProb");
+	printf("1s (1 second) is 1000000us (1e6 microseconds)\n");
+	const int maximumSheepInterval = getInputFor("maximumSheepInterval (us)");
+	const int maximumCowInterval = getInputFor("maximumCowInterval (us)");
+	const int maximumHunterInterval = getInputFor("maximumHunterInterval (us)");
+	const int maximumThiefInterval = getInputFor("maximumThiefInterval (us)");
+	const int winProb = getInputFor("winProb (0 to 100)");
 
 	double sheepTimer = 0;
 	double cowTimer = 0;
@@ -1014,6 +1040,16 @@ int main() {
 			}
 		}
 
+		if(thiefTimer - simDuration <= 0) {
+			thiefTimer = simDuration + (rand() % maximumThiefInterval) / 1000.0;
+			printf("THIEF CREATED! next thief at: %f\n", thiefTimer);
+			int childPID = fork();
+			if(childPID == 0) {
+				thief(simDuration);
+				return 0;
+			}
+		}
+
 		if(hunterTimer - simDuration <= 0) {
 			hunterTimer = simDuration + (rand() % maximumHunterInterval) / 1000.0;
 			printf("HUNTER CREATED! next hunter at: %f\n", hunterTimer);
@@ -1022,11 +1058,6 @@ int main() {
 				hunter(simDuration);
 				return 0;
 			}
-		}
- 
-		if(thiefTimer - simDuration <= 0) {
-			thiefTimer = simDuration + (rand() % maximumThiefInterval) / 1000.0;
-		//	printf("THIEF CREATED! next hunter at: %f\n", thiefTimer);
 		}
 
 		//printf("tick: %d\n", c++);
