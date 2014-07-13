@@ -37,6 +37,8 @@
 
 #define SEM_PHUNTERCOUNT 26
 #define SEM_HUNTERSWAITING 27
+#define SEM_PTHIEFCOUNT 28
+#define SEM_THIEVESWAITING 29
 
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
@@ -46,7 +48,7 @@
 #define MAX_COWS_CREATED 80
 #define MIN_TREASURE_IN_HOARD 0
 #define MAX_TREASURE_IN_HOARD 1000
-#define INITIAL_TREASURE_IN_HOARD 30//500
+#define INITIAL_TREASURE_IN_HOARD 500
 
 /* Simulation variables */
 #define JEWELS_FROM_HUNTER_WIN 10
@@ -60,10 +62,8 @@
 
 /* CREATING YOUR SEMAPHORES */
 int semID; 
-int semID2;
 
-union semun
-{
+union semun {
 	int val;
 	struct semid_ds *buf;
 	ushort *array;
@@ -92,6 +92,8 @@ int cowsEatenCounter = 0;
 
 int *hunterCounterp = NULL;
 int hunterCounter = 0;
+int *thiefCounterp = NULL;
+int thiefCounter = 0;
 
 /* Group IDs for managing/removing processes */
 int parentProcessID = -1;
@@ -125,6 +127,8 @@ struct sembuf SignalProtectCowMealFlag={SEM_PCOWMEALFLAG, 1, 0};
 struct sembuf WaitProtectCowsInGroup={SEM_PCOWSINGROUP, -1, 0};
 struct sembuf SignalProtectCowsInGroup={SEM_PCOWSINGROUP, 1, 0};
 
+struct sembuf WaitProtectThiefCount={SEM_PTHIEFCOUNT, -1, 0};
+struct sembuf SignalProtectThiefCount={SEM_PTHIEFCOUNT, 1, 0};
 struct sembuf WaitProtectHunterCount={SEM_PHUNTERCOUNT, -1, 0};
 struct sembuf SignalProtectHunterCount={SEM_PHUNTERCOUNT, 1, 0};
 
@@ -197,6 +201,7 @@ void smaug(const int smaugWinProb)
 	semopChecked(semID, &WaitDragonSleeping, 1);
 	printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
 	while (TRUE) {		
+		semopChecked(semID, &WaitProtectThiefCount, 1);
 		semopChecked(semID, &WaitProtectHunterCount, 1);
 		while( *hunterCounterp >= 1 ) {
 			*hunterCounterp = *hunterCounterp - 1;
@@ -221,6 +226,7 @@ void smaug(const int smaugWinProb)
 			}
 		}
 		semopChecked(semID, &SignalProtectHunterCount, 1);
+		semopChecked(semID, &SignalProtectThiefCount, 1);
 
 		semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
@@ -332,6 +338,7 @@ void initialize()
 	semctlChecked(semID, SEM_PCOWSINGROUP, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PCOWSEATEN, SETVAL, seminfo);
 
+	semctlChecked(semID, SEM_PTHIEFCOUNT, SETVAL, seminfo);
 	semctlChecked(semID, SEM_PHUNTERCOUNT, SETVAL, seminfo);
 	printf("!!INIT!!INIT!!INIT!!  mutexes initiialized\n");
 
@@ -394,6 +401,13 @@ void initialize()
 	else {
 		printf("!!INIT!!INIT!!INIT!!  shm created for hunterCounter\n");
 	}
+	if ((thiefCounter = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0666)) < 0) {
+		printf("!!INIT!!INIT!!INIT!!  shm not created for thiefCounter\n");
+		exit(1);
+	}
+	else {
+		printf("!!INIT!!INIT!!INIT!!  shm created for thiefCounter\n");
+	}
 
 	/* Now we attach the segment to our data space.  */
 	if ((terminateFlagp = shmat(terminateFlag, NULL, 0)) == (int *) -1) {
@@ -448,6 +462,12 @@ void initialize()
 		exit(1);
 	} else {
 		printf("!!INIT!!INIT!!INIT!!  shm attached for hunterCounter\n");
+	}
+	if ((thiefCounterp = shmat(thiefCounter, NULL, 0)) == (int *) -1) {
+		printf("!!INIT!!INIT!!INIT!!  shm not attached for thiefCounter\n");
+		exit(1);
+	} else {
+		printf("!!INIT!!INIT!!INIT!!  shm attached for thiefCounter\n");
 	}
 
 	printf("!!INIT!!INIT!!INIT!!   initialize end\n");
@@ -790,7 +810,36 @@ void releaseSemandMem()
 	else{
 		printf("RELEASERELEASERELEAS   cowsEatenCounter memory deleted\n");
 	}
-
+	// HUNTER MEMORY
+	if( shmdt(hunterCounterp)==-1)
+	{
+		printf("RELEASERELEASERELEAS   hunterCounterp memory detach failed\n");
+	}
+	else{
+		printf("RELEASERELEASERELEAS   hunterCounterp memory detached\n");
+	}
+	if( shmctl(hunterCounter, IPC_RMID, NULL ))
+	{
+		printf("RELEASERELEASERELEAS   hunterCounter memory delete failed \n");
+	}
+	else{
+		printf("RELEASERELEASERELEAS   hunterCounter memory deleted\n");
+	}
+	// THIEF MEMORY
+	if( shmdt(thiefCounterp)==-1)
+	{
+		printf("RELEASERELEASERELEAS   thiefCounterp memory detach failed\n");
+	}
+	else{
+		printf("RELEASERELEASERELEAS   thiefCounterp memory detached\n");
+	}
+	if( shmctl(thiefCounter, IPC_RMID, NULL ))
+	{
+		printf("RELEASERELEASERELEAS   thiefCounter memory delete failed \n");
+	}
+	else{
+		printf("RELEASERELEASERELEAS   thiefCounter memory deleted\n");
+	}
 }
 
 void semctlChecked(int semaphoreID, int semNum, int flag, union semun seminfo) { 
@@ -883,7 +932,6 @@ int main() {
 	int c = 0;
 	while(*terminateFlagp == 0 && done == 0) {
 		double simDuration = timeChange(startTime);
-		//printf("simDuration: %f\n", simDuration);
 
 		if(sheepTimer - simDuration <= 0) {
 			sheepTimer = simDuration + (rand() % maximumSheepInterval) / 1000.0;
