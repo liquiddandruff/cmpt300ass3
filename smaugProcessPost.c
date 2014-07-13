@@ -811,7 +811,8 @@ void releaseSemandMem()
 
 
 	// wait for the semaphores 
-	usleep(2000);
+	usleep(4000);
+	// arg1 is -1 to wait for all child processes
 	while( (w = waitpid( -1, &status, WNOHANG)) > 1){
 		printf("                           REAPED process in terminate %d\n", w);
 	}
@@ -1035,9 +1036,9 @@ int main() {
 	smaugProcessID = childPID;
 		
 	gettimeofday(&startTime, NULL);
-	int done = 0;
-	int c = 0;
-	while(*terminateFlagp == 0 && done == 0) {
+	int zombieTick = 0;
+	while(*terminateFlagp == 0) {
+		zombieTick++;
 		double simDuration = timeChange(startTime);
 
 		if(sheepTimer - simDuration <= 0) {
@@ -1080,14 +1081,15 @@ int main() {
 			}
 		}
 
-		//printf("tick: %d\n", c++);
-
-		// simDuration: 1 second is 1000 simDurations; 10 seconds is 10000 simDurations.. etc
-		//if(simDuration >=  10000)
-		//	done = 1;
-
-		//sleep(1);
-		//usleep(10);
+		// Purge all zombies every 10 iteratinos
+		if(zombieTick % 10 == 0) {
+			zombieTick -= 10;
+			// arg1 is -1 to wait for all child processes
+			int w = 0; int status = 0;
+			while( (w = waitpid( -1, &status, WNOHANG)) > 1){
+				printf("                           REAPED zombie process %d from main loop\n", w);
+			}
+		}
 	}
 	
 	//	printf("testing values: %d\n", maximumsheepinterval);
