@@ -43,6 +43,8 @@
 #define SEM_THIEVESWAITING 30
 #define SEM_THIEFFINISH 31
 
+#define MAX_SEMAPHORES 32
+
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
 #define MAX_COWS_EATEN 12
@@ -205,77 +207,48 @@ void smaug(const int smaugWinProb)
 	int cowsEatenTotal = 0;
 	int thievesDefeatedTotal = 0;
 	int huntersDefeatedTotal = 0;
-
+	int sleepThisIteration = 1;
 	/* Initialize random number generator*/
 	/* Random numbers are used to determine the time between successive beasts */
 	smaugProcessID = getpid();
 	printf("SMAUGSMAUGSMAUGSMAUGSMAU   PID is %d \n", smaugProcessID );
 	localpid = smaugProcessID;
-	printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep\n" );
-	semopChecked(semID, &WaitDragonSleeping, 1);
-	printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
 	while (TRUE) {		
+		// Smaug goes to sleep if nothing happens and sleepThisIteration is 1
+		if(sleepThisIteration == 1) {
+			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep\n" );
+			semopChecked(semID, &WaitDragonSleeping, 1);
+			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
+			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sniffs his surroundings\n" );
+		} else {
+			sleepThisIteration = 1;
+		}
+
 		semopChecked(semID, &WaitProtectThiefCount, 1);
 		semopChecked(semID, &WaitProtectHunterCount, 1);
-		while( *hunterCounterp + *thiefCounterp > 0) {
-			semopChecked(semID, &SignalProtectHunterCount, 1);
-			if(*thiefCounterp > 0) {
-				*thiefCounterp = *thiefCounterp - 1;
-				semopChecked(semID, &SignalProtectThiefCount, 1);
-				// Wake thief from wander state for interaction
-				semopChecked(semID, &SignalThievesWaiting, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief\n");
-				if( rand() % 100 <= smaugWinProb ) {
-					thievesDefeatedTotal++;
-					numJewels += JEWELS_FROM_THIEF_LOSE;
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief (%d thieves have been defeated)\n", thievesDefeatedTotal);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_LOSE, numJewels);
-					if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
-						*terminateFlagp = 1;
-						break;
-					}
-				} else {
-					numJewels -= JEWELS_FROM_THIEF_WIN;
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief\n");
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_WIN, numJewels);
-				}
-				if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
-					char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
-					*terminateFlagp = 1;
-					break;
-				}
-				semopChecked(semID, &SignalThiefFinish, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief process has been terminated)\n");
-				// Nap and breath
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
-				usleep(SMAUG_NAP_LENGTH_US);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
-			} else {
-				semopChecked(semID, &SignalProtectThiefCount, 1);
-				semopChecked(semID, &WaitProtectHunterCount, 1);
-				if(*hunterCounterp > 0) {
-					*hunterCounterp = *hunterCounterp - 1;
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave\n");
-					semopChecked(semID, &SignalProtectHunterCount, 1);
-					// Wake hunter from wander state for interaction
-					semopChecked(semID, &SignalHuntersWaiting, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter\n");
+		if( *hunterCounterp + *thiefCounterp > 0) {
+			while( *hunterCounterp + *thiefCounterp > 0) {
+				semopChecked(semID, &SignalProtectHunterCount, 1);
+				if(*thiefCounterp > 0) {
+					*thiefCounterp = *thiefCounterp - 1;
+					semopChecked(semID, &SignalProtectThiefCount, 1);
+					// Wake thief from wander state for interaction
+					semopChecked(semID, &SignalThievesWaiting, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief\n");
 					if( rand() % 100 <= smaugWinProb ) {
-						huntersDefeatedTotal++;
-						numJewels += JEWELS_FROM_HUNTER_LOSE;
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter (%d hunters have been defeated)\n", huntersDefeatedTotal);
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
-						if(huntersDefeatedTotal >= MAX_DEFEATED_HUNTERS) {
-							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d hunters, so the simulation will terminate.\n", MAX_DEFEATED_HUNTERS);
+						thievesDefeatedTotal++;
+						numJewels += JEWELS_FROM_THIEF_LOSE;
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief (%d thieves have been defeated)\n", thievesDefeatedTotal);
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_LOSE, numJewels);
+						if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
 							*terminateFlagp = 1;
 							break;
 						}
 					} else {
-						numJewels -= JEWELS_FROM_HUNTER_WIN;
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter\n");
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_WIN, numJewels);
+						numJewels -= JEWELS_FROM_THIEF_WIN;
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief\n");
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_WIN, numJewels);
 					}
 					if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
 						char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
@@ -283,93 +256,161 @@ void smaug(const int smaugWinProb)
 						*terminateFlagp = 1;
 						break;
 					}
-					semopChecked(semID, &SignalHunterFinish, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter process has been terminated)\n");
+					semopChecked(semID, &SignalThiefFinish, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief process has been terminated)\n");
 					// Nap and breath
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
 					usleep(SMAUG_NAP_LENGTH_US);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 				} else {
-					semopChecked(semID, &SignalProtectHunterCount, 1);
+					semopChecked(semID, &SignalProtectThiefCount, 1);
+					semopChecked(semID, &WaitProtectHunterCount, 1);
+					if(*hunterCounterp > 0) {
+						*hunterCounterp = *hunterCounterp - 1;
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave\n");
+						semopChecked(semID, &SignalProtectHunterCount, 1);
+						// Wake hunter from wander state for interaction
+						semopChecked(semID, &SignalHuntersWaiting, 1);
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter\n");
+						if( rand() % 100 <= smaugWinProb ) {
+							huntersDefeatedTotal++;
+							numJewels += JEWELS_FROM_HUNTER_LOSE;
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter (%d hunters have been defeated)\n", huntersDefeatedTotal);
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
+							if(huntersDefeatedTotal >= MAX_DEFEATED_HUNTERS) {
+								printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d hunters, so the simulation will terminate.\n", MAX_DEFEATED_HUNTERS);
+								*terminateFlagp = 1;
+								break;
+							}
+						} else {
+							numJewels -= JEWELS_FROM_HUNTER_WIN;
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter\n");
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_WIN, numJewels);
+						}
+						if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
+							char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
+							*terminateFlagp = 1;
+							break;
+						}
+						semopChecked(semID, &SignalHunterFinish, 1);
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter process has been terminated)\n");
+						// Nap and breath
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
+						usleep(SMAUG_NAP_LENGTH_US);
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
+					} else {
+						semopChecked(semID, &SignalProtectHunterCount, 1);
+					}
 				}
+				// Apply protection for next iteration
+				semopChecked(semID, &WaitProtectThiefCount, 1);
+				semopChecked(semID, &WaitProtectHunterCount, 1);
 			}
-			// Apply protection for next iteration
-			semopChecked(semID, &WaitProtectThiefCount, 1);
-			semopChecked(semID, &WaitProtectHunterCount, 1);
-		}
-		// Release protection
-		semopChecked(semID, &SignalProtectHunterCount, 1);
-		semopChecked(semID, &SignalProtectThiefCount, 1);
+			// Release protection
+			semopChecked(semID, &SignalProtectHunterCount, 1);
+			semopChecked(semID, &SignalProtectThiefCount, 1);
+		} else {
+			// Release protection
+			semopChecked(semID, &SignalProtectHunterCount, 1);
+			semopChecked(semID, &SignalProtectThiefCount, 1);
 
-		semopChecked(semID, &WaitProtectCowMealFlag, 1);
-		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
-		while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1) {
-			*sheepMealFlagp = *sheepMealFlagp - 1;
-			*cowMealFlagP = *cowMealFlagP - 1;
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   signal cow and sheep meal flag %d\n", *cowMealFlagP);
-			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
-			semopChecked(semID, &SignalProtectCowMealFlag, 1);
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is eating a meal of %d sheep and %d cow\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
-			for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
-				semopChecked(semID, &SignalSheepWaiting, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   A sheep is ready to eat\n");
-			}
-			for( k = 0; k < COWS_IN_GROUP; k++ ) {
-				semopChecked(semID, &SignalCowsWaiting, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   A cow is ready to eat\n");
-			}
-
-			/*Smaug waits to eat*/
-			semopChecked(semID, &WaitDragonEating, 1);
-			for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
-				semopChecked(semID, &SignalSheepDead, 1);
-				sheepEatenTotal++;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a sheep (%d sheep has been eaten)\n", sheepEatenTotal);
-			}
-			for( k = 0; k < COWS_IN_GROUP; k++ ) {
-				semopChecked(semID, &SignalCowsDead, 1);
-				cowsEatenTotal++;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a cow (%d cows have been eaten)\n", cowsEatenTotal);
-			}
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a meal (%d sheep and %d cow process has been terminated)\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
-			if(sheepEatenTotal >= MAX_SHEEP_EATEN ) {
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of sheep\n");
-				*terminateFlagp= 1;
-				break; 
-			}
-			if(cowsEatenTotal >= MAX_COWS_EATEN ) {
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of cows\n");
-				*terminateFlagp= 1;
-				break; 
-			}
-
-			/* Smaug checks to see if another snack is waiting */
+			// Check animals
 			semopChecked(semID, &WaitProtectCowMealFlag, 1);
-			if( *cowMealFlagP > 0  ) {
-				// Mutex check for sheeps is staggered to improve performance, parent else branch is reused for break case
-				semopChecked(semID, &WaitProtectSheepMealFlag, 1);
-				if(*sheepMealFlagp > 0) {
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localpid);
-					continue;
-				} else {
+			semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+			// If there's a meal of x cows and y sheeps where x is COWS_IN_GROUP and y is SHEEP_IN_GROUP
+			while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1) {
+				*sheepMealFlagp = *sheepMealFlagp - 1;
+				*cowMealFlagP = *cowMealFlagP - 1;
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   signal cow and sheep meal flag %d\n", *cowMealFlagP);
+				semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+				semopChecked(semID, &SignalProtectCowMealFlag, 1);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is eating a meal of %d sheep and %d cow\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
+				for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
+					semopChecked(semID, &SignalSheepWaiting, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   A sheep is ready to eat\n");
+				}
+				for( k = 0; k < COWS_IN_GROUP; k++ ) {
+					semopChecked(semID, &SignalCowsWaiting, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   A cow is ready to eat\n");
+				}
+
+				/*Smaug waits to eat*/
+				semopChecked(semID, &WaitDragonEating, 1);
+				for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
+					semopChecked(semID, &SignalSheepDead, 1);
+					sheepEatenTotal++;
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a sheep (%d sheep has been eaten)\n", sheepEatenTotal);
+				}
+				for( k = 0; k < COWS_IN_GROUP; k++ ) {
+					semopChecked(semID, &SignalCowsDead, 1);
+					cowsEatenTotal++;
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a cow (%d cows have been eaten)\n", cowsEatenTotal);
+				}
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a meal (%d sheep and %d cow process has been terminated)\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
+
+				// Terminate if terminate conditions are met
+				if(sheepEatenTotal >= MAX_SHEEP_EATEN ) {
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of sheep\n");
+					*terminateFlagp= 1;
+					break; 
+				}
+				if(cowsEatenTotal >= MAX_COWS_EATEN ) {
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of cows\n");
+					*terminateFlagp= 1;
+					break; 
+				}
+
+
+				/* Smaug checks to see if another snack is waiting */
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
+				semopChecked(semID, &WaitProtectCowMealFlag, 1);
+				if( *cowMealFlagP > 0  ) {
+					// Mutex check for sheeps is staggered to improve performance, parent else branch is reused for break case
+					semopChecked(semID, &WaitProtectSheepMealFlag, 1);
+					if(*sheepMealFlagp > 0) {
+						semopChecked(semID, &WaitProtectThiefCount, 1);
+						semopChecked(semID, &WaitProtectHunterCount, 1);
+						// Check if there are any visitors
+						if( *thiefCounterp + *hunterCounterp > 0 ) {
+							semopChecked(semID, &SignalProtectThiefCount, 1);
+							semopChecked(semID, &SignalProtectHunterCount, 1);
+							semopChecked(semID, &SignalProtectCowMealFlag, 1);
+							semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+							// There are visitors, so don't sleep in the following main iteration and break out of this loop
+							sleepThisIteration = 0;	
+							break;	
+						} else {
+							semopChecked(semID, &SignalProtectThiefCount, 1);
+							semopChecked(semID, &SignalProtectHunterCount, 1);
+							// No  visitors, but a meal is waiting, so continue in this loop
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localpid);
+							continue;
+						}
+					} else {
+						semopChecked(semID, &SignalProtectCowMealFlag, 1);
+						semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+						// Break out of this loop and resume execution of main loop and sleep
+						break;
+					}
+				}
+				else {
 					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
 					semopChecked(semID, &WaitDragonSleeping, 1);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
 					break;
 				}
-			}
-			else {
+			} /*else {
+				// Resume execution at beginning of loop and sleep
+				semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 				semopChecked(semID, &SignalProtectCowMealFlag, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
-				semopChecked(semID, &WaitDragonSleeping, 1);
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
-				break;
-			}
+				continue;
+			}*/
+			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+			semopChecked(semID, &SignalProtectCowMealFlag, 1);
 		}
-		semopChecked(semID, &SignalProtectSheepMealFlag, 1);
-		semopChecked(semID, &SignalProtectCowMealFlag, 1);
+
 	}
 }
 
@@ -377,7 +418,7 @@ void smaug(const int smaugWinProb)
 void initialize()
 {
 	/* Init semaphores */
-	semID=semget(IPC_PRIVATE, 40, 0666 | IPC_CREAT);
+	semID=semget(IPC_PRIVATE, MAX_SEMAPHORES, 0666 | IPC_CREAT);
 
 
 	/* Init to zero, no elements are produced yet */
@@ -661,7 +702,7 @@ void cow(int startTimeN)
 		printf("CCCCCCC %8d CCCCCCC   The last cow is waiting\n", localpid);
 		semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		*cowMealFlagP = *cowMealFlagP + 1;
-		printf("CCCCCCC %8d CCCCCCC   signal meal flag %d\n", localpid, *cowMealFlagP);
+		printf("CCCCCCC %8d CCCCCCC   signal cow meal flag %d\n", localpid, *cowMealFlagP);
 		semopChecked(semID, &SignalProtectCowMealFlag, 1);
 
 		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
@@ -818,18 +859,18 @@ void releaseSemandMem()
 	}
 	printf("\n");
 	if(shmdt(terminateFlagp)==-1) {
-		printf("RELEASERELEASERELEAS   terminateFlag share memory detach failed\n");
+		printf("RELEASERELEASERELEAS   terminateFlagp shared memory detach failed\n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   terminateFlag share memory detached\n");
+		printf("RELEASERELEASERELEAS   terminateFlagp shared memory detached\n");
 	}
 	if( shmctl(terminateFlag, IPC_RMID, NULL ))
 	{
 		// this will dereferrence the null pointer which has just been freed above; remove it
-		printf("RELEASERELEASERELEAS   share memory delete failed\n");
+		printf("RELEASERELEASERELEAS   terminateFlag shared memory delete failed\n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   share memory deleted\n");
+		printf("RELEASERELEASERELEAS   terminateFlag shared memory deleted\n");
 	}
 	// SHEEP MEMORY
 	if( shmdt(sheepMealFlagp)==-1)
@@ -841,10 +882,10 @@ void releaseSemandMem()
 	}
 	if( shmctl(sheepMealFlag, IPC_RMID, NULL ))
 	{
-		printf("RELEASERELEASERELEAS   sheepMealFlag share memory delete failed \n");
+		printf("RELEASERELEASERELEAS   sheepMealFlag shared memory delete failed \n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   sheepMealFlag share memory deleted\n");
+		printf("RELEASERELEASERELEAS   sheepMealFlag shared memory deleted\n");
 	}
 	if( shmdt(sheepCounterp)==-1)
 	{
@@ -884,10 +925,10 @@ void releaseSemandMem()
 	}
 	if( shmctl(cowMealFlag, IPC_RMID, NULL ))
 	{
-		printf("RELEASERELEASERELEAS   cowMealFlag share memory delete failed \n");
+		printf("RELEASERELEASERELEAS   cowMealFlag shared memory delete failed \n");
 	}
 	else{
-		printf("RELEASERELEASERELEAS   cowMealFlag share memory deleted\n");
+		printf("RELEASERELEASERELEAS   cowMealFlag shared memory deleted\n");
 	}
 	if( shmdt(cowCounterp)==-1)
 	{
@@ -1007,7 +1048,7 @@ int main() {
 	const int maximumCowInterval = getInputFor("maximumCowInterval (us)");
 	const int maximumHunterInterval = getInputFor("maximumHunterInterval (us)");
 	const int maximumThiefInterval = getInputFor("maximumThiefInterval (us)");
-	const int winProb = getInputFor("winProb (0 to 100)");
+	const int winProb = getInputFor("smaugWinProb (0 to 100)");
 
 	double sheepTimer = 0;
 	double cowTimer = 0;
