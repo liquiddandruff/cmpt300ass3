@@ -51,6 +51,7 @@
 #define INITIAL_TREASURE_IN_HOARD 500
 
 /* Simulation variables */
+#define SMAUG_NAP_LENGTH_MS 200
 #define JEWELS_FROM_HUNTER_WIN 10
 #define JEWELS_FROM_HUNTER_LOSE 5
 #define JEWELS_FROM_THIEF_WIN 8
@@ -137,8 +138,11 @@ struct sembuf WaitSheepWaiting={SEM_SHEEPWAITING, -1, 0};
 struct sembuf SignalSheepWaiting={SEM_SHEEPWAITING, 1, 0};
 struct sembuf WaitCowsWaiting={SEM_COWSWAITING, -1, 0};
 struct sembuf SignalCowsWaiting={SEM_COWSWAITING, 1, 0};
+
 struct sembuf WaitHuntersWaiting={SEM_HUNTERSWAITING, -1, 0};
 struct sembuf SignalHuntersWaiting={SEM_HUNTERSWAITING, 1, 0};
+struct sembuf WaitThievesWaiting={SEM_THIEVESWAITING, -1, 0};
+struct sembuf SignalThievesWaiting={SEM_THIEVESWAITING, 1, 0};
 
 /*Number eaten or fought semaphores*/
 struct sembuf WaitSheepEaten={SEM_SHEEPEATEN, -1, 0};
@@ -190,6 +194,7 @@ void smaug(const int smaugWinProb)
 	int numJewels = INITIAL_TREASURE_IN_HOARD;
 	int sheepEatenTotal = 0;
 	int cowsEatenTotal = 0;
+	int thievesDefeatedTotal = 0;
 	int huntersDefeatedTotal = 0;
 
 	/* Initialize random number generator*/
@@ -203,28 +208,83 @@ void smaug(const int smaugWinProb)
 	while (TRUE) {		
 		semopChecked(semID, &WaitProtectThiefCount, 1);
 		semopChecked(semID, &WaitProtectHunterCount, 1);
-		while( *hunterCounterp >= 1 ) {
-			*hunterCounterp = *hunterCounterp - 1;
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave\n");
-			semopChecked(semID, &SignalHuntersWaiting, 1);
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter\n");
-			if( rand() % 100 <= smaugWinProb ) {
-				huntersDefeatedTotal++;
-				numJewels += JEWELS_FROM_HUNTER_LOSE;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter\n");
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
+		while( *hunterCounterp + *thiefCounterp > 0) {
+			semopChecked(semID, &SignalProtectHunterCount, 1);
+			if(*thiefCounterp > 0) {
+				*thiefCounterp = *thiefCounterp - 1;
+				semopChecked(semID, &SignalProtectThiefCount, 1);
+				// Wake thief from wander state for interaction
+				semopChecked(semID, &SignalThievesWaiting, 1);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing a thief\n");
+				if( rand() % 100 <= smaugWinProb ) {
+					thievesDefeatedTotal++;
+					numJewels += JEWELS_FROM_THIEF_LOSE;
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief\n");
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_LOSE, numJewels);
+					if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
+						*terminateFlagp = 1;
+						break;
+					}
+				} else {
+					numJewels -= JEWELS_FROM_THIEF_WIN;
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief\n");
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_WIN, numJewels);
+				}
+				if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
+					char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
+					*terminateFlagp = 1;
+					break;
+				}
+				// Nap and breath
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %d ms\n", SMAUG_NAP_LENGTH_MS);
+				sleep(SMAUG_NAP_LENGTH_MS);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 			} else {
-				numJewels -= JEWELS_FROM_HUNTER_WIN;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter\n");
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_WIN, numJewels);
+				semopChecked(semID, &SignalProtectThiefCount, 1);
+				semopChecked(semID, &WaitProtectHunterCount, 1);
+				if(*hunterCounterp > 0) {
+					*hunterCounterp = *hunterCounterp - 1;
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave\n");
+					semopChecked(semID, &SignalProtectHunterCount, 1);
+					// Wake hunter from wander state for interaction
+					semopChecked(semID, &SignalHuntersWaiting, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter\n");
+					if( rand() % 100 <= smaugWinProb ) {
+						huntersDefeatedTotal++;
+						numJewels += JEWELS_FROM_HUNTER_LOSE;
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a treasure hunter\n");
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
+						if(huntersDefeatedTotal >= MAX_DEFEATED_HUNTERS) {
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d hunters, so the simulation will terminate.\n", MAX_DEFEATED_HUNTERS);
+							*terminateFlagp = 1;
+							break;
+						}
+					} else {
+						numJewels -= JEWELS_FROM_HUNTER_WIN;
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter\n");
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_WIN, numJewels);
+					}
+					if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
+						char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
+						*terminateFlagp = 1;
+						break;
+					}
+					// Nap and breath
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %d ms\n", SMAUG_NAP_LENGTH_MS);
+					sleep(SMAUG_NAP_LENGTH_MS);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
+				} else {
+					semopChecked(semID, &SignalProtectHunterCount, 1);
+				}
 			}
-			if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
-				char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
-				*terminateFlagp = 1;
-				break;
-			}
+			// Apply protection for next iteration
+			semopChecked(semID, &WaitProtectThiefCount, 1);
+			semopChecked(semID, &WaitProtectHunterCount, 1);
 		}
+		// Release protection
 		semopChecked(semID, &SignalProtectHunterCount, 1);
 		semopChecked(semID, &SignalProtectThiefCount, 1);
 
@@ -320,6 +380,7 @@ void initialize()
 	semctlChecked(semID, SEM_COWSDEAD, SETVAL, seminfo);
 
 	semctlChecked(semID, SEM_HUNTERSWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_THIEVESWAITING, SETVAL, seminfo);
 
 	semctlChecked(semID, SEM_DRAGONFIGHTING, SETVAL, seminfo);
 	semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
@@ -718,7 +779,7 @@ void releaseSemandMem()
 	}
 	if( shmctl(terminateFlag, IPC_RMID, NULL ))
 	{
-		// this will dereferrence the null pointer which has just been freed above, remove it;
+		// this will dereferrence the null pointer which has just been freed above; remove it
 		printf("RELEASERELEASERELEAS   share memory delete failed\n");
 	}
 	else{
