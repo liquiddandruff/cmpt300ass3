@@ -37,8 +37,11 @@
 
 #define SEM_PHUNTERCOUNT 26
 #define SEM_HUNTERSWAITING 27
-#define SEM_PTHIEFCOUNT 28
-#define SEM_THIEVESWAITING 29
+#define SEM_HUNTERFINISH 28
+
+#define SEM_PTHIEFCOUNT 29
+#define SEM_THIEVESWAITING 30
+#define SEM_THIEFFINISH 31
 
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
@@ -142,8 +145,13 @@ struct sembuf SignalCowsWaiting={SEM_COWSWAITING, 1, 0};
 
 struct sembuf WaitHuntersWaiting={SEM_HUNTERSWAITING, -1, 0};
 struct sembuf SignalHuntersWaiting={SEM_HUNTERSWAITING, 1, 0};
+struct sembuf WaitHunterFinish={SEM_HUNTERFINISH, -1, 0};
+struct sembuf SignalHunterFinish={SEM_HUNTERFINISH, 1, 0};
+
 struct sembuf WaitThievesWaiting={SEM_THIEVESWAITING, -1, 0};
 struct sembuf SignalThievesWaiting={SEM_THIEVESWAITING, 1, 0};
+struct sembuf WaitThiefFinish={SEM_THIEFFINISH, -1, 0};
+struct sembuf SignalThiefFinish={SEM_THIEFFINISH, 1, 0};
 
 /*Number eaten or fought semaphores*/
 struct sembuf WaitSheepEaten={SEM_SHEEPEATEN, -1, 0};
@@ -238,6 +246,8 @@ void smaug(const int smaugWinProb)
 					*terminateFlagp = 1;
 					break;
 				}
+				semopChecked(semID, &SignalThiefFinish, 1);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief process has been terminated)\n");
 				// Nap and breath
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
 				usleep(SMAUG_NAP_LENGTH_US);
@@ -273,6 +283,8 @@ void smaug(const int smaugWinProb)
 						*terminateFlagp = 1;
 						break;
 					}
+					semopChecked(semID, &SignalHunterFinish, 1);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter process has been terminated)\n");
 					// Nap and breath
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
 					usleep(SMAUG_NAP_LENGTH_US);
@@ -381,7 +393,9 @@ void initialize()
 	semctlChecked(semID, SEM_COWSDEAD, SETVAL, seminfo);
 
 	semctlChecked(semID, SEM_HUNTERSWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_HUNTERFINISH, SETVAL, seminfo);
 	semctlChecked(semID, SEM_THIEVESWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_THIEFFINISH, SETVAL, seminfo);
 
 	semctlChecked(semID, SEM_DRAGONFIGHTING, SETVAL, seminfo);
 	semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
@@ -611,6 +625,7 @@ void sheep(int startTimeN)
 	semopChecked(semID, &WaitSheepDead, 1);
 
 	printf("SSSSSSS %8d SSSSSSS   sheep  dies\n", localpid);
+	kill(localpid, SIGKILL);
 }
 
 void cow(int startTimeN)
@@ -685,6 +700,7 @@ void cow(int startTimeN)
 	semopChecked(semID, &WaitCowsDead, 1);
 
 	printf("CCCCCCC %8d CCCCCCC   cow  dies\n", localpid);
+	kill(localpid, SIGKILL);
 }
 
 void thief(int startTimeN)
@@ -709,7 +725,9 @@ void thief(int startTimeN)
 	semopChecked(semID, &WaitThievesWaiting, 1);
 	printf("TTTTTTT %8d TTTTTTT   thief enters smaug's cave\n", localpid);
 	printf("TTTTTTT %8d TTTTTTT   thief plays with smaug\n", localpid);
-
+	semopChecked(semID, &WaitThiefFinish, 1);
+	printf("TTTTTTT %8d TTTTTTT   thief leaves cave and goes home\n", localpid);
+	kill(localpid, SIGKILL);
 }
 
 void hunter(int startTimeN)
@@ -734,7 +752,9 @@ void hunter(int startTimeN)
 	semopChecked(semID, &WaitHuntersWaiting, 1);
 	printf("HHHHHHH %8d HHHHHHH   hunter enters smaug's cave\n", localpid);
 	printf("HHHHHHH %8d HHHHHHH   hunter fights smaug\n", localpid);
-
+	semopChecked(semID, &WaitHunterFinish, 1);
+	printf("TTTTTTT %8d TTTTTTT   hunter leaves cave and goes home\n", localpid);
+	kill(localpid, SIGKILL);
 }
 
 
