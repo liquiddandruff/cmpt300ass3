@@ -1,3 +1,5 @@
-smaugProcess: smaugProcess.c
+process: smaugProcess.c
 	gcc -o smaugProcess smaugProcess.c -I.
-	gcc -o smaugThread smaugThread.c -I.
+
+thread: smaugThread.c
+	gcc -o smaugThread smaugThread.c -lpthread -I.

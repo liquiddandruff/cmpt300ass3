@@ -188,8 +188,6 @@ struct sembuf SignalProtectTerminate={SEM_PTERMINATE, 1, 0};
 
 double timeChange( struct timeval starttime );
 void initialize();
-void smaug();
-void cow(int startTimeN);
 void terminateSimulation();
 void releaseSemandMem();
 void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something); 
@@ -599,7 +597,7 @@ void initialize()
 }
 
 
-void sheep(int startTimeN)
+void sheep(float startTimeN)
 {
 	int localpid;
 	int k;
@@ -615,7 +613,7 @@ void sheep(int startTimeN)
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("SSSSSSS %8d SSSSSSS   sheep grazes for %f ms\n", localpid, startTimeN/1000.0);
+	printf("SSSSSSS %8d SSSSSSS   sheep grazes for %f ms\n", localpid, startTimeN);
 
 
 	/* does this sheep complete a group of SHEEP_IN_GROUP? */
@@ -688,7 +686,7 @@ void sheep(int startTimeN)
 	kill(localpid, SIGKILL);
 }
 
-void cow(int startTimeN)
+void cow(float startTimeN)
 {
 	int localpid;
 	int k;
@@ -704,7 +702,7 @@ void cow(int startTimeN)
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("CCCCCCC %8d CCCCCCC   cow grazes for %f ms\n", localpid, startTimeN/1000.0);
+	printf("CCCCCCC %8d CCCCCCC   cow grazes for %f ms\n", localpid, startTimeN);
 
 	/* does this cow complete a group of COWS_IN_GROUP? */
 	/* if so wake up the dragon */
@@ -775,7 +773,7 @@ void cow(int startTimeN)
 	kill(localpid, SIGKILL);
 }
 
-void thief(int startTimeN)
+void thief(float startTimeN)
 {
     int localpid = getpid();
     setpgid(localpid, thiefProcessGID);
@@ -796,7 +794,7 @@ void thief(int startTimeN)
 		kill(localpid, SIGKILL);
 		return;
 	} else {
-		printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+		printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN);
 		semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 
@@ -814,7 +812,7 @@ void thief(int startTimeN)
 	kill(localpid, SIGKILL);
 }
 
-void hunter(int startTimeN)
+void hunter(float startTimeN)
 {
     int localpid = getpid();
     setpgid(localpid, hunterProcessGID);
@@ -835,7 +833,7 @@ void hunter(int startTimeN)
 		kill(localpid, SIGKILL);
 		return;
 	} else {
-		printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+		printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN);
 		semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 
@@ -1142,7 +1140,7 @@ int main() {
 			printf("SHEEP CREATED! next sheep at: %f\n", sheepTimer);
 			int childPID = fork();
 			if(childPID == 0) {
-				sheep(simDuration);
+				sheep((rand() % maximumSheepInterval) / 1000.0);
 				return 0;
 			}
 		}
@@ -1152,7 +1150,7 @@ int main() {
 			printf("COW CREATED! next cow at: %f\n", cowTimer);
 			int childPID = fork();
 			if(childPID == 0) {
-				cow(simDuration);
+				cow((rand() % maximumCowInterval) / 1000.0);
 				return 0;
 			}
 		}
@@ -1162,7 +1160,7 @@ int main() {
 			printf("THIEF CREATED! next thief at: %f\n", thiefTimer);
 			int childPID = fork();
 			if(childPID == 0) {
-				thief(simDuration);
+				thief((rand() % maximumThiefInterval) / 1000.0);
 				return 0;
 			}
 		}
@@ -1172,7 +1170,7 @@ int main() {
 			printf("HUNTER CREATED! next hunter at: %f\n", hunterTimer);
 			int childPID = fork();
 			if(childPID == 0) {
-				hunter(simDuration);
+				hunter((rand() % maximumHunterInterval) / 1000.0);
 				return 0;
 			}
 		}
