@@ -649,15 +649,18 @@ void sheep(int startTimeN)
 	}
 
 	semopChecked(semID, &WaitSheepWaiting, 1);
+
+	// Terminate check
 	semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("SSSSSSS %8d SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate\n", localpid);
+		semopChecked(semID, &SignalProtectTerminate, 1);
 		kill(localpid, SIGKILL);
 		return;
 	} else {
+		semopChecked(semID, &SignalProtectTerminate, 1);
 		printf("SSSSSSS %8d SSSSSSS   A sheep has been woken up to be eaten\n", localpid);
 	}
-	semopChecked(semID, &SignalProtectTerminate, 1);
 
 	/* have all the sheeps in group been eaten? */
 	/* if so wake up the dragon */
@@ -735,6 +738,18 @@ void cow(int startTimeN)
 
 	semopChecked(semID, &WaitCowsWaiting, 1);
 
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("CCCCCCC %8d CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate\n", localpid);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		kill(localpid, SIGKILL);
+		return;
+	} else {
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		printf("CCCCCCC %8d CCCCCCC   A cow has been woken up to be eaten\n", localpid);
+	}
+
 	/* have all the cows in group been eaten? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectCowsEaten, 1);
@@ -772,7 +787,19 @@ void thief(int startTimeN)
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("TTTTTTT %8d TTTTTTT   thief has found the magical path after we've been told to terminate\n", localpid);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		kill(localpid, SIGKILL);
+		return;
+	} else {
+		printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
+
 	semopChecked(semID, &WaitProtectThiefCount, 1);
 	*thiefCounterp = *thiefCounterp + 1;
 	semopChecked(semID, &SignalProtectThiefCount, 1);
@@ -799,7 +826,19 @@ void hunter(int startTimeN)
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path after we've been told to terminate\n", localpid);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		kill(localpid, SIGKILL);
+		return;
+	} else {
+		printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
+
 	semopChecked(semID, &WaitProtectHunterCount, 1);
 	*hunterCounterp = *hunterCounterp + 1;
 	semopChecked(semID, &SignalProtectHunterCount, 1);
