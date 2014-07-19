@@ -878,6 +878,12 @@ void terminateSimulation() {
 		}
 		printf("XXTERMINATETERMINATE   killed hunters \n");
 	}
+	if(thiefProcessGID != (int)localpgid ){
+		if(killpg(thiefProcessGID, SIGKILL) == -1 && errno == EPERM) {
+			printf("XXTERMINATETERMINATE   THIEVES NOT KILLED\n");
+		}
+		printf("XXTERMINATETERMINATE   killed thieves \n");
+	}
 
 	//printf("smaugProcessID: %d  localpgid: %d\n", smaugProcessID, localpgid);
 
