@@ -12,7 +12,6 @@
 #include <sys/shm.h>
 #include <sys/time.h>
 #include <sys/resource.h> 
-#include <pthread.h>
 
 
 /* Define semaphores to be placed in a single semaphore set */
@@ -189,17 +188,17 @@ struct sembuf SignalProtectTerminate={SEM_PTERMINATE, 1, 0};
 
 double timeChange( struct timeval starttime );
 void initialize();
-void* cow(void* startTimeN);
 void terminateSimulation();
 void releaseSemandMem();
 void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something); 
 void semctlChecked(int semaphoreID, int semNum, int flag, union semun seminfo); 
 
 
-void* smaug(void *smaugWinProb)
+void *smaug(void *smaugWinProbP)
 {
+	const int smaugWinProb = *(int*)smaugWinProbP;
 	int k;
-	int localpid;
+	unsigned int localThreadID = (unsigned int)pthread_self();
 
 	/* local counters used only for smaug routine */
 	int numJewels = INITIAL_TREASURE_IN_HOARD;
@@ -208,18 +207,19 @@ void* smaug(void *smaugWinProb)
 	int thievesDefeatedTotal = 0;
 	int huntersDefeatedTotal = 0;
 	int sleepThisIteration = 1;
+	int terminateNow = 0;
 	/* Initialize random number generator*/
 	/* Random numbers are used to determine the time between successive beasts */
-	smaugProcessID = getpid();
-	printf("SMAUGSMAUGSMAUGSMAUGSMAU   PID is %d \n", smaugProcessID );
-	localpid = smaugProcessID;
-	while (TRUE) {		
+
+	printf("SMAUGSMAUGSMAUGSMAUGSMAU   PTHREADID is %lu \n", localThreadID );
+
+	while (terminateNow == 0) {		
 		// Smaug goes to sleep if nothing happens and sleepThisIteration is 1
 		if(sleepThisIteration == 1) {
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep\n" );
 			semopChecked(semID, &WaitDragonSleeping, 1);
-			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sniffs his surroundings\n" );
+			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
 		} else {
 			sleepThisIteration = 1;
 		}
@@ -227,7 +227,7 @@ void* smaug(void *smaugWinProb)
 		semopChecked(semID, &WaitProtectThiefCount, 1);
 		semopChecked(semID, &WaitProtectHunterCount, 1);
 		if( *hunterCounterp + *thiefCounterp > 0) {
-			while( *hunterCounterp + *thiefCounterp > 0) {
+			while( *hunterCounterp + *thiefCounterp > 0 && terminateNow == 0) {
 				semopChecked(semID, &SignalProtectHunterCount, 1);
 				if(*thiefCounterp > 0) {
 					*thiefCounterp = *thiefCounterp - 1;
@@ -242,6 +242,7 @@ void* smaug(void *smaugWinProb)
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_LOSE, numJewels);
 						if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
+							terminateNow = 1;
 							*terminateFlagp = 1;
 							break;
 						}
@@ -253,6 +254,7 @@ void* smaug(void *smaugWinProb)
 					if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
 						char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
+						terminateNow = 1;
 						*terminateFlagp = 1;
 						break;
 					}
@@ -279,6 +281,7 @@ void* smaug(void *smaugWinProb)
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_LOSE, numJewels);
 							if(huntersDefeatedTotal >= MAX_DEFEATED_HUNTERS) {
 								printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d hunters, so the simulation will terminate.\n", MAX_DEFEATED_HUNTERS);
+								terminateNow = 1;
 								*terminateFlagp = 1;
 								break;
 							}
@@ -290,6 +293,7 @@ void* smaug(void *smaugWinProb)
 						if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
 							char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
+							terminateNow = 1;
 							*terminateFlagp = 1;
 							break;
 						}
@@ -319,10 +323,11 @@ void* smaug(void *smaugWinProb)
 			semopChecked(semID, &WaitProtectCowMealFlag, 1);
 			semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 			// If there's a meal of x cows and y sheeps where x is COWS_IN_GROUP and y is SHEEP_IN_GROUP
-			while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1) {
+			while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1 && terminateNow == 0) {
 				*sheepMealFlagp = *sheepMealFlagp - 1;
 				*cowMealFlagP = *cowMealFlagP - 1;
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   signal cow and sheep meal flag %d\n", *cowMealFlagP);
+				int mealsLeft = *cowMealFlagP < *sheepMealFlagp ? *cowMealFlagP : *sheepMealFlagp;
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   cow meals: %d sheep meals: %d mealsLeft: %d\n", *cowMealFlagP, *sheepMealFlagp, mealsLeft);
 				semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 				semopChecked(semID, &SignalProtectCowMealFlag, 1);
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is eating a meal of %d sheep and %d cow\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
@@ -352,11 +357,13 @@ void* smaug(void *smaugWinProb)
 				// Terminate if terminate conditions are met
 				if(sheepEatenTotal >= MAX_SHEEP_EATEN ) {
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of sheep\n");
+					terminateNow = 1;
 					*terminateFlagp= 1;
 					break; 
 				}
 				if(cowsEatenTotal >= MAX_COWS_EATEN ) {
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has eaten the allowed number of cows\n");
+					terminateNow = 1;
 					*terminateFlagp= 1;
 					break; 
 				}
@@ -384,7 +391,7 @@ void* smaug(void *smaugWinProb)
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
 							// No  visitors, but a meal is waiting, so continue in this loop
-							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localpid);
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localThreadID);
 							continue;
 						}
 					} else {
@@ -396,9 +403,9 @@ void* smaug(void *smaugWinProb)
 				}
 				else {
 					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localThreadID);
 					semopChecked(semID, &WaitDragonSleeping, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localThreadID);
 					break;
 				}
 			} /*else {
@@ -412,6 +419,7 @@ void* smaug(void *smaugWinProb)
 		}
 
 	}
+	return NULL;
 }
 
 
@@ -591,23 +599,21 @@ void initialize()
 }
 
 
-void sheep(int startTimeN)
+void *sheep(void *startTimeNp)
 {
-	int localpid;
+	float startTimeN = *(float *)startTimeNp;
+	unsigned long localThreadID = (unsigned long)pthread_self();
 	int k;
-	localpid = getpid();
-
-	setpgid(localpid, sheepProcessGID);
 
 	/* graze */
-	printf("SSSSSSS %8d SSSSSSS   A sheep is born\n", localpid);
+	printf("SSSSSSS %8lu SSSSSSS   A sheep is born\n", localThreadID);
 	if( startTimeN > 0) {
 		if( usleep( startTimeN) == -1){
 			/* exit when usleep interrupted by kill signal */
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("SSSSSSS %8d SSSSSSS   sheep grazes for %f ms\n", localpid, startTimeN/1000.0);
+	printf("SSSSSSS %8lu SSSSSSS   sheep grazes for %f ms\n", localThreadID, startTimeN);
 
 
 	/* does this sheep complete a group of SHEEP_IN_GROUP? */
@@ -615,23 +621,23 @@ void sheep(int startTimeN)
 	semopChecked(semID, &WaitProtectSheepInGroup, 1);
 	semopChecked(semID, &SignalSheepInGroup, 1);
 	*sheepCounterp = *sheepCounterp + 1;
-	printf("SSSSSSS %8d SSSSSSS   %d  sheeps have been enchanted \n", localpid, *sheepCounterp );
+	printf("SSSSSSS %8lu SSSSSSS   %d  sheeps have been enchanted \n", localThreadID, *sheepCounterp );
 	if( ( *sheepCounterp  >= SHEEP_IN_GROUP )) {
 		*sheepCounterp = *sheepCounterp - SHEEP_IN_GROUP;
 		semopChecked(semID, &SignalProtectSheepInGroup, 1);
 		for (k=0; k<SHEEP_IN_GROUP; k++){
 			semopChecked(semID, &WaitSheepInGroup, 1);
 		}
-		printf("SSSSSSS %8d SSSSSSS   The last sheep is waiting\n", localpid);
+		printf("SSSSSSS %8lu SSSSSSS   The last sheep is waiting\n", localThreadID);
 		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 		*sheepMealFlagp = *sheepMealFlagp + 1;
-		printf("SSSSSSS %8d SSSSSSS   signal sheep meal flag %d\n", localpid, *sheepMealFlagp);
+		printf("SSSSSSS %8lu SSSSSSS   signal sheep meal flag %d\n", localThreadID, *sheepMealFlagp);
 		semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 
 		semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		if( *cowMealFlagP >= 1 ) {
 			semopChecked(semID, &SignalDragonSleeping, 1);
-			printf("SSSSSSS %8d SSSSSSS   last sheep  wakes the dragon \n", localpid);
+			printf("SSSSSSS %8lu SSSSSSS   last sheep  wakes the dragon \n", localThreadID);
 		}
 		semopChecked(semID, &SignalProtectCowMealFlag, 1);
 	}
@@ -641,7 +647,18 @@ void sheep(int startTimeN)
 	}
 
 	semopChecked(semID, &WaitSheepWaiting, 1);
-	printf("SSSSSSS %8d SSSSSSS   A sheep has been woken up to be eaten\n", localpid);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("SSSSSSS %8lu SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		kill(localThreadID, SIGKILL);
+		return;
+	} else {
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		printf("SSSSSSS %8lu SSSSSSS   A sheep has been woken up to be eaten\n", localThreadID);
+	}
 
 	/* have all the sheeps in group been eaten? */
 	/* if so wake up the dragon */
@@ -653,63 +670,60 @@ void sheep(int startTimeN)
 		for (k=0; k<SHEEP_IN_GROUP; k++){
 			semopChecked(semID, &WaitSheepEaten, 1);
 		}
-		printf("SSSSSSS %8d SSSSSSS   The last sheep has been eaten\n", localpid);
+		printf("SSSSSSS %8lu SSSSSSS   The last sheep has been eaten\n", localThreadID);
 		semopChecked(semID, &SignalProtectSheepEaten, 1);
 		semopChecked(semID, &SignalDragonEating, 1);
 	}
 	else
 	{
 		semopChecked(semID, &SignalProtectSheepEaten, 1);
-		printf("SSSSSSS %8d SSSSSSS   A sheep is waiting to be eaten\n", localpid);
+		printf("SSSSSSS %8lu SSSSSSS   A sheep is waiting to be eaten\n", localThreadID);
 	}
 
 	semopChecked(semID, &WaitSheepDead, 1);
 
-	printf("SSSSSSS %8d SSSSSSS   sheep  dies\n", localpid);
-	kill(localpid, SIGKILL);
+	printf("SSSSSSS %8lu SSSSSSS   sheep  dies\n", localThreadID);
+	return NULL;
 }
 
-void *cow(void* startTimeNp)
+void *cow(void *startTimeNp)
 {
-	int startTimeN = (int *)startTimeNp;
-	int localpid;
+	float startTimeN = *(float *)startTimeNp;
+	unsigned long localThreadID = (unsigned long)pthread_self();
 	int k;
-	localpid = getpid();
-
-	setpgid(localpid, cowProcessGID);
 
 	/* graze */
-	printf("CCCCCCC %8d CCCCCCC   A cow is born\n", localpid);
+	printf("CCCCCCC %8lu CCCCCCC   A cow is born\n", localThreadID);
 	if( startTimeN > 0) {
 		if( usleep( startTimeN) == -1){
 			/* exit when usleep interrupted by kill signal */
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("CCCCCCC %8d CCCCCCC   cow grazes for %f ms\n", localpid, startTimeN/1000.0);
+	printf("CCCCCCC %8lu CCCCCCC   cow grazes for %f ms\n", localThreadID, startTimeN);
 
 	/* does this cow complete a group of COWS_IN_GROUP? */
 	/* if so wake up the dragon */
 	semopChecked(semID, &WaitProtectCowsInGroup, 1);
 	semopChecked(semID, &SignalCowsInGroup, 1);
 	*cowCounterp = *cowCounterp + 1;
-	printf("CCCCCCC %8d CCCCCCC   %d  cow has been enchanted \n", localpid, *cowCounterp );
+	printf("CCCCCCC %8lu CCCCCCC   %d  cow has been enchanted \n", localThreadID, *cowCounterp );
 	if( ( *cowCounterp  >= COWS_IN_GROUP )) {
 		*cowCounterp = *cowCounterp - COWS_IN_GROUP;
 		semopChecked(semID, &SignalProtectCowsInGroup, 1);
 		for (k=0; k<COWS_IN_GROUP; k++){
 			semopChecked(semID, &WaitCowsInGroup, 1);
 		}
-		printf("CCCCCCC %8d CCCCCCC   The last cow is waiting\n", localpid);
+		printf("CCCCCCC %8lu CCCCCCC   The last cow is waiting\n", localThreadID);
 		semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		*cowMealFlagP = *cowMealFlagP + 1;
-		printf("CCCCCCC %8d CCCCCCC   signal cow meal flag %d\n", localpid, *cowMealFlagP);
+		printf("CCCCCCC %8lu CCCCCCC   signal cow meal flag %d\n", localThreadID, *cowMealFlagP);
 		semopChecked(semID, &SignalProtectCowMealFlag, 1);
 
 		semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 		if( *sheepMealFlagp >= 1 ) {
 			semopChecked(semID, &SignalDragonSleeping, 1);
-			printf("CCCCCCC %8d CCCCCCC   last cow  wakes the dragon \n", localpid);
+			printf("CCCCCCC %8lu CCCCCCC   last cow  wakes the dragon \n", localThreadID);
 		}	
 		semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 	}
@@ -719,6 +733,18 @@ void *cow(void* startTimeNp)
 	}
 
 	semopChecked(semID, &WaitCowsWaiting, 1);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("CCCCCCC %8lu CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		kill(localThreadID, SIGKILL);
+		return;
+	} else {
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		printf("CCCCCCC %8lu CCCCCCC   A cow has been woken up to be eaten\n", localThreadID);
+	}
 
 	/* have all the cows in group been eaten? */
 	/* if so wake up the dragon */
@@ -730,74 +756,98 @@ void *cow(void* startTimeNp)
 		for (k=0; k<COWS_IN_GROUP; k++){
 			semopChecked(semID, &WaitCowsEaten, 1);
 		}
-		printf("CCCCCCC %8d CCCCCCC   The last cow has been eaten\n", localpid);
+		printf("CCCCCCC %8lu CCCCCCC   The last cow has been eaten\n", localThreadID);
 		semopChecked(semID, &SignalProtectCowsEaten, 1);
 		semopChecked(semID, &SignalDragonEating, 1);
 	}
 	else
 	{
 		semopChecked(semID, &SignalProtectCowsEaten, 1);
-		printf("CCCCCCC %8d CCCCCCC   A cow is waiting to be eaten\n", localpid);
+		printf("CCCCCCC %8lu CCCCCCC   A cow is waiting to be eaten\n", localThreadID);
 	}
 	semopChecked(semID, &WaitCowsDead, 1);
 
-	printf("CCCCCCC %8d CCCCCCC   cow  dies\n", localpid);
-	pthread_exit(NULL);
+	printf("CCCCCCC %8lu CCCCCCC   cow  dies\n", localThreadID);
+
 	return NULL;
 }
 
-void thief(int startTimeN)
+void *thief(void *startTimeNp)
 {
-    int localpid = getpid();
-    setpgid(localpid, thiefProcessGID);
+	float startTimeN = *(float *)startTimeNp;
+	unsigned long localThreadID = (unsigned long)pthread_self();
     
-    printf("TTTTTTT %8d TTTTTTT   A thief arrived outside the valley\n", localpid);
+    printf("TTTTTTT %8lu TTTTTTT   A thief arrived outside the valley\n", localThreadID);
 	if( startTimeN > 0) {
 		if( usleep( startTimeN) == -1){
 			/* exit when usleep interrupted by kill signal */
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("TTTTTTT %8d TTTTTTT   thief has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("TTTTTTT %8lu TTTTTTT   thief has found the magical path after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		return NULL;
+	} else {
+		printf("TTTTTTT %8lu TTTTTTT   thief has found the magical path in %f ms\n", localThreadID, startTimeN);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
+
 	semopChecked(semID, &WaitProtectThiefCount, 1);
 	*thiefCounterp = *thiefCounterp + 1;
 	semopChecked(semID, &SignalProtectThiefCount, 1);
-	printf("TTTTTTT %8d TTTTTTT   thief is under smaug's spell and is waiting to be interacted with\n", localpid);
-	printf("TTTTTTT %8d TTTTTTT   thief wakes smaug\n", localpid);
+	printf("TTTTTTT %8lu TTTTTTT   thief is under smaug's spell and is waiting to be interacted with\n", localThreadID);
+	printf("TTTTTTT %8lu TTTTTTT   thief wakes smaug\n", localThreadID);
 	semopChecked(semID, &SignalDragonSleeping, 1);
 	semopChecked(semID, &WaitThievesWaiting, 1);
-	printf("TTTTTTT %8d TTTTTTT   thief enters smaug's cave\n", localpid);
-	printf("TTTTTTT %8d TTTTTTT   thief plays with smaug\n", localpid);
+	printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave\n", localThreadID);
+	printf("TTTTTTT %8lu TTTTTTT   thief plays with smaug\n", localThreadID);
 	semopChecked(semID, &WaitThiefFinish, 1);
-	printf("TTTTTTT %8d TTTTTTT   thief leaves cave and goes home\n", localpid);
-	kill(localpid, SIGKILL);
+	printf("TTTTTTT %8lu TTTTTTT   thief leaves cave and goes home\n", localThreadID);
+
+	return NULL;
 }
 
-void hunter(int startTimeN)
+void *hunter(void *startTimeNp)
 {
-    int localpid = getpid();
-    setpgid(localpid, hunterProcessGID);
+	float startTimeN = *(float *)startTimeNp;
+	unsigned long localThreadID = (unsigned long)pthread_self();
     
-    printf("HHHHHHH %8d HHHHHHH   A hunter arrived outside the valley\n", localpid);
+    printf("HHHHHHH %8lu HHHHHHH   A hunter arrived outside the valley\n", localThreadID);
 	if( startTimeN > 0) {
 		if( usleep( startTimeN) == -1){
 			/* exit when usleep interrupted by kill signal */
 			if(errno==EINTR)exit(4);
 		}	
 	}
-	printf("HHHHHHH %8d HHHHHHH   hunter has found the magical path in %f ms\n", localpid, startTimeN/1000.0);
+
+	// Terminate check
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("HHHHHHH %8lu HHHHHHH   hunter has found the magical path after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		return NULL;
+	} else {
+		printf("HHHHHHH %8lu HHHHHHH   hunter has found the magical path in %f ms\n", localThreadID, startTimeN);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
+
 	semopChecked(semID, &WaitProtectHunterCount, 1);
 	*hunterCounterp = *hunterCounterp + 1;
 	semopChecked(semID, &SignalProtectHunterCount, 1);
-	printf("HHHHHHH %8d HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with\n", localpid);
-	printf("HHHHHHH %8d HHHHHHH   hunter wakes smaug\n", localpid);
+	printf("HHHHHHH %8lu HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with\n", localThreadID);
+	printf("HHHHHHH %8lu HHHHHHH   hunter wakes smaug\n", localThreadID);
 	semopChecked(semID, &SignalDragonSleeping, 1);
 	semopChecked(semID, &WaitHuntersWaiting, 1);
-	printf("HHHHHHH %8d HHHHHHH   hunter enters smaug's cave\n", localpid);
-	printf("HHHHHHH %8d HHHHHHH   hunter fights smaug\n", localpid);
+	printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave\n", localThreadID);
+	printf("HHHHHHH %8lu HHHHHHH   hunter fights smaug\n", localThreadID);
 	semopChecked(semID, &WaitHunterFinish, 1);
-	printf("TTTTTTT %8d TTTTTTT   hunter leaves cave and goes home\n", localpid);
-	kill(localpid, SIGKILL);
+	printf("TTTTTTT %8lu TTTTTTT   hunter leaves cave and goes home\n", localThreadID);
+
+	return NULL;
 }
 
 
@@ -1042,7 +1092,25 @@ double timeChange( const struct timeval startTime )
 
 int getInputFor(char *prompt);
 
+void *mt(void *varp) {
+	int *var = (int *)varp;
+	while(++(*var) < 10);
+	return NULL;
+}
 int main() {
+	pthread_t mythread;
+	int var = 0;
+	if(pthread_create(&mythread, NULL, mt, &var)) {
+		printf("error creating thread!\n");
+		return 1;
+	}
+	if(pthread_join(mythread, NULL)) {
+		printf("error joining thread!\n");
+		return 1;
+	}
+	printf("%d\n", var);
+
+
 	initialize();
 
 	printf("1s (1 second) is 1000000us (1e6 microseconds)\n");
@@ -1050,7 +1118,7 @@ int main() {
 	const int maximumCowInterval = getInputFor("maximumCowInterval (us)");
 	const int maximumHunterInterval = getInputFor("maximumHunterInterval (us)");
 	const int maximumThiefInterval = getInputFor("maximumThiefInterval (us)");
-	const int winProb = getInputFor("smaugWinProb (0 to 100)");
+	const int smaugWinProb = getInputFor("smaugWinProb (0 to 100)");
 
 	double sheepTimer = 0;
 	double cowTimer = 0;
@@ -1065,66 +1133,69 @@ int main() {
 	hunterProcessGID = parentProcessID - 3;
 	thiefProcessGID = parentProcessID - 4;
 
-	pid_t childPID = fork();
+	pthread_t smaugThread;
+	if(pthread_create(&smaugThread, NULL, smaug, &smaugWinProb)) {
+		printf("error creating thread!\n");
+		return 1;
+	}
+	pthread_detach(smaugThread);
+
+	/*pid_t childPID = fork();
 
 	if(childPID < 0) {
 		printf("FORK FAILED\n");
 		return 1;
 	} else if(childPID == 0) {
-		smaug(winProb);
+		smaug(smaugWinProb);
 		return 0;
 	} 
 
 	// smaugpid is now known to callee from the above fork; assign it now
-	smaugProcessID = childPID;
+	smaugProcessID = childPID; */
 		
 	gettimeofday(&startTime, NULL);
 	int zombieTick = 0;
 	while(*terminateFlagp == 0) {
 		zombieTick++;
 		double simDuration = timeChange(startTime);
-/*
+
 		if(sheepTimer - simDuration <= 0) {
 			sheepTimer = simDuration + (rand() % maximumSheepInterval) / 1000.0;
 			printf("SHEEP CREATED! next sheep at: %f\n", sheepTimer);
-			int childPID = fork();
-			if(childPID == 0) {
-				sheep(simDuration);
-				return 0;
-			}
-		} */
+			float sleepTime = (rand() % maximumSheepInterval) / 1000.0;
+			pthread_t sheepThread;
+			pthread_create(&sheepThread, NULL, sheep, &sleepTime);
+			//printf("sheepthread: %d\n", (int)sheepThread);
+			pthread_detach(sheepThread);
+		}
 
 		if(cowTimer - simDuration <= 0) {
 			cowTimer = simDuration + (rand() % maximumCowInterval) / 1000.0;
 			printf("COW CREATED! next cow at: %f\n", cowTimer);
-			pthread_t cowThread ;
-
-			if(pthread_create(&cowThread, NULL, cow, &simDuration)) {
-				printf("Error creating thread\n");
-				return 1;
-			}
+			float cowTime = (rand() % maximumCowInterval) / 1000.0;
+			pthread_t cowThread;
+			pthread_create(&cowThread, NULL, cow, &cowTime);
+			pthread_detach(cowThread);
 		}
-/*
+
 		if(thiefTimer - simDuration <= 0) {
 			thiefTimer = simDuration + (rand() % maximumThiefInterval) / 1000.0;
 			printf("THIEF CREATED! next thief at: %f\n", thiefTimer);
-			int childPID = fork();
-			if(childPID == 0) {
-				thief(simDuration);
-				return 0;
-			}
+			float thiefTime = (rand() % maximumThiefInterval) / 1000.0;
+			pthread_t thiefThread;
+			pthread_create(&thiefThread, NULL, thief, &thiefTime);
+			pthread_detach(thiefThread);
 		}
 
 		if(hunterTimer - simDuration <= 0) {
 			hunterTimer = simDuration + (rand() % maximumHunterInterval) / 1000.0;
 			printf("HUNTER CREATED! next hunter at: %f\n", hunterTimer);
-			int childPID = fork();
-			if(childPID == 0) {
-				hunter(simDuration);
-				return 0;
-			}
-		}
-*/
+			float hunterTime = (rand() % maximumHunterInterval) / 1000.0;
+			pthread_t hunterThread;
+			pthread_create(&hunterThread, NULL, hunter, &hunterTime);
+			pthread_detach(hunterThread);
+		} 
+/*
 		// Purge all zombies every 10 iteratinos
 		if(zombieTick % 10 == 0) {
 			zombieTick -= 10;
@@ -1133,7 +1204,7 @@ int main() {
 			while( (w = waitpid( -1, &status, WNOHANG)) > 1){
 				printf("                           REAPED zombie process %d from main loop\n", w);
 			}
-		}
+		} */
 	}
 	
 	//	printf("testing values: %d\n", maximumsheepinterval);
