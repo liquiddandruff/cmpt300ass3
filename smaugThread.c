@@ -243,6 +243,7 @@ void *smaug(void *smaugWinProbP)
 						if(thievesDefeatedTotal >= MAX_DEFEATED_THIEVES) {
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated %d thieves, so the simulation will terminate.\n", MAX_DEFEATED_THIEVES);
 							terminateNow = 1;
+							// Shared variable terminateFlagp is only ever SET to 1, not 0 or otherwise, so a mutex lock is unnecessary
 							*terminateFlagp = 1;
 							break;
 						}
@@ -408,12 +409,7 @@ void *smaug(void *smaugWinProbP)
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n");
 					break;
 				}
-			} /*else {
-				// Resume execution at beginning of loop and sleep
-				semopChecked(semID, &SignalProtectSheepMealFlag, 1);
-				semopChecked(semID, &SignalProtectCowMealFlag, 1);
-				continue;
-			}*/
+			} 
 			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 			semopChecked(semID, &SignalProtectCowMealFlag, 1);
 		}
@@ -601,7 +597,9 @@ void initialize()
 
 void *sheep(void *startTimeNp)
 {
+	// Cast void* to float*, then dereference float* to get to the actual float value pointed to by the pointer
 	float startTimeN = *(float *)startTimeNp;
+	// Cast thread id to unsigned long since sometimes the thread id can be very large
 	unsigned long localThreadID = (unsigned long)pthread_self();
 	int k;
 
@@ -1092,25 +1090,7 @@ double timeChange( const struct timeval startTime )
 
 int getInputFor(char *prompt);
 
-void *mt(void *varp) {
-	int *var = (int *)varp;
-	while(++(*var) < 10);
-	return NULL;
-}
 int main() {
-	pthread_t mythread;
-	int var = 0;
-	if(pthread_create(&mythread, NULL, mt, &var)) {
-		printf("error creating thread!\n");
-		return 1;
-	}
-	if(pthread_join(mythread, NULL)) {
-		printf("error joining thread!\n");
-		return 1;
-	}
-	printf("%d\n", var);
-
-
 	initialize();
 
 	printf("1s (1 second) is 1000000us (1e6 microseconds)\n");
@@ -1126,12 +1106,6 @@ int main() {
 	double thiefTimer = 0;
 
 	parentProcessID = getpid();
-	// we do not know smaugpid yet
-	smaugProcessID = -1; 
-	sheepProcessGID = parentProcessID - 1;
-	cowProcessGID = parentProcessID - 2;
-	hunterProcessGID = parentProcessID - 3;
-	thiefProcessGID = parentProcessID - 4;
 
 	pthread_t smaugThread;
 	if(pthread_create(&smaugThread, NULL, smaug, &smaugWinProb)) {
@@ -1139,24 +1113,9 @@ int main() {
 		return 1;
 	}
 	pthread_detach(smaugThread);
-
-	/*pid_t childPID = fork();
-
-	if(childPID < 0) {
-		printf("FORK FAILED\n");
-		return 1;
-	} else if(childPID == 0) {
-		smaug(smaugWinProb);
-		return 0;
-	} 
-
-	// smaugpid is now known to callee from the above fork; assign it now
-	smaugProcessID = childPID; */
 		
 	gettimeofday(&startTime, NULL);
-	int zombieTick = 0;
 	while(*terminateFlagp == 0) {
-		zombieTick++;
 		double simDuration = timeChange(startTime);
 
 		if(sheepTimer - simDuration <= 0) {
@@ -1209,20 +1168,8 @@ int main() {
 			}
 			pthread_detach(hunterThread);
 		} 
-/*
-		// Purge all zombies every 10 iteratinos
-		if(zombieTick % 10 == 0) {
-			zombieTick -= 10;
-			// arg1 is -1 to wait for all child processes
-			int w = 0; int status = 0;
-			while( (w = waitpid( -1, &status, WNOHANG)) > 1){
-				printf("                           REAPED zombie process %d from main loop\n", w);
-			}
-		} */
 	}
 	
-	//	printf("testing values: %d\n", maximumsheepinterval);
-
 	terminateSimulation();
 	return 0;
 }
