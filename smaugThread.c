@@ -198,7 +198,7 @@ void *smaug(void *smaugWinProbP)
 {
 	const int smaugWinProb = *(int*)smaugWinProbP;
 	int k;
-	unsigned int localThreadID = (unsigned int)pthread_self();
+	unsigned long localThreadID = (unsigned long)pthread_self();
 
 	/* local counters used only for smaug routine */
 	int numJewels = INITIAL_TREASURE_IN_HOARD;
@@ -391,7 +391,7 @@ void *smaug(void *smaugWinProbP)
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
 							// No  visitors, but a meal is waiting, so continue in this loop
-							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localThreadID);
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n");
 							continue;
 						}
 					} else {
@@ -403,9 +403,9 @@ void *smaug(void *smaugWinProbP)
 				}
 				else {
 					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localThreadID);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n");
 					semopChecked(semID, &WaitDragonSleeping, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localThreadID);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n");
 					break;
 				}
 			} /*else {
@@ -858,7 +858,7 @@ void terminateSimulation() {
 	int status;
 
 	localpid = getpid();
-	printf("RELEASESEMAPHORES   Terminating Simulation from process: %8d threadid: %8lu\n", localpid, pthread_self());
+	printf("RELEASESEMAPHORES   Terminating Simulation from process: %8d threadid: %8lu\n", localpid, (unsigned long)pthread_self());
 	if(sheepProcessGID != (int)localpgid ){
 		if(killpg(sheepProcessGID, SIGKILL) == -1 && errno == EPERM) {
 			printf("XXTERMINATETERMINATE   SHEEPS NOT KILLED\n");

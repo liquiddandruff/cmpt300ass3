@@ -390,7 +390,7 @@ void smaug(const int smaugWinProb)
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
 							// No  visitors, but a meal is waiting, so continue in this loop
-							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n", localpid);
+							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n");
 							continue;
 						}
 					} else {
@@ -402,9 +402,9 @@ void smaug(const int smaugWinProb)
 				}
 				else {
 					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n", localpid);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n");
 					semopChecked(semID, &WaitDragonSleeping, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n", localpid);
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n");
 					break;
 				}
 			} /*else {
