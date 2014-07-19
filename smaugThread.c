@@ -858,7 +858,7 @@ void terminateSimulation() {
 	int status;
 
 	localpid = getpid();
-	printf("RELEASESEMAPHORES   Terminating Simulation from process %8d\n", localpid);
+	printf("RELEASESEMAPHORES   Terminating Simulation from process: %8d threadid: %8lu\n", localpid, pthread_self());
 	if(sheepProcessGID != (int)localpgid ){
 		if(killpg(sheepProcessGID, SIGKILL) == -1 && errno == EPERM) {
 			printf("XXTERMINATETERMINATE   SHEEPS NOT KILLED\n");
@@ -1164,8 +1164,13 @@ int main() {
 			printf("SHEEP CREATED! next sheep at: %f\n", sheepTimer);
 			float sleepTime = (rand() % maximumSheepInterval) / 1000.0;
 			pthread_t sheepThread;
-			pthread_create(&sheepThread, NULL, sheep, &sleepTime);
-			//printf("sheepthread: %d\n", (int)sheepThread);
+			if(pthread_create(&sheepThread, NULL, sheep, &sleepTime)) {
+				// We have ran out of memory/hit max number of avail threads/got hit by cosmic rays
+				printf("Error creating sheep thread!\n"); 
+				break;
+			}
+			// To free up resources, we would need to join our threads upon completion
+			// However, we would not be returning anything important anyways, so just detach our threads
 			pthread_detach(sheepThread);
 		}
 
@@ -1174,7 +1179,10 @@ int main() {
 			printf("COW CREATED! next cow at: %f\n", cowTimer);
 			float cowTime = (rand() % maximumCowInterval) / 1000.0;
 			pthread_t cowThread;
-			pthread_create(&cowThread, NULL, cow, &cowTime);
+			if(pthread_create(&cowThread, NULL, cow, &cowTime)) {
+				printf("Error creating cow thread!\n"); 
+				break;
+			}
 			pthread_detach(cowThread);
 		}
 
@@ -1183,7 +1191,10 @@ int main() {
 			printf("THIEF CREATED! next thief at: %f\n", thiefTimer);
 			float thiefTime = (rand() % maximumThiefInterval) / 1000.0;
 			pthread_t thiefThread;
-			pthread_create(&thiefThread, NULL, thief, &thiefTime);
+			if(pthread_create(&thiefThread, NULL, thief, &thiefTime)) { 
+				printf("Error creating thief thread!\n"); 
+				break;
+			}
 			pthread_detach(thiefThread);
 		}
 
@@ -1192,7 +1203,10 @@ int main() {
 			printf("HUNTER CREATED! next hunter at: %f\n", hunterTimer);
 			float hunterTime = (rand() % maximumHunterInterval) / 1000.0;
 			pthread_t hunterThread;
-			pthread_create(&hunterThread, NULL, hunter, &hunterTime);
+			if(pthread_create(&hunterThread, NULL, hunter, &hunterTime)) {
+				printf("Error creating hunter thread!\n"); 
+				break;
+			}
 			pthread_detach(hunterThread);
 		} 
 /*
