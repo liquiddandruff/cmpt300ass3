@@ -104,7 +104,7 @@ int hunterCounter = 0;
 int *thiefCounterp = NULL;
 int thiefCounter = 0;
 
-/* Group IDs for managing/removing processes */
+/* Main processID for output purposes */
 int parentProcessID = -1;
 
 /* Define the semaphore operations for each semaphore */
