@@ -1,3 +1,5 @@
+all: process thread
+
 process: smaugProcess.c
 	gcc -o smaugProcess smaugProcess.c -I.
 
