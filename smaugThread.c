@@ -251,8 +251,8 @@ void *smaug(void *smaugWinProbP)
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief\n");
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_THIEF_WIN, numJewels);
 					}
-					if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
-						char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
+					if( numJewels <= MIN_TREASURE_IN_HOARD || numJewels >= MAX_TREASURE_IN_HOARD) {
+						char* condition = numJewels <= MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
 						terminateNow = 1;
 						*terminateFlagp = 1;
@@ -290,8 +290,8 @@ void *smaug(void *smaugWinProbP)
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter\n");
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (%d jewels). He now has %d jewels.\n", JEWELS_FROM_HUNTER_WIN, numJewels);
 						}
-						if( numJewels < MIN_TREASURE_IN_HOARD || numJewels > MAX_TREASURE_IN_HOARD) {
-							char* condition = numJewels < MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
+						if( numJewels <= MIN_TREASURE_IN_HOARD || numJewels >= MAX_TREASURE_IN_HOARD) {
+							char* condition = numJewels <= MIN_TREASURE_IN_HOARD ? "too less treasure" : "too much treasure";
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has %s, so the simulation will terminate.\n", condition);
 							terminateNow = 1;
 							*terminateFlagp = 1;
