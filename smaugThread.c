@@ -382,8 +382,6 @@ void *smaug(void *smaugWinProbP)
 						if( *thiefCounterp + *hunterCounterp > 0 ) {
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
-						//	semopChecked(semID, &SignalProtectCowMealFlag, 1);
-						//	semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 							// There are visitors, so don't sleep in the following main iteration and break out of this loop
 							sleepThisIteration = 0;	
 							break;	
@@ -396,8 +394,6 @@ void *smaug(void *smaugWinProbP)
 						}
 					} else {
 						// Cow and sheep semaphores released after while loop exits
-						//semopChecked(semID, &SignalProtectCowMealFlag, 1);
-						//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 						// Break out of this loop and resume execution of main loop and sleep
 						break;
 					}

@@ -20,30 +20,30 @@
 #define SEM_PCOWSINGROUP 1
 #define SEM_SHEEPINGROUP 2
 #define SEM_PSHEEPINGROUP 3
-#define SEM_SHEEPWAITING 7
-#define SEM_COWSWAITING 8
-#define SEM_PSHEEPEATEN 10
-#define SEM_PCOWSEATEN 11
-#define SEM_SHEEPEATEN 12
-#define SEM_COWSEATEN 13
-#define SEM_SHEEPDEAD 15
-#define SEM_COWSDEAD 16
-#define SEM_PTERMINATE 17
-#define SEM_DRAGONEATING 19
-#define SEM_DRAGONFIGHTING 20
-#define SEM_DRAGONSLEEPING 21
-#define SEM_PCOWMEALFLAG 23
-#define SEM_PSHEEPMEALFLAG 24
+#define SEM_SHEEPWAITING 4
+#define SEM_COWSWAITING 5
+#define SEM_PSHEEPEATEN 6
+#define SEM_PCOWSEATEN 7
+#define SEM_SHEEPEATEN 8
+#define SEM_COWSEATEN 9
+#define SEM_SHEEPDEAD 10
+#define SEM_COWSDEAD 11
+#define SEM_PTERMINATE 12
+#define SEM_DRAGONEATING 13
+#define SEM_DRAGONFIGHTING 14
+#define SEM_DRAGONSLEEPING 15
+#define SEM_PCOWMEALFLAG 16
+#define SEM_PSHEEPMEALFLAG 17
 
-#define SEM_PHUNTERCOUNT 26
-#define SEM_HUNTERSWAITING 27
-#define SEM_HUNTERFINISH 28
+#define SEM_PHUNTERCOUNT 18
+#define SEM_HUNTERSWAITING 19
+#define SEM_HUNTERFINISH 20
 
-#define SEM_PTHIEFCOUNT 29
-#define SEM_THIEVESWAITING 30
-#define SEM_THIEFFINISH 31
+#define SEM_PTHIEFCOUNT 21
+#define SEM_THIEVESWAITING 22
+#define SEM_THIEFFINISH 23
 
-#define MAX_SEMAPHORES 32
+#define MAX_SEMAPHORES 24
 
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
@@ -216,6 +216,9 @@ void smaug(const int smaugWinProb)
 		// Smaug goes to sleep if nothing happens and sleepThisIteration is 1
 		if(sleepThisIteration == 1) {
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep\n" );
+			// We must reset the semaphore to prevent smaug waking up when there's no need to
+			seminfo.val = 0;
+			semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
 			semopChecked(semID, &WaitDragonSleeping, 1);
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sniffs his surroundings\n" );
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
@@ -381,8 +384,6 @@ void smaug(const int smaugWinProb)
 						if( *thiefCounterp + *hunterCounterp > 0 ) {
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
-							semopChecked(semID, &SignalProtectCowMealFlag, 1);
-							semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 							// There are visitors, so don't sleep in the following main iteration and break out of this loop
 							sleepThisIteration = 0;	
 							break;	
@@ -394,25 +395,13 @@ void smaug(const int smaugWinProb)
 							continue;
 						}
 					} else {
-						semopChecked(semID, &SignalProtectCowMealFlag, 1);
-						semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+						// Cow and sheep semaphores released after while loop exits
 						// Break out of this loop and resume execution of main loop and sleep
 						break;
 					}
 				}
-				else {
-					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n");
-					semopChecked(semID, &WaitDragonSleeping, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n");
-					break;
-				}
-			} /*else {
-				// Resume execution at beginning of loop and sleep
-				semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 				semopChecked(semID, &SignalProtectCowMealFlag, 1);
-				continue;
-			}*/
+			}
 			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 			semopChecked(semID, &SignalProtectCowMealFlag, 1);
 		}
@@ -906,9 +895,13 @@ void releaseSemandMem()
 
 	localpid = getpid();
 
-	//should check return values for clean termination
-	semctl(semID, 0, IPC_RMID, seminfo);
-
+	// Check deletion 
+	int semaphoreDeletionRet = semctl(semID, 0, IPC_RMID, seminfo);
+	if(semaphoreDeletionRet != 0) {
+		printf("RELEASERELEASERELEAS   Catastrophic error encountered trying to release semaphore set!\n");
+	} else {
+		printf("RELEASERELEASERELEAS   Semaphore set successfully released\n");
+	}
 
 	// wait for the semaphores 
 	usleep(4000);
@@ -1103,17 +1096,19 @@ int main() {
 	initialize();
 
 	printf("1s (1 second) is 1000000us (1e6 microseconds)\n");
+	const int seed = getInputFor("the seed");
 	const int maximumSheepInterval = getInputFor("maximumSheepInterval (us)");
 	const int maximumCowInterval = getInputFor("maximumCowInterval (us)");
 	const int maximumHunterInterval = getInputFor("maximumHunterInterval (us)");
 	const int maximumThiefInterval = getInputFor("maximumThiefInterval (us)");
-	const int winProb = getInputFor("smaugWinProb (0 to 100)");
+	const int smaugWinProb = getInputFor("smaugWinProb (0 to 100)");
 
 	double sheepTimer = 0;
 	double cowTimer = 0;
 	double hunterTimer = 0;
 	double thiefTimer = 0;
 
+	srand(seed);
 	parentProcessID = getpid();
 	// we do not know smaugpid yet
 	smaugProcessID = -1; 
@@ -1128,7 +1123,7 @@ int main() {
 		printf("FORK FAILED\n");
 		return 1;
 	} else if(childPID == 0) {
-		smaug(winProb);
+		smaug(smaugWinProb);
 		return 0;
 	} 
 
