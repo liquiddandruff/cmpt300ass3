@@ -1062,6 +1062,13 @@ void semctlChecked(int semaphoreID, int semNum, int flag, union semun seminfo) {
 
 void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something) 
 {
+	// If we have been told to terminate, then just return since the semaphore 
+	// operation below would likely cause an error; releaseSemandMem() would have already been in
+	// execution elsewhere and the semaphore set would soon be freed. 
+	// Same reasoning on why we will not use a mutex here.
+	if(*terminateFlagp == 1)
+		return;
+
 	/* wrapper that checks if the semaphore operation request has terminated */
 	/* successfully. If it has not the entire simulation is terminated */
 	if (semop(semaphoreID, operation, something) == -1 ) {
