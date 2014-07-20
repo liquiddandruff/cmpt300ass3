@@ -20,30 +20,30 @@
 #define SEM_PCOWSINGROUP 1
 #define SEM_SHEEPINGROUP 2
 #define SEM_PSHEEPINGROUP 3
-#define SEM_SHEEPWAITING 7
-#define SEM_COWSWAITING 8
-#define SEM_PSHEEPEATEN 10
-#define SEM_PCOWSEATEN 11
-#define SEM_SHEEPEATEN 12
-#define SEM_COWSEATEN 13
-#define SEM_SHEEPDEAD 15
-#define SEM_COWSDEAD 16
-#define SEM_PTERMINATE 17
-#define SEM_DRAGONEATING 19
-#define SEM_DRAGONFIGHTING 20
-#define SEM_DRAGONSLEEPING 21
-#define SEM_PCOWMEALFLAG 23
-#define SEM_PSHEEPMEALFLAG 24
+#define SEM_SHEEPWAITING 4
+#define SEM_COWSWAITING 5
+#define SEM_PSHEEPEATEN 6
+#define SEM_PCOWSEATEN 7
+#define SEM_SHEEPEATEN 8
+#define SEM_COWSEATEN 9
+#define SEM_SHEEPDEAD 10
+#define SEM_COWSDEAD 11
+#define SEM_PTERMINATE 12
+#define SEM_DRAGONEATING 13
+#define SEM_DRAGONFIGHTING 14
+#define SEM_DRAGONSLEEPING 15
+#define SEM_PCOWMEALFLAG 16
+#define SEM_PSHEEPMEALFLAG 17
 
-#define SEM_PHUNTERCOUNT 26
-#define SEM_HUNTERSWAITING 27
-#define SEM_HUNTERFINISH 28
+#define SEM_PHUNTERCOUNT 18
+#define SEM_HUNTERSWAITING 19
+#define SEM_HUNTERFINISH 20
 
-#define SEM_PTHIEFCOUNT 29
-#define SEM_THIEVESWAITING 30
-#define SEM_THIEFFINISH 31
+#define SEM_PTHIEFCOUNT 21
+#define SEM_THIEVESWAITING 22
+#define SEM_THIEFFINISH 23
 
-#define MAX_SEMAPHORES 32
+#define MAX_SEMAPHORES 24
 
 /* System constants used to control simulation termination */
 #define MAX_SHEEP_EATEN 36 
@@ -57,6 +57,8 @@
 
 /* Simulation variables */
 #define SECONDS_TO_MICROSECONDS 1000000
+// This should be 10 minutes, but that will make the simulation too long. 
+// Smaug will nap for 2 seconds, but change to 10*60 = 600 seconds if 10 minutes is actually wanted
 #define SMAUG_NAP_LENGTH_US 2*SECONDS_TO_MICROSECONDS
 #define JEWELS_FROM_HUNTER_WIN 10
 #define JEWELS_FROM_HUNTER_LOSE 5
@@ -104,12 +106,6 @@ int thiefCounter = 0;
 
 /* Group IDs for managing/removing processes */
 int parentProcessID = -1;
-int smaugProcessID = -1;
-int sheepProcessGID = -1;
-int cowProcessGID = -1;
-int hunterProcessGID = -1;
-int thiefProcessGID = -1;
-
 
 /* Define the semaphore operations for each semaphore */
 /* Arguments of each definition are: */
@@ -260,7 +256,7 @@ void *smaug(void *smaugWinProbP)
 						break;
 					}
 					semopChecked(semID, &SignalThiefFinish, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief process has been terminated)\n");
+					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)\n");
 					// Nap and breath
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
 					usleep(SMAUG_NAP_LENGTH_US);
@@ -299,7 +295,7 @@ void *smaug(void *smaugWinProbP)
 							break;
 						}
 						semopChecked(semID, &SignalHunterFinish, 1);
-						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter process has been terminated)\n");
+						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)\n");
 						// Nap and breath
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for %f ms\n", SMAUG_NAP_LENGTH_US/1000.0);
 						usleep(SMAUG_NAP_LENGTH_US);
@@ -353,7 +349,7 @@ void *smaug(void *smaugWinProbP)
 					cowsEatenTotal++;
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug finished eating a cow (%d cows have been eaten)\n", cowsEatenTotal);
 				}
-				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a meal (%d sheep and %d cow process has been terminated)\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
+				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a meal (%d sheep and %d cow threads have been terminated)\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
 
 				// Terminate if terminate conditions are met
 				if(sheepEatenTotal >= MAX_SHEEP_EATEN ) {
@@ -383,8 +379,8 @@ void *smaug(void *smaugWinProbP)
 						if( *thiefCounterp + *hunterCounterp > 0 ) {
 							semopChecked(semID, &SignalProtectThiefCount, 1);
 							semopChecked(semID, &SignalProtectHunterCount, 1);
-							semopChecked(semID, &SignalProtectCowMealFlag, 1);
-							semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+						//	semopChecked(semID, &SignalProtectCowMealFlag, 1);
+						//	semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 							// There are visitors, so don't sleep in the following main iteration and break out of this loop
 							sleepThisIteration = 0;	
 							break;	
@@ -396,19 +392,14 @@ void *smaug(void *smaugWinProbP)
 							continue;
 						}
 					} else {
-						semopChecked(semID, &SignalProtectCowMealFlag, 1);
-						semopChecked(semID, &SignalProtectSheepMealFlag, 1);
+						// Cow and sheep semaphores released after while loop exits
+						//semopChecked(semID, &SignalProtectCowMealFlag, 1);
+						//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 						// Break out of this loop and resume execution of main loop and sleep
 						break;
 					}
 				}
-				else {
-					semopChecked(semID, &SignalProtectCowMealFlag, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sleeps again\n");
-					semopChecked(semID, &WaitDragonSleeping, 1);
-					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is awake again\n");
-					break;
-				}
+				semopChecked(semID, &SignalProtectCowMealFlag, 1);
 			} 
 			semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 			semopChecked(semID, &SignalProtectCowMealFlag, 1);
@@ -651,7 +642,6 @@ void *sheep(void *startTimeNp)
 	if( *terminateFlagp == 1 ) {
 		printf("SSSSSSS %8lu SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate\n", localThreadID);
 		semopChecked(semID, &SignalProtectTerminate, 1);
-		kill(localThreadID, SIGKILL);
 		return;
 	} else {
 		semopChecked(semID, &SignalProtectTerminate, 1);
@@ -737,7 +727,6 @@ void *cow(void *startTimeNp)
 	if( *terminateFlagp == 1 ) {
 		printf("CCCCCCC %8lu CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate\n", localThreadID);
 		semopChecked(semID, &SignalProtectTerminate, 1);
-		kill(localThreadID, SIGKILL);
 		return;
 	} else {
 		semopChecked(semID, &SignalProtectTerminate, 1);
@@ -801,8 +790,17 @@ void *thief(void *startTimeNp)
 	printf("TTTTTTT %8lu TTTTTTT   thief wakes smaug\n", localThreadID);
 	semopChecked(semID, &SignalDragonSleeping, 1);
 	semopChecked(semID, &WaitThievesWaiting, 1);
-	printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave\n", localThreadID);
-	printf("TTTTTTT %8lu TTTTTTT   thief plays with smaug\n", localThreadID);
+	// Another terminate check incase this thief ends the simulation and the semaphores are cleaned up
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		return NULL;
+	} else {
+		printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave\n", localThreadID);
+		printf("TTTTTTT %8lu TTTTTTT   thief plays with smaug\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
 	semopChecked(semID, &WaitThiefFinish, 1);
 	printf("TTTTTTT %8lu TTTTTTT   thief leaves cave and goes home\n", localThreadID);
 
@@ -840,8 +838,17 @@ void *hunter(void *startTimeNp)
 	printf("HHHHHHH %8lu HHHHHHH   hunter wakes smaug\n", localThreadID);
 	semopChecked(semID, &SignalDragonSleeping, 1);
 	semopChecked(semID, &WaitHuntersWaiting, 1);
-	printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave\n", localThreadID);
-	printf("HHHHHHH %8lu HHHHHHH   hunter fights smaug\n", localThreadID);
+	// Another terminate check incase this hunter ends the simulation and the semaphores are cleaned up
+	semopChecked(semID, &WaitProtectTerminate, 1);
+	if( *terminateFlagp == 1 ) {
+		printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave after we've been told to terminate\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+		return NULL;
+	} else {
+		printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave\n", localThreadID);
+		printf("HHHHHHH %8lu HHHHHHH   hunter fights smaug\n", localThreadID);
+		semopChecked(semID, &SignalProtectTerminate, 1);
+	}
 	semopChecked(semID, &WaitHunterFinish, 1);
 	printf("TTTTTTT %8lu TTTTTTT   hunter leaves cave and goes home\n", localThreadID);
 
@@ -850,64 +857,61 @@ void *hunter(void *startTimeNp)
 
 
 void terminateSimulation() {
-	pid_t localpgid;
 	pid_t localpid;
-	int w = 0;
-	int status;
 
 	localpid = getpid();
 	printf("RELEASESEMAPHORES   Terminating Simulation from process: %8d threadid: %8lu\n", localpid, (unsigned long)pthread_self());
-	if(sheepProcessGID != (int)localpgid ){
-		if(killpg(sheepProcessGID, SIGKILL) == -1 && errno == EPERM) {
-			printf("XXTERMINATETERMINATE   SHEEPS NOT KILLED\n");
-		}
-		printf("XXTERMINATETERMINATE   killed sheeps \n");
-	}
-	if(cowProcessGID != (int)localpgid ){
-		if(killpg(cowProcessGID, SIGKILL) == -1 && errno == EPERM) {
-			printf("XXTERMINATETERMINATE   COWS NOT KILLED\n");
-		}
-		printf("XXTERMINATETERMINATE   killed cows \n");
-	}
-	if(hunterProcessGID != (int)localpgid ){
-		if(killpg(hunterProcessGID, SIGKILL) == -1 && errno == EPERM) {
-			printf("XXTERMINATETERMINATE   HUNTERS NOT KILLED\n");
-		}
-		printf("XXTERMINATETERMINATE   killed hunters \n");
-	}
 
-	//printf("smaugProcessID: %d  localpgid: %d\n", smaugProcessID, localpgid);
+	// Child threads spawned by the main thread will terminate automatically when main thread terminates
+	// so not much cleanup to do here
+	printf("XXTERMINATETERMINATE   sheep threads terminating\n");
+	printf("XXTERMINATETERMINATE   cow threads terminating\n");
+	printf("XXTERMINATETERMINATE   hunter threads terminating\n");
+	printf("XXTERMINATETERMINATE   thief threads terminating\n");
+	printf("XXTERMINATETERMINATE   smaug thread terminating\n");
 
-	if(smaugProcessID != (int)localpid ) {
-		kill(smaugProcessID, SIGKILL);
-		printf("XXTERMINATETERMINATE   killed smaug\n");
-	}
-	while( (w = waitpid( -1, &status, WNOHANG)) > 1){
-			printf("                           REAPED process in terminate %d\n", w);
-	}
+	// No child processes are created in this threaded version, so no need to waitpid -1 them
+
 	releaseSemandMem();
+
 	printf("GOODBYE from terminate\n");
 }
 
 void releaseSemandMem() 
 {
-	pid_t localpid;
-	int w = 0;
-	int status;
+	// Semaphore set cannot be freed when there are sleeping threads waiting on the semaphores
+	// We set all semaphores to be nonzero and allow the sleeping threads to resume and terminate
+	// The maxiumum semaphore value is 32767, so set the following semaphore values less than that
+	seminfo.val = 30000;
+	semctlChecked(semID, SEM_SHEEPINGROUP, SETVAL, seminfo);
+	semctlChecked(semID, SEM_SHEEPWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_SHEEPEATEN, SETVAL, seminfo);
+	semctlChecked(semID, SEM_SHEEPDEAD, SETVAL, seminfo);
+	semctlChecked(semID, SEM_COWSINGROUP, SETVAL, seminfo);
+	semctlChecked(semID, SEM_COWSWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_COWSEATEN, SETVAL, seminfo);
+	semctlChecked(semID, SEM_COWSDEAD, SETVAL, seminfo);
+	semctlChecked(semID, SEM_HUNTERSWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_HUNTERFINISH, SETVAL, seminfo);
+	semctlChecked(semID, SEM_THIEVESWAITING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_THIEFFINISH, SETVAL, seminfo);
+	semctlChecked(semID, SEM_DRAGONFIGHTING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
+	semctlChecked(semID, SEM_DRAGONEATING, SETVAL, seminfo);
 
-	localpid = getpid();
+	// Wait for the semaphores, especially for the terminate semaphore to allow the threads to 
+	// terminate gracefully and not exit(3) from an invalid semaphore operation
+	printf("RELEASERELEASERELEAS   Sleeping for one second to allow threads to terminate gracefully\n");
+	sleep(1);
 
-	//should check return values for clean termination
-	semctl(semID, 0, IPC_RMID, seminfo);
-
-
-	// wait for the semaphores 
-	usleep(4000);
-	// arg1 is -1 to wait for all child processes
-	while( (w = waitpid( -1, &status, WNOHANG)) > 1){
-		printf("                           REAPED process in terminate %d\n", w);
+	int semaphoreDeletionRet = semctl(semID, 0, IPC_RMID, seminfo);
+	if(semaphoreDeletionRet != 0) {
+		printf("RELEASERELEASERELEAS   Catastrophic error encountered trying to release semaphore set!\n");
+	} else {
+		printf("RELEASERELEASERELEAS   Semaphore set successfully released\n");
 	}
-	printf("\n");
+
+
 	if(shmdt(terminateFlagp)==-1) {
 		printf("RELEASERELEASERELEAS   terminateFlagp shared memory detach failed\n");
 	}
@@ -1062,6 +1066,14 @@ void semopChecked(int semaphoreID, struct sembuf *operation, unsigned something)
 {
 	/* wrapper that checks if the semaphore operation request has terminated */
 	/* successfully. If it has not the entire simulation is terminated */
+	
+	// If we have been told to terminate, then just return since the semaphore 
+	// operation below would likely cause an error; releaseSemandMem() would have already been in
+	// execution elsewhere and the semaphore set would soon be freed. 
+	// Same reasoning on why we will not use a mutex here.
+	if(*terminateFlagp == 1)
+		return;
+
 	if (semop(semaphoreID, operation, something) == -1 ) {
 		if(errno != EIDRM) {
 			printf("semaphore operation failed: simulation terminating\n");
@@ -1092,8 +1104,9 @@ int getInputFor(char *prompt);
 
 int main() {
 	initialize();
-
+	printf("Main threadid: %lu\n", (unsigned long)pthread_self());
 	printf("1s (1 second) is 1000000us (1e6 microseconds)\n");
+	const int seed = getInputFor("the seed");
 	const int maximumSheepInterval = getInputFor("maximumSheepInterval (us)");
 	const int maximumCowInterval = getInputFor("maximumCowInterval (us)");
 	const int maximumHunterInterval = getInputFor("maximumHunterInterval (us)");
@@ -1105,11 +1118,13 @@ int main() {
 	double hunterTimer = 0;
 	double thiefTimer = 0;
 
+	srand(seed);
 	parentProcessID = getpid();
 
 	pthread_t smaugThread;
 	if(pthread_create(&smaugThread, NULL, smaug, &smaugWinProb)) {
 		printf("error creating thread!\n");
+		terminateSimulation();
 		return 1;
 	}
 	pthread_detach(smaugThread);
@@ -1124,9 +1139,11 @@ int main() {
 			float sleepTime = (rand() % maximumSheepInterval) / 1000.0;
 			pthread_t sheepThread;
 			if(pthread_create(&sheepThread, NULL, sheep, &sleepTime)) {
-				// We have ran out of memory/hit max number of avail threads/got hit by cosmic rays
+				// We have ran out of memory/hit max number of avail threads/got hit by cosmic rays, so
+				// abort and terminate.
 				printf("Error creating sheep thread!\n"); 
-				break;
+				terminateSimulation();
+				return 1;
 			}
 			// To free up resources, we would need to join our threads upon completion
 			// However, we would not be returning anything important anyways, so just detach our threads
@@ -1140,7 +1157,8 @@ int main() {
 			pthread_t cowThread;
 			if(pthread_create(&cowThread, NULL, cow, &cowTime)) {
 				printf("Error creating cow thread!\n"); 
-				break;
+				terminateSimulation();
+				return 1;
 			}
 			pthread_detach(cowThread);
 		}
@@ -1152,7 +1170,8 @@ int main() {
 			pthread_t thiefThread;
 			if(pthread_create(&thiefThread, NULL, thief, &thiefTime)) { 
 				printf("Error creating thief thread!\n"); 
-				break;
+				terminateSimulation();
+				return 1;
 			}
 			pthread_detach(thiefThread);
 		}
@@ -1164,7 +1183,8 @@ int main() {
 			pthread_t hunterThread;
 			if(pthread_create(&hunterThread, NULL, hunter, &hunterTime)) {
 				printf("Error creating hunter thread!\n"); 
-				break;
+				terminateSimulation();
+				return 1;
 			}
 			pthread_detach(hunterThread);
 		} 
