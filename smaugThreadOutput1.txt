@@ -1,0 +1,1942 @@
+Script started on Sun 20 Jul 2014 01:08:40 AM PDT
+]0;steven@ansible: ~/Dropbox/school/cmpt300/ass3steven@ansible:~/Dropbox/school/cmpt300/ass3$ ./smaugThread 
+!!INIT!!INIT!!INIT!!  semaphores initiialized
+!!INIT!!INIT!!INIT!!  mutexes initiialized
+!!INIT!!INIT!!INIT!!  shm created for terminateFlag
+!!INIT!!INIT!!INIT!!  shm created for cowMealFlag
+!!INIT!!INIT!!INIT!!  shm created for cowCounter
+!!INIT!!INIT!!INIT!!  shm created for cowsEatenCounter
+!!INIT!!INIT!!INIT!!  shm created for sheepMealFlag
+!!INIT!!INIT!!INIT!!  shm created for sheepCounter
+!!INIT!!INIT!!INIT!!  shm created for sheepEatenCounter
+!!INIT!!INIT!!INIT!!  shm created for hunterCounter
+!!INIT!!INIT!!INIT!!  shm created for thiefCounter
+!!INIT!!INIT!!INIT!!  shm attached for terminateFlag
+!!INIT!!INIT!!INIT!!  shm attached for cowMealFlag
+!!INIT!!INIT!!INIT!!  shm attached for cowCounter
+!!INIT!!INIT!!INIT!!  shm attached for cowsEatenCounter
+!!INIT!!INIT!!INIT!!  shm attached for sheepMealFlag
+!!INIT!!INIT!!INIT!!  shm attached for sheepCounter
+!!INIT!!INIT!!INIT!!  shm attached for sheepEatenCounter
+!!INIT!!INIT!!INIT!!  shm attached for hunterCounter
+!!INIT!!INIT!!INIT!!  shm attached for thiefCounter
+!!INIT!!INIT!!INIT!!   initialize end
+Main threadid: 18446744072805656384
+1s (1 second) is 1000000us (1e6 microseconds)
+Enter the value for the seed: 0
+Enter the value for maximumSheepInterval (us): 5000000
+Enter the value for maximumCowInterval (us): 5000000
+Enter the value for maximumHunterInterval (us): 5000000
+Enter the value for maximumThiefInterval (us): 5000000
+Enter the value for smaugWinProb (0 to 100): 0
+SHEEP CREATED! next sheep at: 4289.401000
+SMAUGSMAUGSMAUGSMAUGSMAU   PTHREADID is 18446744072797345536 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep
+SSSSSSS 18446744072788952832 SSSSSSS   A sheep is born
+COW CREATED! next cow at: 1692.795000
+THIEF CREATED! next thief at: 2747.811000
+HUNTER CREATED! next hunter at: 4885.404000
+TTTTTTT 18446744072772167424 TTTTTTT   A thief arrived outside the valley
+CCCCCCC 18446744072780560128 CCCCCCC   A cow is born
+HHHHHHH 18446744072763774720 HHHHHHH   A hunter arrived outside the valley
+SSSSSSS 18446744072788952832 SSSSSSS   sheep grazes for 1930.885986 ms
+SSSSSSS 18446744072788952832 SSSSSSS   1  sheeps have been enchanted 
+TTTTTTT 18446744072772167424 TTTTTTT   thief has found the magical path in 4238.334961 ms
+TTTTTTT 18446744072772167424 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072772167424 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sniffs his surroundings
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+TTTTTTT 18446744072772167424 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072772167424 TTTTTTT   thief plays with smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 492 jewels.
+CCCCCCC 18446744072780560128 CCCCCCC   cow grazes for 4636.915039 ms
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+CCCCCCC 18446744072780560128 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072780560128 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072780560128 CCCCCCC   signal cow meal flag 1
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072772167424 TTTTTTT   thief leaves cave and goes home
+HHHHHHH 18446744072763774720 HHHHHHH   hunter has found the magical path in 4760.492188 ms
+HHHHHHH 18446744072763774720 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072763774720 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 6334.216000
+CCCCCCC 18446744072772167424 CCCCCCC   A cow is born
+CCCCCCC 18446744072772167424 CCCCCCC   cow grazes for 202.362000 ms
+CCCCCCC 18446744072772167424 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072772167424 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072772167424 CCCCCCC   signal cow meal flag 2
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 482 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072763774720 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072763774720 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072763774720 TTTTTTT   hunter leaves cave and goes home
+THIEF CREATED! next thief at: 6116.501000
+TTTTTTT 18446744072763774720 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072763774720 TTTTTTT   thief has found the magical path in 2520.059082 ms
+TTTTTTT 18446744072763774720 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072763774720 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 474 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072763774720 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072763774720 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072763774720 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 6803.327000
+SSSSSSS 18446744072763774720 SSSSSSS   A sheep is born
+SSSSSSS 18446744072763774720 SSSSSSS   sheep grazes for 180.539993 ms
+SSSSSSS 18446744072763774720 SSSSSSS   2  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 5268.830000
+HHHHHHH 18446744072755382016 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072755382016 HHHHHHH   hunter has found the magical path in 4089.172119 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072755382016 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 8724.567000
+HHHHHHH 18446744072746989312 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072746989312 HHHHHHH   hunter has found the magical path in 5.211000 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072746989312 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 464 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072755382016 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072755382016 TTTTTTT   hunter leaves cave and goes home
+THIEF CREATED! next thief at: 10819.068000
+TTTTTTT 18446744072755382016 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072755382016 TTTTTTT   thief has found the magical path in 1956.428955 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072755382016 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 7799.998000
+CCCCCCC 18446744072738596608 CCCCCCC   A cow is born
+CCCCCCC 18446744072738596608 CCCCCCC   cow grazes for 1021.530029 ms
+CCCCCCC 18446744072738596608 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072738596608 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072738596608 CCCCCCC   signal cow meal flag 3
+SHEEP CREATED! next sheep at: 10526.189000
+SSSSSSS 18446744072730203904 SSSSSSS   A sheep is born
+SSSSSSS 18446744072730203904 SSSSSSS   sheep grazes for 3665.123047 ms
+SSSSSSS 18446744072730203904 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072730203904 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072730203904 SSSSSSS   signal sheep meal flag 1
+SSSSSSS 18446744072730203904 SSSSSSS   last sheep  wakes the dragon 
+COW CREATED! next cow at: 7974.066000
+CCCCCCC 18446744072721811200 CCCCCCC   A cow is born
+CCCCCCC 18446744072721811200 CCCCCCC   cow grazes for 3703.135010 ms
+CCCCCCC 18446744072721811200 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072721811200 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072721811200 CCCCCCC   signal cow meal flag 4
+CCCCCCC 18446744072721811200 CCCCCCC   last cow  wakes the dragon 
+COW CREATED! next cow at: 9487.995000
+CCCCCCC 18446744072713418496 CCCCCCC   A cow is born
+CCCCCCC 18446744072713418496 CCCCCCC   cow grazes for 1979.802002 ms
+CCCCCCC 18446744072713418496 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072713418496 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072713418496 CCCCCCC   signal cow meal flag 5
+CCCCCCC 18446744072713418496 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 456 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072755382016 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072755382016 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 9447.625000
+HHHHHHH 18446744072755382016 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072755382016 HHHHHHH   hunter has found the magical path in 4133.068848 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072755382016 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 10345.792000
+HHHHHHH 18446744072705025792 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072705025792 HHHHHHH   hunter has found the magical path in 4961.393066 ms
+HHHHHHH 18446744072705025792 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072705025792 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 13506.451000
+CCCCCCC 18446744072696633088 CCCCCCC   A cow is born
+CCCCCCC 18446744072696633088 CCCCCCC   cow grazes for 3175.010986 ms
+CCCCCCC 18446744072696633088 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072696633088 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072696633088 CCCCCCC   signal cow meal flag 6
+CCCCCCC 18446744072696633088 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 446 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072746989312 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072746989312 TTTTTTT   hunter leaves cave and goes home
+HUNTER CREATED! next hunter at: 11522.021000
+HHHHHHH 18446744072746989312 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072746989312 HHHHHHH   hunter has found the magical path in 3377.373047 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072746989312 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 15010.610000
+SSSSSSS 18446744072688240384 SSSSSSS   A sheep is born
+SSSSSSS 18446744072688240384 SSSSSSS   sheep grazes for 4544.918945 ms
+SSSSSSS 18446744072688240384 SSSSSSS   1  sheeps have been enchanted 
+THIEF CREATED! next thief at: 14232.852000
+TTTTTTT 18446744072679847680 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072679847680 TTTTTTT   thief has found the magical path in 1898.536987 ms
+TTTTTTT 18446744072679847680 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072679847680 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 16097.219000
+HHHHHHH 18446744072671454976 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072671454976 HHHHHHH   hunter has found the magical path in 3594.323975 ms
+HHHHHHH 18446744072671454976 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072671454976 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 438 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072679847680 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072679847680 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072679847680 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 17170.821000
+CCCCCCC 18446744072679847680 CCCCCCC   A cow is born
+CCCCCCC 18446744072679847680 CCCCCCC   cow grazes for 4566.413086 ms
+CCCCCCC 18446744072679847680 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072679847680 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072679847680 CCCCCCC   signal cow meal flag 7
+CCCCCCC 18446744072679847680 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 428 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072755382016 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072755382016 TTTTTTT   hunter leaves cave and goes home
+THIEF CREATED! next thief at: 17008.943000
+TTTTTTT 18446744072755382016 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072755382016 TTTTTTT   thief has found the magical path in 4268.979980 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072755382016 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 16770.566000
+SSSSSSS 18446744072663062272 SSSSSSS   A sheep is born
+SSSSSSS 18446744072663062272 SSSSSSS   sheep grazes for 4241.873047 ms
+SSSSSSS 18446744072663062272 SSSSSSS   2  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 420 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072755382016 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072755382016 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 19096.390000
+HHHHHHH 18446744072755382016 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072755382016 HHHHHHH   hunter has found the magical path in 2906.996094 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072755382016 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 17267.847000
+SSSSSSS 18446744072654669568 SSSSSSS   A sheep is born
+SSSSSSS 18446744072654669568 SSSSSSS   sheep grazes for 1702.305054 ms
+SSSSSSS 18446744072654669568 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072654669568 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072654669568 SSSSSSS   signal sheep meal flag 2
+SSSSSSS 18446744072654669568 SSSSSSS   last sheep  wakes the dragon 
+THIEF CREATED! next thief at: 21429.868000
+TTTTTTT 18446744072646276864 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072646276864 TTTTTTT   thief has found the magical path in 2477.083984 ms
+TTTTTTT 18446744072646276864 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072646276864 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 19507.148000
+CCCCCCC 18446744072637884160 CCCCCCC   A cow is born
+CCCCCCC 18446744072637884160 CCCCCCC   cow grazes for 2660.335938 ms
+CCCCCCC 18446744072637884160 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072637884160 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072637884160 CCCCCCC   signal cow meal flag 8
+CCCCCCC 18446744072637884160 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 21394.352000
+SSSSSSS 18446744072629491456 SSSSSSS   A sheep is born
+SSSSSSS 18446744072629491456 SSSSSSS   sheep grazes for 750.846008 ms
+SSSSSSS 18446744072629491456 SSSSSSS   1  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 412 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072646276864 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072646276864 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072646276864 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 19757.703000
+HHHHHHH 18446744072646276864 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072646276864 HHHHHHH   hunter has found the magical path in 3925.856934 ms
+HHHHHHH 18446744072646276864 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072646276864 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 21123.272000
+CCCCCCC 18446744072621098752 CCCCCCC   A cow is born
+CCCCCCC 18446744072621098752 CCCCCCC   cow grazes for 4353.895020 ms
+CCCCCCC 18446744072621098752 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072621098752 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072621098752 CCCCCCC   signal cow meal flag 9
+CCCCCCC 18446744072621098752 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 24577.285000
+HHHHHHH 18446744072612706048 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072612706048 HHHHHHH   hunter has found the magical path in 1100.545044 ms
+HHHHHHH 18446744072612706048 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072612706048 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 402 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072705025792 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072705025792 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072705025792 TTTTTTT   hunter leaves cave and goes home
+COW CREATED! next cow at: 24356.639000
+CCCCCCC 18446744072705025792 CCCCCCC   A cow is born
+CCCCCCC 18446744072705025792 CCCCCCC   cow grazes for 515.434021 ms
+CCCCCCC 18446744072705025792 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072705025792 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072705025792 CCCCCCC   signal cow meal flag 10
+CCCCCCC 18446744072705025792 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 22384.717000
+SSSSSSS 18446744072604313344 SSSSSSS   A sheep is born
+SSSSSSS 18446744072604313344 SSSSSSS   sheep grazes for 4344.042969 ms
+SSSSSSS 18446744072604313344 SSSSSSS   2  sheeps have been enchanted 
+THIEF CREATED! next thief at: 21743.618000
+TTTTTTT 18446744072595920640 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072595920640 TTTTTTT   thief has found the magical path in 2171.086914 ms
+TTTTTTT 18446744072595920640 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072595920640 TTTTTTT   thief wakes smaug
+THIEF CREATED! next thief at: 23170.426000
+TTTTTTT 18446744072587527936 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072587527936 TTTTTTT   thief has found the magical path in 117.276001 ms
+TTTTTTT 18446744072587527936 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072587527936 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 394 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072595920640 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072595920640 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072595920640 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 23080.505000
+SSSSSSS 18446744072595920640 SSSSSSS   A sheep is born
+SSSSSSS 18446744072595920640 SSSSSSS   sheep grazes for 4393.583984 ms
+SSSSSSS 18446744072595920640 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072595920640 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072595920640 SSSSSSS   signal sheep meal flag 3
+SSSSSSS 18446744072595920640 SSSSSSS   last sheep  wakes the dragon 
+SHEEP CREATED! next sheep at: 24785.908000
+SSSSSSS 18446744072579135232 SSSSSSS   A sheep is born
+SSSSSSS 18446744072579135232 SSSSSSS   sheep grazes for 3502.650879 ms
+SSSSSSS 18446744072579135232 SSSSSSS   1  sheeps have been enchanted 
+THIEF CREATED! next thief at: 25563.180000
+TTTTTTT 18446744072570742528 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072570742528 TTTTTTT   thief has found the magical path in 4612.398926 ms
+TTTTTTT 18446744072570742528 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072570742528 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 386 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072587527936 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072587527936 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072587527936 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 28451.700000
+CCCCCCC 18446744072587527936 CCCCCCC   A cow is born
+CCCCCCC 18446744072587527936 CCCCCCC   cow grazes for 1549.676025 ms
+CCCCCCC 18446744072587527936 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072587527936 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072587527936 CCCCCCC   signal cow meal flag 11
+CCCCCCC 18446744072587527936 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 28570.654000
+HHHHHHH 18446744072562349824 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072562349824 HHHHHHH   hunter has found the magical path in 3947.739014 ms
+HHHHHHH 18446744072562349824 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072562349824 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 28995.920000
+SSSSSSS 18446744072553957120 SSSSSSS   A sheep is born
+SSSSSSS 18446744072553957120 SSSSSSS   sheep grazes for 636.226013 ms
+SSSSSSS 18446744072553957120 SSSSSSS   2  sheeps have been enchanted 
+THIEF CREATED! next thief at: 30261.766000
+TTTTTTT 18446744072545564416 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072545564416 TTTTTTT   thief has found the magical path in 4348.094238 ms
+TTTTTTT 18446744072545564416 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072545564416 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 378 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072570742528 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072570742528 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072570742528 TTTTTTT   thief leaves cave and goes home
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 370 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072545564416 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072545564416 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072545564416 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 31932.270000
+CCCCCCC 18446744072545564416 CCCCCCC   A cow is born
+CCCCCCC 18446744072545564416 CCCCCCC   cow grazes for 651.434021 ms
+CCCCCCC 18446744072545564416 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072545564416 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072545564416 CCCCCCC   signal cow meal flag 12
+CCCCCCC 18446744072545564416 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 29531.032000
+HHHHHHH 18446744072570742528 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072570742528 HHHHHHH   hunter has found the magical path in 2097.467041 ms
+HHHHHHH 18446744072570742528 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072570742528 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 31062.521000
+SSSSSSS 18446744072537171712 SSSSSSS   A sheep is born
+SSSSSSS 18446744072537171712 SSSSSSS   sheep grazes for 1710.097046 ms
+SSSSSSS 18446744072537171712 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072537171712 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072537171712 SSSSSSS   signal sheep meal flag 4
+SSSSSSS 18446744072537171712 SSSSSSS   last sheep  wakes the dragon 
+HUNTER CREATED! next hunter at: 32143.934000
+HHHHHHH 18446744072528779008 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072528779008 HHHHHHH   hunter has found the magical path in 573.317017 ms
+HHHHHHH 18446744072528779008 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072528779008 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 360 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072746989312 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072746989312 TTTTTTT   hunter leaves cave and goes home
+THIEF CREATED! next thief at: 33188.418000
+TTTTTTT 18446744072746989312 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072746989312 TTTTTTT   thief has found the magical path in 260.756012 ms
+TTTTTTT 18446744072746989312 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072746989312 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 36059.822000
+SSSSSSS 18446744072520386304 SSSSSSS   A sheep is born
+SSSSSSS 18446744072520386304 SSSSSSS   sheep grazes for 560.280029 ms
+SSSSSSS 18446744072520386304 SSSSSSS   1  sheeps have been enchanted 
+COW CREATED! next cow at: 34656.556000
+CCCCCCC 18446744072511993600 CCCCCCC   A cow is born
+CCCCCCC 18446744072511993600 CCCCCCC   cow grazes for 3209.440918 ms
+CCCCCCC 18446744072511993600 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072511993600 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072511993600 CCCCCCC   signal cow meal flag 13
+CCCCCCC 18446744072511993600 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 352 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072746989312 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072746989312 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072746989312 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 36573.623000
+HHHHHHH 18446744072746989312 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072746989312 HHHHHHH   hunter has found the magical path in 4228.443848 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072746989312 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 35535.037000
+TTTTTTT 18446744072503600896 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072503600896 TTTTTTT   thief has found the magical path in 1558.439941 ms
+TTTTTTT 18446744072503600896 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072503600896 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 344 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072503600896 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072503600896 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072503600896 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 38614.587000
+CCCCCCC 18446744072503600896 CCCCCCC   A cow is born
+CCCCCCC 18446744072503600896 CCCCCCC   cow grazes for 3108.116943 ms
+CCCCCCC 18446744072503600896 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072503600896 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072503600896 CCCCCCC   signal cow meal flag 14
+CCCCCCC 18446744072503600896 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 40273.134000
+TTTTTTT 18446744072495208192 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072495208192 TTTTTTT   thief has found the magical path in 2905.770996 ms
+TTTTTTT 18446744072495208192 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072495208192 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 336 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072495208192 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072495208192 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072495208192 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 38950.497000
+SSSSSSS 18446744072495208192 SSSSSSS   A sheep is born
+SSSSSSS 18446744072495208192 SSSSSSS   sheep grazes for 120.709000 ms
+SSSSSSS 18446744072495208192 SSSSSSS   2  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 38272.550000
+HHHHHHH 18446744072486815488 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072486815488 HHHHHHH   hunter has found the magical path in 1704.567017 ms
+HHHHHHH 18446744072486815488 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072486815488 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 326 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072671454976 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072671454976 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072671454976 TTTTTTT   hunter leaves cave and goes home
+HUNTER CREATED! next hunter at: 38452.047000
+HHHHHHH 18446744072671454976 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072671454976 HHHHHHH   hunter has found the magical path in 4872.353027 ms
+HHHHHHH 18446744072671454976 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072671454976 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 40706.634000
+HHHHHHH 18446744072478422784 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072478422784 HHHHHHH   hunter has found the magical path in 2276.965088 ms
+HHHHHHH 18446744072478422784 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072478422784 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 43069.893000
+CCCCCCC 18446744072470030080 CCCCCCC   A cow is born
+CCCCCCC 18446744072470030080 CCCCCCC   cow grazes for 3964.683105 ms
+CCCCCCC 18446744072470030080 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072470030080 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072470030080 CCCCCCC   signal cow meal flag 15
+CCCCCCC 18446744072470030080 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 41356.716000
+SSSSSSS 18446744072461637376 SSSSSSS   A sheep is born
+SSSSSSS 18446744072461637376 SSSSSSS   sheep grazes for 28.624001 ms
+SSSSSSS 18446744072461637376 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072461637376 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072461637376 SSSSSSS   signal sheep meal flag 5
+SSSSSSS 18446744072461637376 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 316 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072755382016 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072755382016 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072755382016 TTTTTTT   hunter leaves cave and goes home
+THIEF CREATED! next thief at: 40606.005000
+TTTTTTT 18446744072755382016 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072755382016 TTTTTTT   thief has found the magical path in 2805.731934 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072755382016 TTTTTTT   thief wakes smaug
+THIEF CREATED! next thief at: 40654.834000
+TTTTTTT 18446744072453244672 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072453244672 TTTTTTT   thief has found the magical path in 3409.502930 ms
+TTTTTTT 18446744072453244672 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072453244672 TTTTTTT   thief wakes smaug
+THIEF CREATED! next thief at: 41184.853000
+TTTTTTT 18446744072444851968 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072444851968 TTTTTTT   thief has found the magical path in 3258.270020 ms
+TTTTTTT 18446744072444851968 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072444851968 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 44070.003000
+HHHHHHH 18446744072436459264 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072436459264 HHHHHHH   hunter has found the magical path in 4959.708008 ms
+HHHHHHH 18446744072436459264 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072436459264 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 43671.568000
+TTTTTTT 18446744072428066560 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072428066560 TTTTTTT   thief has found the magical path in 3226.340088 ms
+TTTTTTT 18446744072428066560 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072428066560 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 42874.865000
+SSSSSSS 18446744072419673856 SSSSSSS   A sheep is born
+SSSSSSS 18446744072419673856 SSSSSSS   sheep grazes for 747.796021 ms
+SSSSSSS 18446744072419673856 SSSSSSS   1  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 308 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072755382016 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072755382016 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072755382016 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 45017.483000
+SSSSSSS 18446744072755382016 SSSSSSS   A sheep is born
+SSSSSSS 18446744072755382016 SSSSSSS   sheep grazes for 3002.245117 ms
+SSSSSSS 18446744072755382016 SSSSSSS   2  sheeps have been enchanted 
+COW CREATED! next cow at: 43192.739000
+CCCCCCC 18446744072411281152 CCCCCCC   A cow is born
+CCCCCCC 18446744072411281152 CCCCCCC   cow grazes for 4493.451172 ms
+CCCCCCC 18446744072411281152 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072411281152 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072411281152 CCCCCCC   signal cow meal flag 16
+CCCCCCC 18446744072411281152 CCCCCCC   last cow  wakes the dragon 
+COW CREATED! next cow at: 44085.660000
+CCCCCCC 18446744072402888448 CCCCCCC   A cow is born
+CCCCCCC 18446744072402888448 CCCCCCC   cow grazes for 243.554993 ms
+CCCCCCC 18446744072402888448 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072402888448 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072402888448 CCCCCCC   signal cow meal flag 17
+CCCCCCC 18446744072402888448 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 44863.947000
+TTTTTTT 18446744072394495744 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072394495744 TTTTTTT   thief has found the magical path in 2597.488037 ms
+TTTTTTT 18446744072394495744 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072394495744 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 300 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072453244672 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072453244672 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072453244672 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 47958.232000
+HHHHHHH 18446744072453244672 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072453244672 HHHHHHH   hunter has found the magical path in 2469.841064 ms
+HHHHHHH 18446744072453244672 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072453244672 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 47878.010000
+CCCCCCC 18446744072386103040 CCCCCCC   A cow is born
+CCCCCCC 18446744072386103040 CCCCCCC   cow grazes for 1165.192993 ms
+CCCCCCC 18446744072386103040 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072386103040 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072386103040 CCCCCCC   signal cow meal flag 18
+CCCCCCC 18446744072386103040 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 49305.447000
+TTTTTTT 18446744072377710336 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072377710336 TTTTTTT   thief has found the magical path in 2757.033936 ms
+TTTTTTT 18446744072377710336 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072377710336 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 46105.247000
+SSSSSSS 18446744072369317632 SSSSSSS   A sheep is born
+SSSSSSS 18446744072369317632 SSSSSSS   sheep grazes for 4470.124023 ms
+SSSSSSS 18446744072369317632 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072369317632 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072369317632 SSSSSSS   signal sheep meal flag 6
+SSSSSSS 18446744072369317632 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 292 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072444851968 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072444851968 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072444851968 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 50042.234000
+SSSSSSS 18446744072444851968 SSSSSSS   A sheep is born
+SSSSSSS 18446744072444851968 SSSSSSS   sheep grazes for 2275.855957 ms
+SSSSSSS 18446744072444851968 SSSSSSS   1  sheeps have been enchanted 
+COW CREATED! next cow at: 48251.753000
+CCCCCCC 18446744072360924928 CCCCCCC   A cow is born
+CCCCCCC 18446744072360924928 CCCCCCC   cow grazes for 2346.490967 ms
+CCCCCCC 18446744072360924928 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072360924928 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072360924928 CCCCCCC   signal cow meal flag 19
+CCCCCCC 18446744072360924928 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 48280.459000
+HHHHHHH 18446744072352532224 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072352532224 HHHHHHH   hunter has found the magical path in 1148.364990 ms
+HHHHHHH 18446744072352532224 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072352532224 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 284 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072428066560 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072428066560 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072428066560 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 48533.690000
+CCCCCCC 18446744072428066560 CCCCCCC   A cow is born
+CCCCCCC 18446744072428066560 CCCCCCC   cow grazes for 1151.432007 ms
+CCCCCCC 18446744072428066560 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072428066560 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072428066560 CCCCCCC   signal cow meal flag 20
+CCCCCCC 18446744072428066560 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 49733.010000
+HHHHHHH 18446744072344139520 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072344139520 HHHHHHH   hunter has found the magical path in 4316.437012 ms
+HHHHHHH 18446744072344139520 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072344139520 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 50432.918000
+CCCCCCC 18446744072335746816 CCCCCCC   A cow is born
+CCCCCCC 18446744072335746816 CCCCCCC   cow grazes for 1153.275024 ms
+CCCCCCC 18446744072335746816 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072335746816 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072335746816 CCCCCCC   signal cow meal flag 21
+CCCCCCC 18446744072335746816 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 53280.854000
+TTTTTTT 18446744072327354112 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072327354112 TTTTTTT   thief has found the magical path in 4901.474121 ms
+TTTTTTT 18446744072327354112 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072327354112 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 51009.131000
+HHHHHHH 18446744072318961408 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072318961408 HHHHHHH   hunter has found the magical path in 3468.857910 ms
+HHHHHHH 18446744072318961408 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072318961408 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 276 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072394495744 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072394495744 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072394495744 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 54078.264000
+SSSSSSS 18446744072394495744 SSSSSSS   A sheep is born
+SSSSSSS 18446744072394495744 SSSSSSS   sheep grazes for 4661.236816 ms
+SSSSSSS 18446744072394495744 SSSSSSS   2  sheeps have been enchanted 
+COW CREATED! next cow at: 51341.154000
+CCCCCCC 18446744072310568704 CCCCCCC   A cow is born
+CCCCCCC 18446744072310568704 CCCCCCC   cow grazes for 573.793030 ms
+CCCCCCC 18446744072310568704 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072310568704 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072310568704 CCCCCCC   signal cow meal flag 22
+CCCCCCC 18446744072310568704 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 52074.949000
+HHHHHHH 18446744072302176000 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072302176000 HHHHHHH   hunter has found the magical path in 894.427979 ms
+HHHHHHH 18446744072302176000 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072302176000 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 55707.297000
+CCCCCCC 18446744072293783296 CCCCCCC   A cow is born
+CCCCCCC 18446744072293783296 CCCCCCC   cow grazes for 2231.010986 ms
+CCCCCCC 18446744072293783296 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072293783296 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072293783296 CCCCCCC   signal cow meal flag 23
+CCCCCCC 18446744072293783296 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 268 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072377710336 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072377710336 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072377710336 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 56714.478000
+HHHHHHH 18446744072377710336 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072377710336 HHHHHHH   hunter has found the magical path in 3318.775879 ms
+HHHHHHH 18446744072377710336 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072377710336 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 55603.258000
+TTTTTTT 18446744072285390592 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072285390592 TTTTTTT   thief has found the magical path in 4964.442871 ms
+TTTTTTT 18446744072285390592 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072285390592 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 260 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072327354112 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072327354112 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072327354112 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 56192.877000
+SSSSSSS 18446744072327354112 SSSSSSS   A sheep is born
+SSSSSSS 18446744072327354112 SSSSSSS   sheep grazes for 2854.538086 ms
+SSSSSSS 18446744072327354112 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072327354112 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072327354112 SSSSSSS   signal sheep meal flag 7
+SSSSSSS 18446744072327354112 SSSSSSS   last sheep  wakes the dragon 
+THIEF CREATED! next thief at: 57721.864000
+TTTTTTT 18446744072276997888 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072276997888 TTTTTTT   thief has found the magical path in 2436.840088 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072276997888 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 59710.202000
+CCCCCCC 18446744072268605184 CCCCCCC   A cow is born
+CCCCCCC 18446744072268605184 CCCCCCC   cow grazes for 344.817993 ms
+CCCCCCC 18446744072268605184 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072268605184 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072268605184 CCCCCCC   signal cow meal flag 24
+CCCCCCC 18446744072268605184 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 252 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072285390592 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072285390592 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072285390592 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 58863.565000
+SSSSSSS 18446744072285390592 SSSSSSS   A sheep is born
+SSSSSSS 18446744072285390592 SSSSSSS   sheep grazes for 1797.369019 ms
+SSSSSSS 18446744072285390592 SSSSSSS   1  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 58782.395000
+HHHHHHH 18446744072260212480 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072260212480 HHHHHHH   hunter has found the magical path in 4569.916992 ms
+HHHHHHH 18446744072260212480 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072260212480 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 58188.860000
+TTTTTTT 18446744072251819776 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072251819776 TTTTTTT   thief has found the magical path in 1043.323975 ms
+TTTTTTT 18446744072251819776 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072251819776 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 244 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072276997888 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072276997888 TTTTTTT   thief leaves cave and goes home
+THIEF CREATED! next thief at: 62448.330000
+TTTTTTT 18446744072276997888 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072276997888 TTTTTTT   thief has found the magical path in 4512.183105 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072276997888 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 59080.886000
+HHHHHHH 18446744072243427072 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072243427072 HHHHHHH   hunter has found the magical path in 3295.499023 ms
+HHHHHHH 18446744072243427072 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072243427072 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 60553.337000
+SSSSSSS 18446744072235034368 SSSSSSS   A sheep is born
+SSSSSSS 18446744072235034368 SSSSSSS   sheep grazes for 1206.724976 ms
+SSSSSSS 18446744072235034368 SSSSSSS   2  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 60466.530000
+HHHHHHH 18446744072226641664 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072226641664 HHHHHHH   hunter has found the magical path in 2755.590088 ms
+HHHHHHH 18446744072226641664 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072226641664 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 64327.708000
+CCCCCCC 18446744072218248960 CCCCCCC   A cow is born
+CCCCCCC 18446744072218248960 CCCCCCC   cow grazes for 3268.138916 ms
+CCCCCCC 18446744072218248960 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072218248960 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072218248960 CCCCCCC   signal cow meal flag 25
+CCCCCCC 18446744072218248960 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 236 jewels.
+TTTTTTT 18446744072251819776 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072251819776 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072251819776 TTTTTTT   thief leaves cave and goes home
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HUNTER CREATED! next hunter at: 62936.316000
+HHHHHHH 18446744072251819776 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072251819776 HHHHHHH   hunter has found the magical path in 2907.668945 ms
+HHHHHHH 18446744072251819776 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072251819776 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 63891.419000
+SSSSSSS 18446744072209856256 SSSSSSS   A sheep is born
+SSSSSSS 18446744072209856256 SSSSSSS   sheep grazes for 2308.541992 ms
+SSSSSSS 18446744072209856256 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072209856256 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072209856256 SSSSSSS   signal sheep meal flag 8
+SSSSSSS 18446744072209856256 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 228 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072276997888 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072276997888 TTTTTTT   thief leaves cave and goes home
+THIEF CREATED! next thief at: 65558.527000
+TTTTTTT 18446744072276997888 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072276997888 TTTTTTT   thief has found the magical path in 1939.506958 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072276997888 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 63695.671000
+HHHHHHH 18446744072201463552 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072201463552 HHHHHHH   hunter has found the magical path in 228.804001 ms
+HHHHHHH 18446744072201463552 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072201463552 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 68072.019000
+HHHHHHH 18446744072193070848 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072193070848 HHHHHHH   hunter has found the magical path in 2278.611084 ms
+HHHHHHH 18446744072193070848 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072193070848 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 64465.041000
+SSSSSSS 18446744072184678144 SSSSSSS   A sheep is born
+SSSSSSS 18446744072184678144 SSSSSSS   sheep grazes for 2127.827881 ms
+SSSSSSS 18446744072184678144 SSSSSSS   1  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 220 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072276997888 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072276997888 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072276997888 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 69215.051000
+CCCCCCC 18446744072276997888 CCCCCCC   A cow is born
+CCCCCCC 18446744072276997888 CCCCCCC   cow grazes for 4195.746094 ms
+CCCCCCC 18446744072276997888 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072276997888 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072276997888 CCCCCCC   signal cow meal flag 26
+CCCCCCC 18446744072276997888 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 66500.610000
+SSSSSSS 18446744072176285440 SSSSSSS   A sheep is born
+SSSSSSS 18446744072176285440 SSSSSSS   sheep grazes for 354.339996 ms
+SSSSSSS 18446744072176285440 SSSSSSS   2  sheeps have been enchanted 
+THIEF CREATED! next thief at: 68313.949000
+TTTTTTT 18446744072167892736 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072167892736 TTTTTTT   thief has found the magical path in 4023.311035 ms
+TTTTTTT 18446744072167892736 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072167892736 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 212 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072167892736 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072167892736 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072167892736 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 68768.215000
+SSSSSSS 18446744072167892736 SSSSSSS   A sheep is born
+SSSSSSS 18446744072167892736 SSSSSSS   sheep grazes for 4321.800781 ms
+SSSSSSS 18446744072167892736 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072167892736 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072167892736 SSSSSSS   signal sheep meal flag 9
+SSSSSSS 18446744072167892736 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 202 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072646276864 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072646276864 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072646276864 TTTTTTT   hunter leaves cave and goes home
+HUNTER CREATED! next hunter at: 69545.749000
+HHHHHHH 18446744072646276864 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072646276864 HHHHHHH   hunter has found the magical path in 3044.877930 ms
+HHHHHHH 18446744072646276864 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072646276864 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 70125.255000
+TTTTTTT 18446744072159500032 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072159500032 TTTTTTT   thief has found the magical path in 4229.319824 ms
+TTTTTTT 18446744072159500032 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072159500032 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 68946.951000
+SSSSSSS 18446744072151107328 SSSSSSS   A sheep is born
+SSSSSSS 18446744072151107328 SSSSSSS   sheep grazes for 79.444000 ms
+SSSSSSS 18446744072151107328 SSSSSSS   1  sheeps have been enchanted 
+SHEEP CREATED! next sheep at: 73195.577000
+SSSSSSS 18446744072142714624 SSSSSSS   A sheep is born
+SSSSSSS 18446744072142714624 SSSSSSS   sheep grazes for 2648.521973 ms
+SSSSSSS 18446744072142714624 SSSSSSS   2  sheeps have been enchanted 
+COW CREATED! next cow at: 69718.516000
+CCCCCCC 18446744072134321920 CCCCCCC   A cow is born
+CCCCCCC 18446744072134321920 CCCCCCC   cow grazes for 2586.708008 ms
+CCCCCCC 18446744072134321920 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072134321920 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072134321920 CCCCCCC   signal cow meal flag 27
+CCCCCCC 18446744072134321920 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 72019.165000
+HHHHHHH 18446744072125929216 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072125929216 HHHHHHH   hunter has found the magical path in 3408.281982 ms
+HHHHHHH 18446744072125929216 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072125929216 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 72931.774000
+CCCCCCC 18446744072117536512 CCCCCCC   A cow is born
+CCCCCCC 18446744072117536512 CCCCCCC   cow grazes for 4412.923828 ms
+CCCCCCC 18446744072117536512 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072117536512 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072117536512 CCCCCCC   signal cow meal flag 28
+CCCCCCC 18446744072117536512 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 194 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072159500032 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072159500032 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072159500032 TTTTTTT   thief leaves cave and goes home
+THIEF CREATED! next thief at: 73567.317000
+TTTTTTT 18446744072159500032 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072159500032 TTTTTTT   thief has found the magical path in 1305.624023 ms
+TTTTTTT 18446744072159500032 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072159500032 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has defeated a thief (1 thieves have been defeated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gained some treasure (20 jewels). He now has 214 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072159500032 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072159500032 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072159500032 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 73551.201000
+HHHHHHH 18446744072159500032 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072159500032 HHHHHHH   hunter has found the magical path in 3433.451904 ms
+HHHHHHH 18446744072159500032 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072159500032 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 76843.673000
+CCCCCCC 18446744072109143808 CCCCCCC   A cow is born
+CCCCCCC 18446744072109143808 CCCCCCC   cow grazes for 1419.379028 ms
+CCCCCCC 18446744072109143808 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072109143808 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072109143808 CCCCCCC   signal cow meal flag 29
+CCCCCCC 18446744072109143808 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 73341.127000
+SSSSSSS 18446744072100751104 SSSSSSS   A sheep is born
+SSSSSSS 18446744072100751104 SSSSSSS   sheep grazes for 947.468018 ms
+SSSSSSS 18446744072100751104 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072100751104 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072100751104 SSSSSSS   signal sheep meal flag 10
+SSSSSSS 18446744072100751104 SSSSSSS   last sheep  wakes the dragon 
+SHEEP CREATED! next sheep at: 77631.199000
+SSSSSSS 18446744072092358400 SSSSSSS   A sheep is born
+SSSSSSS 18446744072092358400 SSSSSSS   sheep grazes for 2900.972900 ms
+SSSSSSS 18446744072092358400 SSSSSSS   1  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 76038.332000
+HHHHHHH 18446744072083965696 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072083965696 HHHHHHH   hunter has found the magical path in 3903.881104 ms
+HHHHHHH 18446744072083965696 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072083965696 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 76252.248000
+TTTTTTT 18446744072075572992 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072075572992 TTTTTTT   thief has found the magical path in 1808.932983 ms
+TTTTTTT 18446744072075572992 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072075572992 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 206 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072075572992 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072075572992 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072075572992 TTTTTTT   thief leaves cave and goes home
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 196 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072612706048 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072612706048 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072612706048 TTTTTTT   hunter leaves cave and goes home
+HUNTER CREATED! next hunter at: 78408.495000
+HHHHHHH 18446744072612706048 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072612706048 HHHHHHH   hunter has found the magical path in 3657.198975 ms
+HHHHHHH 18446744072612706048 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072612706048 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 79640.229000
+TTTTTTT 18446744072075572992 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072075572992 TTTTTTT   thief has found the magical path in 2548.898926 ms
+TTTTTTT 18446744072075572992 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072075572992 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 78096.670000
+CCCCCCC 18446744072067180288 CCCCCCC   A cow is born
+CCCCCCC 18446744072067180288 CCCCCCC   cow grazes for 152.959000 ms
+CCCCCCC 18446744072067180288 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072067180288 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072067180288 CCCCCCC   signal cow meal flag 30
+CCCCCCC 18446744072067180288 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 80344.972000
+SSSSSSS 18446744072058787584 SSSSSSS   A sheep is born
+SSSSSSS 18446744072058787584 SSSSSSS   sheep grazes for 4272.812988 ms
+SSSSSSS 18446744072058787584 SSSSSSS   2  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 188 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072075572992 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072075572992 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072075572992 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 78283.860000
+CCCCCCC 18446744072075572992 CCCCCCC   A cow is born
+CCCCCCC 18446744072075572992 CCCCCCC   cow grazes for 2681.094971 ms
+CCCCCCC 18446744072075572992 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072075572992 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072075572992 CCCCCCC   signal cow meal flag 31
+CCCCCCC 18446744072075572992 CCCCCCC   last cow  wakes the dragon 
+COW CREATED! next cow at: 79236.786000
+CCCCCCC 18446744072050394880 CCCCCCC   A cow is born
+CCCCCCC 18446744072050394880 CCCCCCC   cow grazes for 2116.466064 ms
+CCCCCCC 18446744072050394880 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072050394880 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072050394880 CCCCCCC   signal cow meal flag 32
+CCCCCCC 18446744072050394880 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 82773.579000
+HHHHHHH 18446744072042002176 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072042002176 HHHHHHH   hunter has found the magical path in 1911.339966 ms
+HHHHHHH 18446744072042002176 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072042002176 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 82658.877000
+CCCCCCC 18446744072033609472 CCCCCCC   A cow is born
+CCCCCCC 18446744072033609472 CCCCCCC   cow grazes for 3327.684082 ms
+CCCCCCC 18446744072033609472 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072033609472 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072033609472 CCCCCCC   signal cow meal flag 33
+CCCCCCC 18446744072033609472 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 83083.605000
+TTTTTTT 18446744072025216768 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744072025216768 TTTTTTT   thief has found the magical path in 1855.541992 ms
+TTTTTTT 18446744072025216768 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744072025216768 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 180 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744072025216768 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744072025216768 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744072025216768 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 82724.079000
+SSSSSSS 18446744072025216768 SSSSSSS   A sheep is born
+SSSSSSS 18446744072025216768 SSSSSSS   sheep grazes for 4517.444824 ms
+SSSSSSS 18446744072025216768 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744072025216768 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744072025216768 SSSSSSS   signal sheep meal flag 11
+SSSSSSS 18446744072025216768 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 170 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072562349824 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072562349824 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072562349824 TTTTTTT   hunter leaves cave and goes home
+COW CREATED! next cow at: 84328.056000
+CCCCCCC 18446744072562349824 CCCCCCC   A cow is born
+CCCCCCC 18446744072562349824 CCCCCCC   cow grazes for 2418.417969 ms
+CCCCCCC 18446744072562349824 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072562349824 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072562349824 CCCCCCC   signal cow meal flag 34
+CCCCCCC 18446744072562349824 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 83430.966000
+SSSSSSS 18446744072016824064 SSSSSSS   A sheep is born
+SSSSSSS 18446744072016824064 SSSSSSS   sheep grazes for 3089.412109 ms
+SSSSSSS 18446744072016824064 SSSSSSS   1  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 82876.927000
+HHHHHHH 18446744072008431360 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072008431360 HHHHHHH   hunter has found the magical path in 32.172001 ms
+HHHHHHH 18446744072008431360 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072008431360 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 85328.586000
+HHHHHHH 18446744072000038656 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072000038656 HHHHHHH   hunter has found the magical path in 4262.008789 ms
+HHHHHHH 18446744072000038656 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072000038656 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 85485.942000
+TTTTTTT 18446744071991645952 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071991645952 TTTTTTT   thief has found the magical path in 3625.209961 ms
+TTTTTTT 18446744071991645952 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071991645952 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 83597.308000
+SSSSSSS 18446744071983253248 SSSSSSS   A sheep is born
+SSSSSSS 18446744071983253248 SSSSSSS   sheep grazes for 2467.586914 ms
+SSSSSSS 18446744071983253248 SSSSSSS   2  sheeps have been enchanted 
+SHEEP CREATED! next sheep at: 88475.514000
+SSSSSSS 18446744071974860544 SSSSSSS   A sheep is born
+SSSSSSS 18446744071974860544 SSSSSSS   sheep grazes for 319.300995 ms
+SSSSSSS 18446744071974860544 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744071974860544 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744071974860544 SSSSSSS   signal sheep meal flag 12
+SSSSSSS 18446744071974860544 SSSSSSS   last sheep  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 162 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071991645952 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071991645952 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071991645952 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 85995.428000
+CCCCCCC 18446744071991645952 CCCCCCC   A cow is born
+CCCCCCC 18446744071991645952 CCCCCCC   cow grazes for 575.320984 ms
+CCCCCCC 18446744071991645952 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071991645952 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071991645952 CCCCCCC   signal cow meal flag 35
+CCCCCCC 18446744071991645952 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 85729.841000
+HHHHHHH 18446744071966467840 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071966467840 HHHHHHH   hunter has found the magical path in 1864.818970 ms
+HHHHHHH 18446744071966467840 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071966467840 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 89530.541000
+TTTTTTT 18446744071958075136 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071958075136 TTTTTTT   thief has found the magical path in 2517.720947 ms
+TTTTTTT 18446744071958075136 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071958075136 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 86959.745000
+HHHHHHH 18446744071949682432 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071949682432 HHHHHHH   hunter has found the magical path in 955.939026 ms
+HHHHHHH 18446744071949682432 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071949682432 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 86935.239000
+CCCCCCC 18446744071941289728 CCCCCCC   A cow is born
+CCCCCCC 18446744071941289728 CCCCCCC   cow grazes for 2073.939941 ms
+CCCCCCC 18446744071941289728 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071941289728 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071941289728 CCCCCCC   signal cow meal flag 36
+CCCCCCC 18446744071941289728 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 154 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071958075136 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071958075136 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071958075136 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 87246.944000
+CCCCCCC 18446744071958075136 CCCCCCC   A cow is born
+CCCCCCC 18446744071958075136 CCCCCCC   cow grazes for 4346.228027 ms
+CCCCCCC 18446744071958075136 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071958075136 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071958075136 CCCCCCC   signal cow meal flag 37
+CCCCCCC 18446744071958075136 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 88770.872000
+HHHHHHH 18446744071932897024 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071932897024 HHHHHHH   hunter has found the magical path in 4829.149902 ms
+HHHHHHH 18446744071932897024 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071932897024 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 89812.928000
+CCCCCCC 18446744071924504320 CCCCCCC   A cow is born
+CCCCCCC 18446744071924504320 CCCCCCC   cow grazes for 996.658020 ms
+CCCCCCC 18446744071924504320 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071924504320 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071924504320 CCCCCCC   signal cow meal flag 38
+CCCCCCC 18446744071924504320 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 144 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072570742528 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072570742528 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072570742528 TTTTTTT   hunter leaves cave and goes home
+SHEEP CREATED! next sheep at: 89264.739000
+SSSSSSS 18446744072570742528 SSSSSSS   A sheep is born
+SSSSSSS 18446744072570742528 SSSSSSS   sheep grazes for 1602.421997 ms
+SSSSSSS 18446744072570742528 SSSSSSS   1  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 93638.141000
+HHHHHHH 18446744071916111616 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071916111616 HHHHHHH   hunter has found the magical path in 821.395996 ms
+HHHHHHH 18446744071916111616 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071916111616 HHHHHHH   hunter wakes smaug
+SHEEP CREATED! next sheep at: 93318.820000
+SSSSSSS 18446744071907718912 SSSSSSS   A sheep is born
+SSSSSSS 18446744071907718912 SSSSSSS   sheep grazes for 1645.630005 ms
+SSSSSSS 18446744071907718912 SSSSSSS   2  sheeps have been enchanted 
+THIEF CREATED! next thief at: 90270.625000
+TTTTTTT 18446744071899326208 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071899326208 TTTTTTT   thief has found the magical path in 2679.291992 ms
+TTTTTTT 18446744071899326208 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071899326208 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 91624.900000
+CCCCCCC 18446744071890933504 CCCCCCC   A cow is born
+CCCCCCC 18446744071890933504 CCCCCCC   cow grazes for 3207.672119 ms
+CCCCCCC 18446744071890933504 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071890933504 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071890933504 CCCCCCC   signal cow meal flag 39
+CCCCCCC 18446744071890933504 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 136 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071899326208 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071899326208 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071899326208 TTTTTTT   thief leaves cave and goes home
+THIEF CREATED! next thief at: 94918.250000
+TTTTTTT 18446744071899326208 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071899326208 TTTTTTT   thief has found the magical path in 905.385010 ms
+TTTTTTT 18446744071899326208 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071899326208 TTTTTTT   thief wakes smaug
+COW CREATED! next cow at: 93366.122000
+CCCCCCC 18446744071882540800 CCCCCCC   A cow is born
+CCCCCCC 18446744071882540800 CCCCCCC   cow grazes for 2739.299072 ms
+CCCCCCC 18446744071882540800 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071882540800 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071882540800 CCCCCCC   signal cow meal flag 40
+CCCCCCC 18446744071882540800 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 128 jewels.
+TTTTTTT 18446744071899326208 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071899326208 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071899326208 TTTTTTT   thief leaves cave and goes home
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+SHEEP CREATED! next sheep at: 96924.862000
+SSSSSSS 18446744071899326208 SSSSSSS   A sheep is born
+SSSSSSS 18446744071899326208 SSSSSSS   sheep grazes for 1783.897949 ms
+SSSSSSS 18446744071899326208 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744071899326208 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744071899326208 SSSSSSS   signal sheep meal flag 13
+SSSSSSS 18446744071899326208 SSSSSSS   last sheep  wakes the dragon 
+COW CREATED! next cow at: 94706.835000
+CCCCCCC 18446744071874148096 CCCCCCC   A cow is born
+CCCCCCC 18446744071874148096 CCCCCCC   cow grazes for 2352.298096 ms
+CCCCCCC 18446744071874148096 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071874148096 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071874148096 CCCCCCC   signal cow meal flag 41
+CCCCCCC 18446744071874148096 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 93894.331000
+HHHHHHH 18446744071865755392 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071865755392 HHHHHHH   hunter has found the magical path in 2280.523926 ms
+HHHHHHH 18446744071865755392 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071865755392 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 95836.921000
+HHHHHHH 18446744071857362688 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071857362688 HHHHHHH   hunter has found the magical path in 4688.208984 ms
+HHHHHHH 18446744071857362688 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071857362688 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 118 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072528779008 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072528779008 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072528779008 TTTTTTT   hunter leaves cave and goes home
+COW CREATED! next cow at: 95995.654000
+CCCCCCC 18446744072528779008 CCCCCCC   A cow is born
+CCCCCCC 18446744072528779008 CCCCCCC   cow grazes for 1499.336060 ms
+CCCCCCC 18446744072528779008 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072528779008 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072528779008 CCCCCCC   signal cow meal flag 42
+CCCCCCC 18446744072528779008 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 99855.982000
+TTTTTTT 18446744071848969984 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071848969984 TTTTTTT   thief has found the magical path in 1371.155029 ms
+TTTTTTT 18446744071848969984 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071848969984 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 98332.915000
+HHHHHHH 18446744071840577280 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071840577280 HHHHHHH   hunter has found the magical path in 2218.003906 ms
+HHHHHHH 18446744071840577280 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071840577280 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 98156.034000
+CCCCCCC 18446744071832184576 CCCCCCC   A cow is born
+CCCCCCC 18446744071832184576 CCCCCCC   cow grazes for 1614.769043 ms
+CCCCCCC 18446744071832184576 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071832184576 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071832184576 CCCCCCC   signal cow meal flag 43
+CCCCCCC 18446744071832184576 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 110 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071848969984 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071848969984 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071848969984 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 99906.639000
+SSSSSSS 18446744071848969984 SSSSSSS   A sheep is born
+SSSSSSS 18446744071848969984 SSSSSSS   sheep grazes for 668.849976 ms
+SSSSSSS 18446744071848969984 SSSSSSS   1  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 100 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072746989312 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072746989312 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072746989312 TTTTTTT   hunter leaves cave and goes home
+COW CREATED! next cow at: 101877.894000
+CCCCCCC 18446744072746989312 CCCCCCC   A cow is born
+CCCCCCC 18446744072746989312 CCCCCCC   cow grazes for 3348.142090 ms
+CCCCCCC 18446744072746989312 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072746989312 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072746989312 CCCCCCC   signal cow meal flag 44
+CCCCCCC 18446744072746989312 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 98908.495000
+HHHHHHH 18446744071823791872 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071823791872 HHHHHHH   hunter has found the magical path in 4445.883789 ms
+HHHHHHH 18446744071823791872 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071823791872 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 102330.488000
+HHHHHHH 18446744071815399168 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071815399168 HHHHHHH   hunter has found the magical path in 223.205002 ms
+HHHHHHH 18446744071815399168 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071815399168 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 102723.603000
+TTTTTTT 18446744071807006464 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071807006464 TTTTTTT   thief has found the magical path in 2679.566895 ms
+TTTTTTT 18446744071807006464 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071807006464 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 102869.143000
+SSSSSSS 18446744071798613760 SSSSSSS   A sheep is born
+SSSSSSS 18446744071798613760 SSSSSSS   sheep grazes for 1690.613037 ms
+SSSSSSS 18446744071798613760 SSSSSSS   2  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 92 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071807006464 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071807006464 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071807006464 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 104140.648000
+CCCCCCC 18446744071807006464 CCCCCCC   A cow is born
+CCCCCCC 18446744071807006464 CCCCCCC   cow grazes for 3031.325928 ms
+CCCCCCC 18446744071807006464 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071807006464 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071807006464 CCCCCCC   signal cow meal flag 45
+CCCCCCC 18446744071807006464 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 82 jewels.
+HHHHHHH 18446744072486815488 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072486815488 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072486815488 TTTTTTT   hunter leaves cave and goes home
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HUNTER CREATED! next hunter at: 104849.432000
+HHHHHHH 18446744072486815488 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744072486815488 HHHHHHH   hunter has found the magical path in 2828.201904 ms
+HHHHHHH 18446744072486815488 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744072486815488 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 103336.805000
+TTTTTTT 18446744071790221056 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071790221056 TTTTTTT   thief has found the magical path in 4723.505859 ms
+TTTTTTT 18446744071790221056 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071790221056 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 105805.927000
+SSSSSSS 18446744071781828352 SSSSSSS   A sheep is born
+SSSSSSS 18446744071781828352 SSSSSSS   sheep grazes for 1902.020996 ms
+SSSSSSS 18446744071781828352 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744071781828352 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744071781828352 SSSSSSS   signal sheep meal flag 14
+SSSSSSS 18446744071781828352 SSSSSSS   last sheep  wakes the dragon 
+THIEF CREATED! next thief at: 104559.648000
+TTTTTTT 18446744071773435648 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071773435648 TTTTTTT   thief has found the magical path in 390.868011 ms
+TTTTTTT 18446744071773435648 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071773435648 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 74 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071790221056 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071790221056 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071790221056 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 105375.844000
+CCCCCCC 18446744071790221056 CCCCCCC   A cow is born
+CCCCCCC 18446744071790221056 CCCCCCC   cow grazes for 2608.872070 ms
+CCCCCCC 18446744071790221056 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071790221056 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071790221056 CCCCCCC   signal cow meal flag 46
+CCCCCCC 18446744071790221056 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 107509.556000
+TTTTTTT 18446744071765042944 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071765042944 TTTTTTT   thief has found the magical path in 2849.958008 ms
+TTTTTTT 18446744071765042944 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071765042944 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 107059.930000
+HHHHHHH 18446744071756650240 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071756650240 HHHHHHH   hunter has found the magical path in 3448.035889 ms
+HHHHHHH 18446744071756650240 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071756650240 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 108894.652000
+CCCCCCC 18446744071748257536 CCCCCCC   A cow is born
+CCCCCCC 18446744071748257536 CCCCCCC   cow grazes for 3457.752930 ms
+CCCCCCC 18446744071748257536 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071748257536 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071748257536 CCCCCCC   signal cow meal flag 47
+CCCCCCC 18446744071748257536 CCCCCCC   last cow  wakes the dragon 
+SHEEP CREATED! next sheep at: 110492.175000
+SSSSSSS 18446744071739864832 SSSSSSS   A sheep is born
+SSSSSSS 18446744071739864832 SSSSSSS   sheep grazes for 4383.303223 ms
+SSSSSSS 18446744071739864832 SSSSSSS   1  sheeps have been enchanted 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 66 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071773435648 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071773435648 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071773435648 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 111192.064000
+HHHHHHH 18446744071773435648 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071773435648 HHHHHHH   hunter has found the magical path in 321.648010 ms
+HHHHHHH 18446744071773435648 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071773435648 HHHHHHH   hunter wakes smaug
+THIEF CREATED! next thief at: 109282.446000
+TTTTTTT 18446744071731472128 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071731472128 TTTTTTT   thief has found the magical path in 1999.754028 ms
+TTTTTTT 18446744071731472128 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071731472128 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+TTTTTTT 18446744071765042944 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071765042944 TTTTTTT   thief plays with smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 58 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071765042944 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 111146.398000
+CCCCCCC 18446744071765042944 CCCCCCC   A cow is born
+CCCCCCC 18446744071765042944 CCCCCCC   cow grazes for 3690.367920 ms
+CCCCCCC 18446744071765042944 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071765042944 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071765042944 CCCCCCC   signal cow meal flag 48
+CCCCCCC 18446744071765042944 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 113601.975000
+TTTTTTT 18446744071723079424 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071723079424 TTTTTTT   thief has found the magical path in 4514.500000 ms
+TTTTTTT 18446744071723079424 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071723079424 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 50 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071731472128 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071731472128 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071731472128 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 110965.963000
+SSSSSSS 18446744071731472128 SSSSSSS   A sheep is born
+SSSSSSS 18446744071731472128 SSSSSSS   sheep grazes for 4549.796875 ms
+SSSSSSS 18446744071731472128 SSSSSSS   2  sheeps have been enchanted 
+SHEEP CREATED! next sheep at: 113032.212000
+SSSSSSS 18446744071714686720 SSSSSSS   A sheep is born
+SSSSSSS 18446744071714686720 SSSSSSS   sheep grazes for 1086.989990 ms
+SSSSSSS 18446744071714686720 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744071714686720 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744071714686720 SSSSSSS   signal sheep meal flag 15
+SSSSSSS 18446744071714686720 SSSSSSS   last sheep  wakes the dragon 
+COW CREATED! next cow at: 115419.701000
+CCCCCCC 18446744071706294016 CCCCCCC   A cow is born
+CCCCCCC 18446744071706294016 CCCCCCC   cow grazes for 3.033000 ms
+CCCCCCC 18446744071706294016 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071706294016 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071706294016 CCCCCCC   signal cow meal flag 49
+CCCCCCC 18446744071706294016 CCCCCCC   last cow  wakes the dragon 
+HUNTER CREATED! next hunter at: 111697.427000
+HHHHHHH 18446744071697901312 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071697901312 HHHHHHH   hunter has found the magical path in 3012.497070 ms
+HHHHHHH 18446744071697901312 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071697901312 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 114607.680000
+HHHHHHH 18446744071689508608 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071689508608 HHHHHHH   hunter has found the magical path in 1294.891968 ms
+HHHHHHH 18446744071689508608 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071689508608 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 42 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071723079424 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071723079424 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071723079424 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 113551.337000
+SSSSSSS 18446744071723079424 SSSSSSS   A sheep is born
+SSSSSSS 18446744071723079424 SSSSSSS   sheep grazes for 1761.151978 ms
+SSSSSSS 18446744071723079424 SSSSSSS   1  sheeps have been enchanted 
+SHEEP CREATED! next sheep at: 118165.333000
+SSSSSSS 18446744071681115904 SSSSSSS   A sheep is born
+SSSSSSS 18446744071681115904 SSSSSSS   sheep grazes for 245.975006 ms
+SSSSSSS 18446744071681115904 SSSSSSS   2  sheeps have been enchanted 
+THIEF CREATED! next thief at: 113811.163000
+TTTTTTT 18446744071672723200 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071672723200 TTTTTTT   thief has found the magical path in 649.156982 ms
+TTTTTTT 18446744071672723200 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071672723200 TTTTTTT   thief wakes smaug
+THIEF CREATED! next thief at: 117514.892000
+TTTTTTT 18446744071664330496 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071664330496 TTTTTTT   thief has found the magical path in 4895.436035 ms
+TTTTTTT 18446744071664330496 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071664330496 TTTTTTT   thief wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 34 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071672723200 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071672723200 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071672723200 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 114861.094000
+HHHHHHH 18446744071672723200 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071672723200 HHHHHHH   hunter has found the magical path in 1543.921021 ms
+HHHHHHH 18446744071672723200 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071672723200 HHHHHHH   hunter wakes smaug
+HUNTER CREATED! next hunter at: 117731.554000
+HHHHHHH 18446744071655937792 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071655937792 HHHHHHH   hunter has found the magical path in 2026.303955 ms
+HHHHHHH 18446744071655937792 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071655937792 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 116479.729000
+CCCCCCC 18446744071647545088 CCCCCCC   A cow is born
+CCCCCCC 18446744071647545088 CCCCCCC   cow grazes for 3388.027100 ms
+CCCCCCC 18446744071647545088 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071647545088 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071647545088 CCCCCCC   signal cow meal flag 50
+CCCCCCC 18446744071647545088 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 26 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071664330496 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071664330496 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071664330496 TTTTTTT   thief leaves cave and goes home
+COW CREATED! next cow at: 118746.477000
+CCCCCCC 18446744071664330496 CCCCCCC   A cow is born
+CCCCCCC 18446744071664330496 CCCCCCC   cow grazes for 2707.555908 ms
+CCCCCCC 18446744071664330496 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071664330496 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071664330496 CCCCCCC   signal cow meal flag 51
+CCCCCCC 18446744071664330496 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 118823.794000
+TTTTTTT 18446744071639152384 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071639152384 TTTTTTT   thief has found the magical path in 1504.793945 ms
+TTTTTTT 18446744071639152384 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071639152384 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 118429.251000
+HHHHHHH 18446744071630759680 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071630759680 HHHHHHH   hunter has found the magical path in 858.698975 ms
+HHHHHHH 18446744071630759680 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071630759680 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 18 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071639152384 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071639152384 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071639152384 TTTTTTT   thief leaves cave and goes home
+SHEEP CREATED! next sheep at: 122466.372000
+SSSSSSS 18446744071639152384 SSSSSSS   A sheep is born
+SSSSSSS 18446744071639152384 SSSSSSS   sheep grazes for 132.001999 ms
+SSSSSSS 18446744071639152384 SSSSSSS   3  sheeps have been enchanted 
+SSSSSSS 18446744071639152384 SSSSSSS   The last sheep is waiting
+SSSSSSS 18446744071639152384 SSSSSSS   signal sheep meal flag 16
+SSSSSSS 18446744071639152384 SSSSSSS   last sheep  wakes the dragon 
+HUNTER CREATED! next hunter at: 119519.679000
+HHHHHHH 18446744071622366976 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071622366976 HHHHHHH   hunter has found the magical path in 4806.402832 ms
+HHHHHHH 18446744071622366976 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071622366976 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 121890.978000
+CCCCCCC 18446744071613974272 CCCCCCC   A cow is born
+CCCCCCC 18446744071613974272 CCCCCCC   cow grazes for 4000.680908 ms
+CCCCCCC 18446744071613974272 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071613974272 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071613974272 CCCCCCC   signal cow meal flag 52
+CCCCCCC 18446744071613974272 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 122441.442000
+TTTTTTT 18446744071605581568 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071605581568 TTTTTTT   thief has found the magical path in 4908.538086 ms
+TTTTTTT 18446744071605581568 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071605581568 TTTTTTT   thief wakes smaug
+HUNTER CREATED! next hunter at: 121555.838000
+HHHHHHH 18446744071597188864 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071597188864 HHHHHHH   hunter has found the magical path in 2895.150879 ms
+HHHHHHH 18446744071597188864 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071597188864 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has 10 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a game (1 thief thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+TTTTTTT 18446744071605581568 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071605581568 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071605581568 TTTTTTT   thief leaves cave and goes home
+HUNTER CREATED! next hunter at: 123837.972000
+HHHHHHH 18446744071605581568 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071605581568 HHHHHHH   hunter has found the magical path in 3104.339111 ms
+HHHHHHH 18446744071605581568 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071605581568 HHHHHHH   hunter wakes smaug
+COW CREATED! next cow at: 122062.670000
+CCCCCCC 18446744071588796160 CCCCCCC   A cow is born
+CCCCCCC 18446744071588796160 CCCCCCC   cow grazes for 3502.215088 ms
+CCCCCCC 18446744071588796160 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744071588796160 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744071588796160 CCCCCCC   signal cow meal flag 53
+CCCCCCC 18446744071588796160 CCCCCCC   last cow  wakes the dragon 
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is fighting a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a treasure hunter
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (10 jewels). He now has 0 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has finished a battle (1 treasure hunter thread has been terminated)
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a nap for 2000.000000 ms
+HHHHHHH 18446744072671454976 HHHHHHH   hunter enters smaug's cave
+HHHHHHH 18446744072671454976 HHHHHHH   hunter fights smaug
+TTTTTTT 18446744072671454976 TTTTTTT   hunter leaves cave and goes home
+COW CREATED! next cow at: 124783.174000
+CCCCCCC 18446744072671454976 CCCCCCC   A cow is born
+CCCCCCC 18446744072671454976 CCCCCCC   cow grazes for 3755.628906 ms
+CCCCCCC 18446744072671454976 CCCCCCC   1  cow has been enchanted 
+CCCCCCC 18446744072671454976 CCCCCCC   The last cow is waiting
+CCCCCCC 18446744072671454976 CCCCCCC   signal cow meal flag 54
+CCCCCCC 18446744072671454976 CCCCCCC   last cow  wakes the dragon 
+THIEF CREATED! next thief at: 124501.491000
+TTTTTTT 18446744071580403456 TTTTTTT   A thief arrived outside the valley
+TTTTTTT 18446744071580403456 TTTTTTT   thief has found the magical path in 590.963989 ms
+TTTTTTT 18446744071580403456 TTTTTTT   thief is under smaug's spell and is waiting to be interacted with
+TTTTTTT 18446744071580403456 TTTTTTT   thief wakes smaug
+SHEEP CREATED! next sheep at: 125764.657000
+SSSSSSS 18446744071572010752 SSSSSSS   A sheep is born
+SSSSSSS 18446744071572010752 SSSSSSS   sheep grazes for 636.429016 ms
+SSSSSSS 18446744071572010752 SSSSSSS   1  sheeps have been enchanted 
+HUNTER CREATED! next hunter at: 125333.316000
+HHHHHHH 18446744071563618048 HHHHHHH   A hunter arrived outside the valley
+HHHHHHH 18446744071563618048 HHHHHHH   hunter has found the magical path in 2576.334961 ms
+HHHHHHH 18446744071563618048 HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with
+HHHHHHH 18446744071563618048 HHHHHHH   hunter wakes smaug
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is playing with a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has been defeated by a thief
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has lost some treasure (8 jewels). He now has -8 jewels.
+SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has too less treasure, so the simulation will terminate.
+RELEASESEMAPHORES   Terminating Simulation from process:    17710 threadid: 18446744072805656384
+XXTERMINATETERMINATE   sheep threads terminating
+XXTERMINATETERMINATE   cow threads terminating
+TTTTTTT 18446744071580403456 TTTTTTT   thief enters smaug's cave
+TTTTTTT 18446744071580403456 TTTTTTT   thief plays with smaug
+TTTTTTT 18446744071580403456 TTTTTTT   thief leaves cave and goes home
+XXTERMINATETERMINATE   hunter threads terminating
+XXTERMINATETERMINATE   thief threads terminating
+XXTERMINATETERMINATE   smaug thread terminating
+SSSSSSS 18446744072788952832 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072663062272 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072654669568 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071731472128 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072604313344 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072595920640 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072579135232 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072629491456 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072553957120 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072461637376 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072520386304 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072235034368 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072495208192 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072184678144 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072419673856 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072176285440 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072755382016 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072092358400 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072369317632 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072016824064 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072444851968 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071983253248 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072394495744 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072688240384 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072696633088 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071798613760 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072386103040 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072285390592 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072050394880 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072142714624 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071874148096 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072100751104 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072344139520 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744072058787584 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071932897024 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744072025216768 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072151107328 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071974860544 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071765042944 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071697901312 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744071899326208 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072327354112 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071848969984 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072763774720 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071781828352 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072570742528 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071723079424 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071597188864 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744071681115904 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+RELEASERELEASERELEAS   Sleeping for one second to allow threads to terminate gracefully
+CCCCCCC 18446744072772167424 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072738596608 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072721811200 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072713418496 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072679847680 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072637884160 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072621098752 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072705025792 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072587527936 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072545564416 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072511993600 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072503600896 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072470030080 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072411281152 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072402888448 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071706294016 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072428066560 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071572010752 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072335746816 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072360924928 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072293783296 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071605581568 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072268605184 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071622366976 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072218248960 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071630759680 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072276997888 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071655937792 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072134321920 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071689508608 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072117536512 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071756650240 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072109143808 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072486815488 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072067180288 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071815399168 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072075572992 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071823791872 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072033609472 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071840577280 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072562349824 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071857362688 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071991645952 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071865755392 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744071916111616 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744071949682432 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744071966467840 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072000038656 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071958075136 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072193070848 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072008431360 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071924504320 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072201463552 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072612706048 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071832184576 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072251819776 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072083965696 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072226641664 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072159500032 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744071739864832 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071714686720 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072243427072 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072260212480 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+SSSSSSS 18446744071639152384 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072377710336 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072302176000 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072318961408 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072352532224 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072453244672 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072436459264 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744072478422784 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072671454976 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071588796160 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072125929216 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071664330496 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744071907718912 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071647545088 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072537171712 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071748257536 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072209856256 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072730203904 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071790221056 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071563618048 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071807006464 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072746989312 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072310568704 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744072528779008 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071882540800 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072042002176 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744072780560128 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+SSSSSSS 18446744072167892736 SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744072646276864 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+CCCCCCC 18446744071613974272 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071890933504 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+CCCCCCC 18446744071941289728 CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate
+HHHHHHH 18446744071773435648 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+HHHHHHH 18446744071672723200 HHHHHHH   hunter enters smaug's cave after we've been told to terminate
+RELEASERELEASERELEAS   Semaphore set successfully released
+RELEASERELEASERELEAS   terminateFlagp shared memory detached
+RELEASERELEASERELEAS   terminateFlag shared memory deleted
+RELEASERELEASERELEAS   sheepMealFlagp memory detached
+RELEASERELEASERELEAS   sheepMealFlag shared memory deleted
+RELEASERELEASERELEAS   sheepCounterp memory detached
+RELEASERELEASERELEAS   sheepCounter memory deleted
+RELEASERELEASERELEAS   sheepEatenCounterp memory detached
+RELEASERELEASERELEAS   sheepEatenCounter memory deleted
+RELEASERELEASERELEAS   cowMealFlagP memory detached
+RELEASERELEASERELEAS   cowMealFlag shared memory deleted
+RELEASERELEASERELEAS   cowCounterp memory detached
+RELEASERELEASERELEAS   cowCounter memory deleted
+RELEASERELEASERELEAS   cowsEatenCounterp memory detached
+RELEASERELEASERELEAS   cowsEatenCounter memory deleted
+RELEASERELEASERELEAS   hunterCounterp memory detached
+RELEASERELEASERELEAS   hunterCounter memory deleted
+RELEASERELEASERELEAS   thiefCounterp memory detached
+RELEASERELEASERELEAS   thiefCounter memory deleted
+GOODBYE from terminate
+]0;steven@ansible: ~/Dropbox/school/cmpt300/ass3steven@ansible:~/Dropbox/school/cmpt300/ass3$ exit
+exit
+
+Script done on Sun 20 Jul 2014 01:12:16 AM PDT

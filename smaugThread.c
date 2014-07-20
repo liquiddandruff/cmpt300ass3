@@ -213,6 +213,9 @@ void *smaug(void *smaugWinProbP)
 		// Smaug goes to sleep if nothing happens and sleepThisIteration is 1
 		if(sleepThisIteration == 1) {
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has gone to sleep\n" );
+			// We must reset the semaphore to prevent smaug waking up when there's no need to
+			seminfo.val = 0;
+			semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
 			semopChecked(semID, &WaitDragonSleeping, 1);
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug sniffs his surroundings\n" );
 			printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug has woken up \n" );
