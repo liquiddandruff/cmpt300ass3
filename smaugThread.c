@@ -814,6 +814,14 @@ void terminateSimulation() {
 	printf("GOODBYE from terminate\n");
 }
 
+void destroySemCheck(int ret, char *semName) {
+	if(ret == 0) {
+		printf("SEMAPHORE RELEASERELEASERELEAS   Successfully destroyed semaphore %s\n", semName);
+	} else {
+		printf("SEMAPHORE RELEASERELEASERELEAS   Error destroying semaphore %s\n", semName);
+	}
+}
+
 void releaseSemandMem() 
 {
 	// Semaphore set cannot be freed when there are sleeping threads waiting on the semaphores
@@ -824,41 +832,33 @@ void releaseSemandMem()
 	printf("RELEASERELEASERELEAS   Sleeping for one second to allow threads to terminate gracefully\n");
 	sleep(1);
 
-	sem_destroy(&sem_SheepInGroup);
-	sem_destroy(&sem_SheepWaiting);
-	sem_destroy(&sem_SheepEaten);
-	sem_destroy(&sem_SheepDead);
-	sem_destroy(&mut_SheepInGroup);
-	sem_destroy(&mut_SheepEaten);
-	sem_destroy(&mut_SheepMealFlag);
+	destroySemCheck(sem_destroy(&sem_SheepInGroup)   , "sem_SheepInGroup");
+	destroySemCheck(sem_destroy(&sem_SheepWaiting)   , "sem_SheepWaiting");
+	destroySemCheck(sem_destroy(&sem_SheepEaten)     , "sem_SheepEaten");
+	destroySemCheck(sem_destroy(&sem_SheepDead)      , "sem_SheepDead");
+	destroySemCheck(sem_destroy(&mut_SheepInGroup)   , "mut_SheepInGroup");
+	destroySemCheck(sem_destroy(&mut_SheepEaten)     , "mut_SheepEaten");
+	destroySemCheck(sem_destroy(&mut_SheepMealFlag)  , "mut_SheepMealFlag");
 
-	sem_destroy(&sem_CowsInGroup);
-	sem_destroy(&sem_CowsWaiting);
-	sem_destroy(&sem_CowsEaten);
-	sem_destroy(&sem_CowsDead);
-	sem_destroy(&mut_CowsInGroup);
-	sem_destroy(&mut_CowsEaten);
-	sem_destroy(&mut_CowMealFlag);
+	destroySemCheck(sem_destroy(&sem_CowsInGroup)    , "sem_CowsInGroup");
+	destroySemCheck(sem_destroy(&sem_CowsWaiting)    , "sem_CowsWaiting");
+	destroySemCheck(sem_destroy(&sem_CowsEaten)      , "sem_CowsEaten");
+	destroySemCheck(sem_destroy(&sem_CowsDead)       , "sem_CowsDead");
+	destroySemCheck(sem_destroy(&mut_CowsInGroup)    , "mut_CowsInGroup");
+	destroySemCheck(sem_destroy(&mut_CowsEaten)      , "mut_CowsEaten");
+	destroySemCheck(sem_destroy(&mut_CowMealFlag)    , "mut_CowMealFlag");
 
-	sem_destroy(&mut_HunterCount);
-	sem_destroy(&sem_HuntersWaiting);
-	sem_destroy(&sem_HunterFinish);
+	destroySemCheck(sem_destroy(&mut_HunterCount)    , "mut_HunterCount");
+	destroySemCheck(sem_destroy(&sem_HuntersWaiting) , "sem_HuntersWaiting");
+	destroySemCheck(sem_destroy(&sem_HunterFinish)   , "sem_HunterFinish");
 
-	sem_destroy(&mut_ThiefCount);
-	sem_destroy(&sem_ThievesWaiting);
-	sem_destroy(&sem_ThiefFinish);
+	destroySemCheck(sem_destroy(&mut_ThiefCount)     , "mut_ThiefCount");
+	destroySemCheck(sem_destroy(&sem_ThievesWaiting) , "sem_ThievesWaiting");
+	destroySemCheck(sem_destroy(&sem_ThiefFinish)    , "sem_ThiefFinish");
 
-	sem_destroy(&sem_DragonEating);
-	sem_destroy(&sem_DragonSleeping);
-	sem_destroy(&mut_Terminate);
-
-	int semaphoreDeletionRet = 0;
-	if(semaphoreDeletionRet != 0) {
-		printf("RELEASERELEASERELEAS   Catastrophic error encountered trying to release semaphore set!\n");
-	} else {
-		printf("RELEASERELEASERELEAS   Semaphore set successfully released\n");
-	}
-
+	destroySemCheck(sem_destroy(&sem_DragonEating)   , "sem_DragonEating");
+	destroySemCheck(sem_destroy(&sem_DragonSleeping) , "sem_DragonSleeping");
+	destroySemCheck(sem_destroy(&mut_Terminate)      , "mut_Terminate");
 
 	if(shmdt(terminateFlagp)==-1) {
 		printf("RELEASERELEASERELEAS   terminateFlagp shared memory detach failed\n");
