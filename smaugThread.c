@@ -16,27 +16,27 @@
 
 // Global semaphores
 sem_t sem_CowsInGroup;
-sem_t sem_pCowsInGroup;
+sem_t mut_CowsInGroup;
 sem_t sem_SheepInGroup;
-sem_t sem_pSheepInGroup;
+sem_t mut_SheepInGroup;
 sem_t sem_SheepWaiting;
 sem_t sem_CowsWaiting;
-sem_t sem_pSheepEaten;
-sem_t sem_pCowsEaten;
+sem_t mut_SheepEaten;
+sem_t mut_CowsEaten;
 sem_t sem_SheepEaten;
 sem_t sem_CowsEaten;
 sem_t sem_SheepDead;
 sem_t sem_CowsDead;
-sem_t sem_pTerminate;
+sem_t mut_Terminate;
 sem_t sem_DragonEating;
 //sem_t sem_DragonFighting;
 sem_t sem_DragonSleeping;
-sem_t sem_pCowMealFlag;
-sem_t sem_pSheepMealFlag;
-sem_t sem_pHunterCount;
+sem_t mut_CowMealFlag;
+sem_t mut_SheepMealFlag;
+sem_t mut_HunterCount;
 sem_t sem_HuntersWaiting;
 sem_t sem_HunterFinish;
-sem_t sem_pThiefCount;
+sem_t mut_ThiefCount;
 sem_t sem_ThievesWaiting;
 sem_t sem_ThiefFinish;
 //#define SEM_COWSINGROUP 0
@@ -243,17 +243,17 @@ void *smaug(void *smaugWinProbP)
 			sleepThisIteration = 1;
 		}
 
-		sem_wait(&sem_pThiefCount);
+		sem_wait(&mut_ThiefCount);
 		//semopChecked(semID, &WaitProtectThiefCount, 1);
-		sem_wait(&sem_pHunterCount);
+		sem_wait(&mut_HunterCount);
 		//semopChecked(semID, &WaitProtectHunterCount, 1);
 		if( *hunterCounterp + *thiefCounterp > 0) {
 			while( *hunterCounterp + *thiefCounterp > 0 && terminateNow == 0) {
-				sem_post(&sem_pHunterCount);
+				sem_post(&mut_HunterCount);
 				//semopChecked(semID, &SignalProtectHunterCount, 1);
 				if(*thiefCounterp > 0) {
 					*thiefCounterp = *thiefCounterp - 1;
-					sem_post(&sem_pThiefCount);
+					sem_post(&mut_ThiefCount);
 					//semopChecked(semID, &SignalProtectThiefCount, 1);
 					// Wake thief from wander state for interaction
 					sem_post(&sem_ThievesWaiting);
@@ -291,14 +291,14 @@ void *smaug(void *smaugWinProbP)
 					usleep(SMAUG_NAP_LENGTH_US);
 					printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 				} else {
-					sem_post(&sem_pThiefCount);
+					sem_post(&mut_ThiefCount);
 					//semopChecked(semID, &SignalProtectThiefCount, 1);
-					sem_wait(&sem_pHunterCount);
+					sem_wait(&mut_HunterCount);
 					//semopChecked(semID, &WaitProtectHunterCount, 1);
 					if(*hunterCounterp > 0) {
 						*hunterCounterp = *hunterCounterp - 1;
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug lifts the spell and allows a hunter to see his cave\n");
-						sem_post(&sem_pHunterCount);
+						sem_post(&mut_HunterCount);
 						//semopChecked(semID, &SignalProtectHunterCount, 1);
 						// Wake hunter from wander state for interaction
 						sem_post(&sem_HuntersWaiting);
@@ -335,32 +335,32 @@ void *smaug(void *smaugWinProbP)
 						usleep(SMAUG_NAP_LENGTH_US);
 						printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
 					} else {
-						sem_post(&sem_pHunterCount);
+						sem_post(&mut_HunterCount);
 						//semopChecked(semID, &SignalProtectHunterCount, 1);
 					}
 				}
 				// Apply protection for next iteration
-				sem_wait(&sem_pThiefCount);
+				sem_wait(&mut_ThiefCount);
 				//semopChecked(semID, &WaitProtectThiefCount, 1);
-				sem_wait(&sem_pHunterCount);
+				sem_wait(&mut_HunterCount);
 				//semopChecked(semID, &WaitProtectHunterCount, 1);
 			}
 			// Release protection
-			sem_post(&sem_pHunterCount);
+			sem_post(&mut_HunterCount);
 			//semopChecked(semID, &SignalProtectHunterCount, 1);
-			sem_post(&sem_pThiefCount);
+			sem_post(&mut_ThiefCount);
 			//semopChecked(semID, &SignalProtectThiefCount, 1);
 		} else {
 			// Release protection
-			sem_post(&sem_pHunterCount);
+			sem_post(&mut_HunterCount);
 			//semopChecked(semID, &SignalProtectHunterCount, 1);
-			sem_post(&sem_pThiefCount);
+			sem_post(&mut_ThiefCount);
 			//semopChecked(semID, &SignalProtectThiefCount, 1);
 
 			// Check animals
-			sem_wait(&sem_pCowMealFlag);
+			sem_wait(&mut_CowMealFlag);
 			//semopChecked(semID, &WaitProtectCowMealFlag, 1);
-			sem_wait(&sem_pSheepMealFlag);
+			sem_wait(&mut_SheepMealFlag);
 			//semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 			// If there's a meal of x cows and y sheeps where x is COWS_IN_GROUP and y is SHEEP_IN_GROUP
 			while( *cowMealFlagP >= 1 && *sheepMealFlagp >= 1 && terminateNow == 0) {
@@ -368,9 +368,9 @@ void *smaug(void *smaugWinProbP)
 				*cowMealFlagP = *cowMealFlagP - 1;
 				int mealsLeft = *cowMealFlagP < *sheepMealFlagp ? *cowMealFlagP : *sheepMealFlagp;
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   cow meals: %d sheep meals: %d mealsLeft: %d\n", *cowMealFlagP, *sheepMealFlagp, mealsLeft);
-				sem_post(&sem_pSheepMealFlag);
+				sem_post(&mut_SheepMealFlag);
 				//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
-				sem_post(&sem_pCowMealFlag);
+				sem_post(&mut_CowMealFlag);
 				//semopChecked(semID, &SignalProtectCowMealFlag, 1);
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug is eating a meal of %d sheep and %d cow\n", SHEEP_IN_GROUP, COWS_IN_GROUP);
 				for( k = 0; k < SHEEP_IN_GROUP; k++ ) {
@@ -418,30 +418,30 @@ void *smaug(void *smaugWinProbP)
 
 				/* Smaug checks to see if another snack is waiting */
 				printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug takes a deep breath\n");
-				sem_wait(&sem_pCowMealFlag);
+				sem_wait(&mut_CowMealFlag);
 				//semopChecked(semID, &WaitProtectCowMealFlag, 1);
 				if( *cowMealFlagP > 0  ) {
 					// Mutex check for sheeps is staggered to improve performance, parent else branch is reused for break case
-					sem_wait(&sem_pSheepMealFlag);
+					sem_wait(&mut_SheepMealFlag);
 					//semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 					if(*sheepMealFlagp > 0) {
 						sem_wait(&sem_ThiefFinish);
 						//semopChecked(semID, &WaitProtectThiefCount, 1);
-						sem_wait(&sem_pHunterCount);
+						sem_wait(&mut_HunterCount);
 						//semopChecked(semID, &WaitProtectHunterCount, 1);
 						// Check if there are any visitors
 						if( *thiefCounterp + *hunterCounterp > 0 ) {
-							sem_post(&sem_pThiefCount);
+							sem_post(&mut_ThiefCount);
 							//semopChecked(semID, &SignalProtectThiefCount, 1);
-							sem_post(&sem_pHunterCount);
+							sem_post(&mut_HunterCount);
 							//semopChecked(semID, &SignalProtectHunterCount, 1);
 							// There are visitors, so don't sleep in the following main iteration and break out of this loop
 							sleepThisIteration = 0;	
 							break;	
 						} else {
-							sem_post(&sem_pThiefCount);
+							sem_post(&mut_ThiefCount);
 							//semopChecked(semID, &SignalProtectThiefCount, 1);
-							sem_post(&sem_pHunterCount);
+							sem_post(&mut_HunterCount);
 							//semopChecked(semID, &SignalProtectHunterCount, 1);
 							// No  visitors, but a meal is waiting, so continue in this loop
 							printf("SMAUGSMAUGSMAUGSMAUGSMAU   Smaug eats again\n");
@@ -453,12 +453,12 @@ void *smaug(void *smaugWinProbP)
 						break;
 					}
 				}
-				sem_post(&sem_pCowMealFlag);
+				sem_post(&mut_CowMealFlag);
 				//semopChecked(semID, &SignalProtectCowMealFlag, 1);
 			} 
-			sem_post(&sem_pSheepMealFlag);
+			sem_post(&mut_SheepMealFlag);
 			//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
-			sem_post(&sem_pCowMealFlag);
+			sem_post(&mut_CowMealFlag);
 			//semopChecked(semID, &SignalProtectCowMealFlag, 1);
 		}
 
@@ -511,26 +511,26 @@ void initialize()
 	printf("!!INIT!!INIT!!INIT!!  semaphores initiialized\n");
 	
 	/* Init Mutex to one */
-	sem_init(&sem_pTerminate, 0, 1);
+	sem_init(&mut_Terminate, 0, 1);
 	//semctlChecked(semID, SEM_PTERMINATE, SETVAL, seminfo);
 
-	sem_init(&sem_pSheepMealFlag, 0, 1);
+	sem_init(&mut_SheepMealFlag, 0, 1);
 	//semctlChecked(semID, SEM_PSHEEPMEALFLAG, SETVAL, seminfo);
-	sem_init(&sem_pSheepInGroup, 0, 1);
+	sem_init(&mut_SheepInGroup, 0, 1);
 	//semctlChecked(semID, SEM_PSHEEPINGROUP, SETVAL, seminfo);
-	sem_init(&sem_pSheepEaten, 0, 1);
+	sem_init(&mut_SheepEaten, 0, 1);
 	//semctlChecked(semID, SEM_PSHEEPEATEN, SETVAL, seminfo);
 
-	sem_init(&sem_pCowMealFlag, 0, 1);
+	sem_init(&mut_CowMealFlag, 0, 1);
 	//semctlChecked(semID, SEM_PCOWMEALFLAG, SETVAL, seminfo);
-	sem_init(&sem_pCowsInGroup, 0, 1);
+	sem_init(&mut_CowsInGroup, 0, 1);
 	//semctlChecked(semID, SEM_PCOWSINGROUP, SETVAL, seminfo);
-	sem_init(&sem_pCowsEaten, 0, 1);
+	sem_init(&mut_CowsEaten, 0, 1);
 	//semctlChecked(semID, SEM_PCOWSEATEN, SETVAL, seminfo);
 
-	sem_init(&sem_pThiefCount, 0, 1);
+	sem_init(&mut_ThiefCount, 0, 1);
 	//semctlChecked(semID, SEM_PTHIEFCOUNT, SETVAL, seminfo);
-	sem_init(&sem_pHunterCount, 0, 1);
+	sem_init(&mut_HunterCount, 0, 1);
 	//semctlChecked(semID, SEM_PHUNTERCOUNT, SETVAL, seminfo);
 	printf("!!INIT!!INIT!!INIT!!  mutexes initiialized\n");
 
@@ -687,7 +687,7 @@ void *sheep(void *startTimeNp)
 
 	/* does this sheep complete a group of SHEEP_IN_GROUP? */
 	/* if so wake up the dragon */
-	sem_wait(&sem_pSheepInGroup);
+	sem_wait(&mut_SheepInGroup);
 	//semopChecked(semID, &WaitProtectSheepInGroup, 1);
 	sem_post(&sem_SheepInGroup);
 	//semopChecked(semID, &SignalSheepInGroup, 1);
@@ -695,33 +695,33 @@ void *sheep(void *startTimeNp)
 	printf("SSSSSSS %8lu SSSSSSS   %d  sheeps have been enchanted \n", localThreadID, *sheepCounterp );
 	if( ( *sheepCounterp  >= SHEEP_IN_GROUP )) {
 		*sheepCounterp = *sheepCounterp - SHEEP_IN_GROUP;
-		sem_post(&sem_pSheepInGroup);
+		sem_post(&mut_SheepInGroup);
 		//semopChecked(semID, &SignalProtectSheepInGroup, 1);
 		for (k=0; k<SHEEP_IN_GROUP; k++){
 			sem_wait(&sem_SheepInGroup);
 			//semopChecked(semID, &WaitSheepInGroup, 1);
 		}
 		printf("SSSSSSS %8lu SSSSSSS   The last sheep is waiting\n", localThreadID);
-		sem_wait(&sem_pSheepMealFlag);
+		sem_wait(&mut_SheepMealFlag);
 		//semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 		*sheepMealFlagp = *sheepMealFlagp + 1;
 		printf("SSSSSSS %8lu SSSSSSS   signal sheep meal flag %d\n", localThreadID, *sheepMealFlagp);
-		sem_post(&sem_pSheepMealFlag);
+		sem_post(&mut_SheepMealFlag);
 		//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 
-		sem_wait(&sem_pCowMealFlag);
+		sem_wait(&mut_CowMealFlag);
 		//semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		if( *cowMealFlagP >= 1 ) {
 			sem_post(&sem_DragonSleeping);
 			//semopChecked(semID, &SignalDragonSleeping, 1);
 			printf("SSSSSSS %8lu SSSSSSS   last sheep  wakes the dragon \n", localThreadID);
 		}
-		sem_post(&sem_pCowMealFlag);
+		sem_post(&mut_CowMealFlag);
 		//semopChecked(semID, &SignalProtectCowMealFlag, 1);
 	}
 	else
 	{
-		sem_post(&sem_pSheepInGroup);
+		sem_post(&mut_SheepInGroup);
 		//semopChecked(semID, &SignalProtectSheepInGroup, 1);
 	}
 
@@ -729,22 +729,22 @@ void *sheep(void *startTimeNp)
 	//semopChecked(semID, &WaitSheepWaiting, 1);
 
 	// Terminate check
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("SSSSSSS %8lu SSSSSSS   A sheep has been woken up to be eaten after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return;
 	} else {
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		printf("SSSSSSS %8lu SSSSSSS   A sheep has been woken up to be eaten\n", localThreadID);
 	}
 
 	/* have all the sheeps in group been eaten? */
 	/* if so wake up the dragon */
-	sem_wait(&sem_pSheepEaten);
+	sem_wait(&mut_SheepEaten);
 	//semopChecked(semID, &WaitProtectSheepEaten, 1);
 	sem_post(&sem_SheepEaten);
 	//semopChecked(semID, &SignalSheepEaten, 1);
@@ -756,14 +756,14 @@ void *sheep(void *startTimeNp)
 			//semopChecked(semID, &WaitSheepEaten, 1);
 		}
 		printf("SSSSSSS %8lu SSSSSSS   The last sheep has been eaten\n", localThreadID);
-		sem_post(&sem_pSheepEaten);
+		sem_post(&mut_SheepEaten);
 		//semopChecked(semID, &SignalProtectSheepEaten, 1);
 		sem_post(&sem_DragonEating);
 		//semopChecked(semID, &SignalDragonEating, 1);
 	}
 	else
 	{
-		sem_post(&sem_pSheepEaten);
+		sem_post(&mut_SheepEaten);
 		//semopChecked(semID, &SignalProtectSheepEaten, 1);
 		printf("SSSSSSS %8lu SSSSSSS   A sheep is waiting to be eaten\n", localThreadID);
 	}
@@ -793,7 +793,7 @@ void *cow(void *startTimeNp)
 
 	/* does this cow complete a group of COWS_IN_GROUP? */
 	/* if so wake up the dragon */
-	sem_wait(&sem_pCowsInGroup);
+	sem_wait(&mut_CowsInGroup);
 	//semopChecked(semID, &WaitProtectCowsInGroup, 1);
 	sem_post(&sem_CowsInGroup);
 	//semopChecked(semID, &SignalCowsInGroup, 1);
@@ -801,33 +801,33 @@ void *cow(void *startTimeNp)
 	printf("CCCCCCC %8lu CCCCCCC   %d  cow has been enchanted \n", localThreadID, *cowCounterp );
 	if( ( *cowCounterp  >= COWS_IN_GROUP )) {
 		*cowCounterp = *cowCounterp - COWS_IN_GROUP;
-		sem_post(&sem_pCowsInGroup);
+		sem_post(&mut_CowsInGroup);
 		//semopChecked(semID, &SignalProtectCowsInGroup, 1);
 		for (k=0; k<COWS_IN_GROUP; k++){
 			sem_wait(&sem_CowsInGroup);
 			//semopChecked(semID, &WaitCowsInGroup, 1);
 		}
 		printf("CCCCCCC %8lu CCCCCCC   The last cow is waiting\n", localThreadID);
-		sem_wait(&sem_pCowMealFlag);
+		sem_wait(&mut_CowMealFlag);
 		//semopChecked(semID, &WaitProtectCowMealFlag, 1);
 		*cowMealFlagP = *cowMealFlagP + 1;
 		printf("CCCCCCC %8lu CCCCCCC   signal cow meal flag %d\n", localThreadID, *cowMealFlagP);
-		sem_post(&sem_pCowMealFlag);
+		sem_post(&mut_CowMealFlag);
 		//semopChecked(semID, &SignalProtectCowMealFlag, 1);
 
-		sem_wait(&sem_pSheepMealFlag);
+		sem_wait(&mut_SheepMealFlag);
 		//semopChecked(semID, &WaitProtectSheepMealFlag, 1);
 		if( *sheepMealFlagp >= 1 ) {
 			sem_post(&sem_DragonEating);
 			//semopChecked(semID, &SignalDragonSleeping, 1);
 			printf("CCCCCCC %8lu CCCCCCC   last cow  wakes the dragon \n", localThreadID);
 		}	
-		sem_post(&sem_pSheepMealFlag);
+		sem_post(&mut_SheepMealFlag);
 		//semopChecked(semID, &SignalProtectSheepMealFlag, 1);
 	}
 	else
 	{
-		sem_post(&sem_pCowsInGroup);
+		sem_post(&mut_CowsInGroup);
 		//semopChecked(semID, &SignalProtectCowsInGroup, 1);
 	}
 
@@ -835,22 +835,22 @@ void *cow(void *startTimeNp)
 	//semopChecked(semID, &WaitCowsWaiting, 1);
 
 	// Terminate check
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("CCCCCCC %8lu CCCCCCC   A cow has been woken up to be eaten after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return;
 	} else {
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		printf("CCCCCCC %8lu CCCCCCC   A cow has been woken up to be eaten\n", localThreadID);
 	}
 
 	/* have all the cows in group been eaten? */
 	/* if so wake up the dragon */
-	sem_wait(&sem_pCowsEaten);
+	sem_wait(&mut_CowsEaten);
 	//semopChecked(semID, &WaitProtectCowsEaten, 1);
 	sem_post(&sem_CowsEaten);
 	//semopChecked(semID, &SignalCowsEaten, 1);
@@ -862,14 +862,14 @@ void *cow(void *startTimeNp)
 			//semopChecked(semID, &WaitCowsEaten, 1);
 		}
 		printf("CCCCCCC %8lu CCCCCCC   The last cow has been eaten\n", localThreadID);
-		sem_post(&sem_pCowsEaten);
+		sem_post(&mut_CowsEaten);
 		//semopChecked(semID, &SignalProtectCowsEaten, 1);
 		sem_post(&sem_DragonEating);
 		//semopChecked(semID, &SignalDragonEating, 1);
 	}
 	else
 	{
-		sem_post(&sem_pCowsEaten);
+		sem_post(&mut_CowsEaten);
 		//semopChecked(semID, &SignalProtectCowsEaten, 1);
 		printf("CCCCCCC %8lu CCCCCCC   A cow is waiting to be eaten\n", localThreadID);
 	}
@@ -895,23 +895,23 @@ void *thief(void *startTimeNp)
 	}
 
 	// Terminate check
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("TTTTTTT %8lu TTTTTTT   thief has found the magical path after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return NULL;
 	} else {
 		printf("TTTTTTT %8lu TTTTTTT   thief has found the magical path in %f ms\n", localThreadID, startTimeN);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 
 	sem_wait(&sem_ThiefFinish);
 	//semopChecked(semID, &WaitProtectThiefCount, 1);
 	*thiefCounterp = *thiefCounterp + 1;
-	sem_post(&sem_pThiefCount);
+	sem_post(&mut_ThiefCount);
 	//semopChecked(semID, &SignalProtectThiefCount, 1);
 	printf("TTTTTTT %8lu TTTTTTT   thief is under smaug's spell and is waiting to be interacted with\n", localThreadID);
 	printf("TTTTTTT %8lu TTTTTTT   thief wakes smaug\n", localThreadID);
@@ -920,17 +920,17 @@ void *thief(void *startTimeNp)
 	sem_wait(&sem_ThievesWaiting);
 	//semopChecked(semID, &WaitThievesWaiting, 1);
 	// Another terminate check incase this thief ends the simulation and the semaphores are cleaned up
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return NULL;
 	} else {
 		printf("TTTTTTT %8lu TTTTTTT   thief enters smaug's cave\n", localThreadID);
 		printf("TTTTTTT %8lu TTTTTTT   thief plays with smaug\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 	sem_wait(&sem_ThiefFinish);
@@ -954,23 +954,23 @@ void *hunter(void *startTimeNp)
 	}
 
 	// Terminate check
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("HHHHHHH %8lu HHHHHHH   hunter has found the magical path after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return NULL;
 	} else {
 		printf("HHHHHHH %8lu HHHHHHH   hunter has found the magical path in %f ms\n", localThreadID, startTimeN);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 
-	sem_wait(&sem_pHunterCount);
+	sem_wait(&mut_HunterCount);
 	//semopChecked(semID, &WaitProtectHunterCount, 1);
 	*hunterCounterp = *hunterCounterp + 1;
-	sem_post(&sem_pHunterCount);
+	sem_post(&mut_HunterCount);
 	//semopChecked(semID, &SignalProtectHunterCount, 1);
 	printf("HHHHHHH %8lu HHHHHHH   hunter is under smaug's spell and is waiting to be interacted with\n", localThreadID);
 	printf("HHHHHHH %8lu HHHHHHH   hunter wakes smaug\n", localThreadID);
@@ -979,17 +979,17 @@ void *hunter(void *startTimeNp)
 	sem_wait(&sem_HuntersWaiting);
 	//semopChecked(semID, &WaitHuntersWaiting, 1);
 	// Another terminate check incase this hunter ends the simulation and the semaphores are cleaned up
-	sem_wait(&sem_pTerminate);
+	sem_wait(&mut_Terminate);
 	//semopChecked(semID, &WaitProtectTerminate, 1);
 	if( *terminateFlagp == 1 ) {
 		printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave after we've been told to terminate\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 		return NULL;
 	} else {
 		printf("HHHHHHH %8lu HHHHHHH   hunter enters smaug's cave\n", localThreadID);
 		printf("HHHHHHH %8lu HHHHHHH   hunter fights smaug\n", localThreadID);
-		sem_post(&sem_pTerminate);
+		sem_post(&mut_Terminate);
 		//semopChecked(semID, &SignalProtectTerminate, 1);
 	}
 	sem_wait(&sem_HunterFinish);
@@ -1048,27 +1048,26 @@ void releaseSemandMem()
 	sleep(1);
 
 	sem_destroy(&sem_CowsInGroup);
-	sem_destroy(&sem_pCowsInGroup);
+	sem_destroy(&mut_CowsInGroup);
 	sem_destroy(&sem_SheepInGroup);
-	sem_destroy(&sem_pSheepInGroup);
+	sem_destroy(&mut_SheepInGroup);
 	sem_destroy(&sem_SheepWaiting);
 	sem_destroy(&sem_CowsWaiting);
-	sem_destroy(&sem_pSheepEaten);
-	sem_destroy(&sem_pCowsEaten);
+	sem_destroy(&mut_SheepEaten);
+	sem_destroy(&mut_CowsEaten);
 	sem_destroy(&sem_SheepEaten);
 	sem_destroy(&sem_CowsEaten);
 	sem_destroy(&sem_SheepDead);
 	sem_destroy(&sem_CowsDead);
-	sem_destroy(&sem_pTerminate);
+	sem_destroy(&mut_Terminate);
 	sem_destroy(&sem_DragonEating);
-	//sem_destroy(&sem_DragonFighting);
 	sem_destroy(&sem_DragonSleeping);
-	sem_destroy(&sem_pCowMealFlag);
-	sem_destroy(&sem_pSheepMealFlag);
-	sem_destroy(&sem_pHunterCount);
+	sem_destroy(&mut_CowMealFlag);
+	sem_destroy(&mut_SheepMealFlag);
+	sem_destroy(&mut_HunterCount);
 	sem_destroy(&sem_HuntersWaiting);
 	sem_destroy(&sem_HunterFinish);
-	sem_destroy(&sem_pThiefCount);
+	sem_destroy(&mut_ThiefCount);
 	sem_destroy(&sem_ThievesWaiting);
 	sem_destroy(&sem_ThiefFinish);
 
