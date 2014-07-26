@@ -326,69 +326,39 @@ void *smaug(void *smaugWinProbP)
 
 void initialize()
 {
-	/* Init semaphores */
-	//semID=semget(IPC_PRIVATE, MAX_SEMAPHORES, 0666 | IPC_CREAT);
-
-
-	/* Init to zero, no elements are produced yet */
-	//seminfo.val=0;
+	/* Init semaphores to 0 */
 	sem_init(&sem_SheepInGroup, 0, 0);
-	//semctlChecked(semID, SEM_SHEEPINGROUP, SETVAL, seminfo);
 	sem_init(&sem_SheepWaiting, 0, 0);
-	//semctlChecked(semID, SEM_SHEEPWAITING, SETVAL, seminfo);
 	sem_init(&sem_SheepEaten, 0, 0);
-	//semctlChecked(semID, SEM_SHEEPEATEN, SETVAL, seminfo);
 	sem_init(&sem_SheepDead, 0, 0);
-	//semctlChecked(semID, SEM_SHEEPDEAD, SETVAL, seminfo);
 
 	sem_init(&sem_CowsInGroup, 0, 0);
-	//semctlChecked(semID, SEM_COWSINGROUP, SETVAL, seminfo);
 	sem_init(&sem_CowsWaiting, 0, 0);
-	//semctlChecked(semID, SEM_COWSWAITING, SETVAL, seminfo);
 	sem_init(&sem_CowsEaten, 0, 0);
-	//semctlChecked(semID, SEM_COWSEATEN, SETVAL, seminfo);
 	sem_init(&sem_CowsDead, 0, 0);
-	//semctlChecked(semID, SEM_COWSDEAD, SETVAL, seminfo);
 
 	sem_init(&sem_HuntersWaiting, 0, 0);
-	//semctlChecked(semID, SEM_HUNTERSWAITING, SETVAL, seminfo);
 	sem_init(&sem_HunterFinish, 0, 0);
-	//semctlChecked(semID, SEM_HUNTERFINISH, SETVAL, seminfo);
 	sem_init(&sem_ThievesWaiting, 0, 0);
-	//semctlChecked(semID, SEM_THIEVESWAITING, SETVAL, seminfo);
 	sem_init(&sem_ThiefFinish, 0, 0);
-	//semctlChecked(semID, SEM_THIEFFINISH, SETVAL, seminfo);
 
-	//sem_init(&sem_DragonFighting, 0, 0);
-	//semctlChecked(semID, SEM_DRAGONFIGHTING, SETVAL, seminfo);
 	sem_init(&sem_DragonSleeping, 0, 0);
-	//semctlChecked(semID, SEM_DRAGONSLEEPING, SETVAL, seminfo);
 	sem_init(&sem_DragonEating, 0, 0);
-	//semctlChecked(semID, SEM_DRAGONEATING, SETVAL, seminfo);
 	printf("!!INIT!!INIT!!INIT!!  semaphores initiialized\n");
 	
-	/* Init Mutex to one */
+	/* Init mutexes to one */
 	sem_init(&mut_Terminate, 0, 1);
-	//semctlChecked(semID, SEM_PTERMINATE, SETVAL, seminfo);
 
 	sem_init(&mut_SheepMealFlag, 0, 1);
-	//semctlChecked(semID, SEM_PSHEEPMEALFLAG, SETVAL, seminfo);
 	sem_init(&mut_SheepInGroup, 0, 1);
-	//semctlChecked(semID, SEM_PSHEEPINGROUP, SETVAL, seminfo);
 	sem_init(&mut_SheepEaten, 0, 1);
-	//semctlChecked(semID, SEM_PSHEEPEATEN, SETVAL, seminfo);
 
 	sem_init(&mut_CowMealFlag, 0, 1);
-	//semctlChecked(semID, SEM_PCOWMEALFLAG, SETVAL, seminfo);
 	sem_init(&mut_CowsInGroup, 0, 1);
-	//semctlChecked(semID, SEM_PCOWSINGROUP, SETVAL, seminfo);
 	sem_init(&mut_CowsEaten, 0, 1);
-	//semctlChecked(semID, SEM_PCOWSEATEN, SETVAL, seminfo);
 
 	sem_init(&mut_ThiefCount, 0, 1);
-	//semctlChecked(semID, SEM_PTHIEFCOUNT, SETVAL, seminfo);
 	sem_init(&mut_HunterCount, 0, 1);
-	//semctlChecked(semID, SEM_PHUNTERCOUNT, SETVAL, seminfo);
 	printf("!!INIT!!INIT!!INIT!!  mutexes initiialized\n");
 
 
@@ -824,11 +794,9 @@ void destroySemCheck(int ret, char *semName) {
 
 void releaseSemandMem() 
 {
-	// Semaphore set cannot be freed when there are sleeping threads waiting on the semaphores
-	// We set all semaphores to be nonzero and allow the sleeping threads to resume and terminate
-	// The maxiumum semaphore value is 32767, so set the following semaphore values less than that
 	// Wait for the semaphores, especially for the terminate semaphore to allow the threads to 
-	// terminate gracefully and not exit(3) from an invalid semaphore operation
+	// terminate gracefully
+
 	printf("RELEASERELEASERELEAS   Sleeping for one second to allow threads to terminate gracefully\n");
 	sleep(1);
 
