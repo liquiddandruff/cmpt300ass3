@@ -993,6 +993,8 @@ int main() {
 	parentProcessID = getpid();
 
 	pthread_t smaugThread;
+	// If pthraed_create returns anything that's not a zero, then we will progress 
+	// into the if body and handle the error by terminating
 	if(pthread_create(&smaugThread, NULL, smaug, &smaugWinProb)) {
 		printf("error creating thread!\n");
 		terminateSimulation();
